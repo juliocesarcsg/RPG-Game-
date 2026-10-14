@@ -1,0 +1,1002 @@
+{
+ "partidas": 10000,
+ "erros": [],
+ "n_erros": 0,
+ "vitorias": {
+  "4 jogadores (1 de cada)": {
+   "n": 6000,
+   "racas": {
+    "Bárbaro": {
+     "jogos": 6000,
+     "vitorias": 2399,
+     "pct_vitoria": 40.0,
+     "pct_das_partidas_em_que_jogou": 40.0,
+     "vitorias_por_esperado": 1.6,
+     "ic95": 1.2
+    },
+    "Goblin": {
+     "jogos": 6000,
+     "vitorias": 2108,
+     "pct_vitoria": 35.1,
+     "pct_das_partidas_em_que_jogou": 35.1,
+     "vitorias_por_esperado": 1.41,
+     "ic95": 1.2
+    },
+    "Feiticeiro": {
+     "jogos": 6000,
+     "vitorias": 877,
+     "pct_vitoria": 14.6,
+     "pct_das_partidas_em_que_jogou": 14.6,
+     "vitorias_por_esperado": 0.58,
+     "ic95": 0.9
+    },
+    "Ferreiro": {
+     "jogos": 6000,
+     "vitorias": 616,
+     "pct_vitoria": 10.3,
+     "pct_das_partidas_em_que_jogou": 10.3,
+     "vitorias_por_esperado": 0.41,
+     "ic95": 0.8
+    }
+   },
+   "rodadas_media": 23.19,
+   "rodadas_mediana": 21.0,
+   "rodadas_p10": 16.0,
+   "rodadas_p90": 33.0,
+   "pct_mais_de_30": 12.3,
+   "pct_venc_vida_baixa": 44.0
+  },
+  "5-6 jogadores (raças sorteadas)": {
+   "n": 1600,
+   "racas": {
+    "Bárbaro": {
+     "jogos": 1286,
+     "vitorias": 642,
+     "pct_vitoria": 40.1,
+     "pct_das_partidas_em_que_jogou": 49.9,
+     "vitorias_por_esperado": 1.58,
+     "ic95": 2.4
+    },
+    "Goblin": {
+     "jogos": 1247,
+     "vitorias": 552,
+     "pct_vitoria": 34.5,
+     "pct_das_partidas_em_que_jogou": 44.3,
+     "vitorias_por_esperado": 1.42,
+     "ic95": 2.3
+    },
+    "Feiticeiro": {
+     "jogos": 1287,
+     "vitorias": 214,
+     "pct_vitoria": 13.4,
+     "pct_das_partidas_em_que_jogou": 16.6,
+     "vitorias_por_esperado": 0.52,
+     "ic95": 1.7
+    },
+    "Ferreiro": {
+     "jogos": 1263,
+     "vitorias": 192,
+     "pct_vitoria": 12.0,
+     "pct_das_partidas_em_que_jogou": 15.2,
+     "vitorias_por_esperado": 0.49,
+     "ic95": 1.6
+    }
+   },
+   "rodadas_media": 26.85,
+   "rodadas_mediana": 24.0,
+   "rodadas_p10": 18.0,
+   "rodadas_p90": 38.0,
+   "pct_mais_de_30": 22.2,
+   "pct_venc_vida_baixa": 42.4
+  },
+  "duelos": {
+   "n": 2400,
+   "racas": {
+    "Bárbaro": {
+     "jogos": 1200,
+     "vitorias": 588,
+     "pct_vitoria": 24.5,
+     "pct_das_partidas_em_que_jogou": 49.0,
+     "vitorias_por_esperado": 0.98,
+     "ic95": 1.7
+    },
+    "Goblin": {
+     "jogos": 1200,
+     "vitorias": 644,
+     "pct_vitoria": 26.8,
+     "pct_das_partidas_em_que_jogou": 53.7,
+     "vitorias_por_esperado": 1.07,
+     "ic95": 1.8
+    },
+    "Feiticeiro": {
+     "jogos": 1200,
+     "vitorias": 737,
+     "pct_vitoria": 30.7,
+     "pct_das_partidas_em_que_jogou": 61.4,
+     "vitorias_por_esperado": 1.23,
+     "ic95": 1.8
+    },
+    "Ferreiro": {
+     "jogos": 1200,
+     "vitorias": 431,
+     "pct_vitoria": 18.0,
+     "pct_das_partidas_em_que_jogou": 35.9,
+     "vitorias_por_esperado": 0.72,
+     "ic95": 1.5
+    }
+   },
+   "rodadas_media": 16.79,
+   "rodadas_mediana": 15.0,
+   "rodadas_p10": 11.0,
+   "rodadas_p90": 23.0,
+   "pct_mais_de_30": 3.4,
+   "pct_venc_vida_baixa": 49.5
+  }
+ },
+ "duelos": {
+  "Bárbaro x Goblin": {
+   "Bárbaro": 175,
+   "Goblin": 225,
+   "% Bárbaro": 43.8
+  },
+  "Bárbaro x Feiticeiro": {
+   "Bárbaro": 171,
+   "Feiticeiro": 229,
+   "% Bárbaro": 42.8
+  },
+  "Bárbaro x Ferreiro": {
+   "Bárbaro": 242,
+   "Ferreiro": 158,
+   "% Bárbaro": 60.5
+  },
+  "Feiticeiro x Goblin": {
+   "Feiticeiro": 234,
+   "Goblin": 166,
+   "% Feiticeiro": 58.5
+  },
+  "Ferreiro x Goblin": {
+   "Ferreiro": 147,
+   "Goblin": 253,
+   "% Ferreiro": 36.8
+  },
+  "Feiticeiro x Ferreiro": {
+   "Feiticeiro": 274,
+   "Ferreiro": 126,
+   "% Feiticeiro": 68.5
+  }
+ },
+ "ataques": {
+  "Fúria": {
+   "n": 22471,
+   "pct": 4.6,
+   "bruto_medio": 18.95,
+   "final_medio": 14.5,
+   "fator_medio": 2.15,
+   "bruto_max": 90
+  },
+  "GOLPE CRÍTICO": {
+   "n": 103842,
+   "pct": 21.2,
+   "bruto_medio": 19.44,
+   "final_medio": 16.02,
+   "fator_medio": 2.0,
+   "bruto_max": 84
+  },
+  "Golpe Fraco": {
+   "n": 141190,
+   "pct": 28.8,
+   "bruto_medio": 4.59,
+   "final_medio": 3.77,
+   "fator_medio": 0.5,
+   "bruto_max": 22
+  },
+  "Golpe Normal": {
+   "n": 223022,
+   "pct": 45.5,
+   "bruto_medio": 9.27,
+   "final_medio": 7.86,
+   "fator_medio": 1.0,
+   "bruto_max": 48
+  }
+ },
+ "ataques_por_raca": {
+  "Bárbaro": {
+   "n": 140735,
+   "final_medio": 8.23,
+   "bruto_medio": 10.45,
+   "por_categoria": {
+    "Fúria": {
+     "n": 22471,
+     "final_medio": 14.5,
+     "bruto_medio": 18.95
+    },
+    "GOLPE CRÍTICO": {
+     "n": 26075,
+     "final_medio": 13.47,
+     "bruto_medio": 16.88
+    },
+    "Golpe Fraco": {
+     "n": 35502,
+     "final_medio": 3.11,
+     "bruto_medio": 4.08
+    },
+    "Golpe Normal": {
+     "n": 56687,
+     "final_medio": 6.55,
+     "bruto_medio": 8.11
+    }
+   }
+  },
+  "Goblin": {
+   "n": 128913,
+   "final_medio": 8.52,
+   "bruto_medio": 10.62,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 29806,
+     "final_medio": 15.95,
+     "bruto_medio": 20.28
+    },
+    "Golpe Fraco": {
+     "n": 38790,
+     "final_medio": 3.85,
+     "bruto_medio": 4.85
+    },
+    "Golpe Normal": {
+     "n": 60317,
+     "final_medio": 7.85,
+     "bruto_medio": 9.56
+    }
+   }
+  },
+  "Feiticeiro": {
+   "n": 108640,
+   "final_medio": 10.4,
+   "bruto_medio": 11.67,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 23598,
+     "final_medio": 19.54,
+     "bruto_medio": 22.46
+    },
+    "Golpe Fraco": {
+     "n": 33002,
+     "final_medio": 4.65,
+     "bruto_medio": 5.13
+    },
+    "Golpe Normal": {
+     "n": 52040,
+     "final_medio": 9.89,
+     "bruto_medio": 10.92
+    }
+   }
+  },
+  "Ferreiro": {
+   "n": 112237,
+   "final_medio": 7.91,
+   "bruto_medio": 9.38,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 24363,
+     "final_medio": 15.43,
+     "bruto_medio": 18.24
+    },
+    "Golpe Fraco": {
+     "n": 33896,
+     "final_medio": 3.49,
+     "bruto_medio": 4.31
+    },
+    "Golpe Normal": {
+     "n": 53978,
+     "final_medio": 7.29,
+     "bruto_medio": 8.56
+    }
+   }
+  }
+ },
+ "furia_fatores": {
+  "2.0": 5267,
+  "1.0": 2058,
+  "4.0": 1207,
+  "1.5": 6289,
+  "2.5": 3033,
+  "3.0": 4617
+ },
+ "barbaro_fator_medio_sem_furia": 1.07,
+ "barbaro_pct_ataques_com_furia": 16.0,
+ "ataques_contra_postura": {
+  "n": 51660,
+  "final_medio": 4.63,
+  "final_medio_sem_postura": 9.19
+ },
+ "dano_final_por_periodo": {
+  "rodada 31+": 11.59,
+  "rodadas 1-10": 8.0,
+  "rodadas 11-20": 9.74,
+  "rodadas 21-30": 10.01
+ },
+ "picos": [
+  [
+   "4 jogadores (1 de cada)",
+   "Goblin",
+   "GOLPE CRÍTICO",
+   84,
+   83,
+   2.0,
+   false,
+   33,
+   true
+  ],
+  [
+   "5-6 jogadores (raças sorteadas)",
+   "Bárbaro",
+   "Fúria",
+   84,
+   83,
+   4.0,
+   false,
+   123,
+   false
+  ],
+  [
+   "4 jogadores (1 de cada)",
+   "Bárbaro",
+   "Fúria",
+   80,
+   79,
+   4.0,
+   false,
+   14,
+   true
+  ],
+  [
+   "5-6 jogadores (raças sorteadas)",
+   "Feiticeiro",
+   "GOLPE CRÍTICO",
+   78,
+   78,
+   2.0,
+   false,
+   67,
+   true
+  ],
+  [
+   "4 jogadores (1 de cada)",
+   "Bárbaro",
+   "Fúria",
+   78,
+   77,
+   4.0,
+   false,
+   59,
+   true
+  ]
+ ],
+ "diretos": {
+  "⚡ Cajado Relâmpago": {
+   "n": 3085,
+   "dano_medio": 12.45
+  },
+  "💣 Bomba de Pólvora": {
+   "n": 1,
+   "dano_medio": 8
+  }
+ },
+ "acoes": {
+  "Ferreiro": {
+   "ataque": 71.1,
+   "postura": 21.4,
+   "item livre (não encerra)": 2.6,
+   "item (gasta o turno)": 2.3,
+   "item (com alvo)": 1.9,
+   "passar": 0.7
+  },
+  "Feiticeiro": {
+   "ataque": 61.7,
+   "postura": 16.5,
+   "Escudo de Mana": 13.1,
+   "item livre (não encerra)": 3.5,
+   "item (gasta o turno)": 2.6,
+   "item (com alvo)": 2.0,
+   "passar": 0.6
+  },
+  "Goblin": {
+   "ataque": 65.7,
+   "postura": 19.1,
+   "item livre (não encerra)": 9.3,
+   "item (gasta o turno)": 2.7,
+   "item (com alvo)": 2.5,
+   "passar": 0.7
+  },
+  "Bárbaro": {
+   "ataque": 68.6,
+   "postura": 19.9,
+   "item livre (não encerra)": 5.1,
+   "item (gasta o turno)": 2.9,
+   "item (com alvo)": 2.7,
+   "passar": 0.7
+  }
+ },
+ "ouro_por_partida": {
+  "Ferreiro": {
+   "gasto no Comerciante": 103.6,
+   "turno (base)": 82.1,
+   "Comerciante (base)": 28.0,
+   "crítico": 15.6,
+   "roubo (Luvas)": 2.8,
+   "saque (Manoplas)": 2.7,
+   "roubado de mim": -2.0,
+   "defesa perfeita": 0.9,
+   "itens (ouro por turno)": 0.6,
+   "Goblin (turno)": 0.0,
+   "economia Pechinchar": 0.0,
+   "Goblin (postura)": 0.0
+  },
+  "Goblin": {
+   "gasto no Comerciante": 196.4,
+   "turno (base)": 95.2,
+   "Goblin (turno)": 47.3,
+   "Comerciante (base)": 32.9,
+   "Goblin (postura)": 20.1,
+   "crítico": 19.1,
+   "Goblin (Comerciante)": 16.4,
+   "economia Pechinchar": 9.3,
+   "itens (ouro por turno)": 6.5,
+   "roubado de mim": -5.5,
+   "saque (Manoplas)": 4.9,
+   "roubo (Luvas)": 3.7,
+   "defesa perfeita": 0.8
+  },
+  "Feiticeiro": {
+   "gasto no Comerciante": 111.4,
+   "turno (base)": 89.8,
+   "Comerciante (base)": 31.0,
+   "crítico": 15.0,
+   "roubo (Luvas)": 3.2,
+   "roubado de mim": -2.9,
+   "saque (Manoplas)": 2.3,
+   "itens (ouro por turno)": 1.1,
+   "defesa perfeita": 0.8,
+   "Goblin (turno)": 0.0,
+   "Goblin (postura)": 0.0,
+   "economia Pechinchar": 0.0
+  },
+  "Bárbaro": {
+   "gasto no Comerciante": 135.2,
+   "turno (base)": 103.1,
+   "Comerciante (base)": 36.0,
+   "crítico": 23.0,
+   "roubo (Luvas)": 5.0,
+   "roubado de mim": -4.2,
+   "saque (Manoplas)": 3.7,
+   "itens (ouro por turno)": 1.5,
+   "defesa perfeita": 0.7,
+   "Goblin (turno)": 0.0,
+   "Goblin (postura)": 0.0,
+   "economia Pechinchar": 0.0
+  }
+ },
+ "comerciante": {
+  "Bárbaro": {
+   "visitas": 33959,
+   "ouro_medio_na_chegada": 50.04,
+   "pct_comprou": 85.9,
+   "pct_duas_compras": 5.1,
+   "compras_por_visita": 0.91,
+   "pct_nada_acessivel": 13.9,
+   "preco_medio_pago": 41.28,
+   "gasto_medio_por_visita": 37.54,
+   "ouro_medio_saida": 12.5,
+   "pct_compras_por_tipo": {
+    "arma": 29.0,
+    "joia": 26.7,
+    "armadura": 21.4,
+    "ativo": 16.1,
+    "consumivel": 6.8
+   },
+   "pct_compras_por_fase": {
+    "Mid": 52.0,
+    "Early": 35.9,
+    "Late": 12.2
+   },
+   "pechinchas": 0
+  },
+  "Goblin": {
+   "visitas": 30714,
+   "ouro_medio_na_chegada": 74.73,
+   "pct_comprou": 98.7,
+   "pct_duas_compras": 48.6,
+   "compras_por_visita": 1.47,
+   "pct_nada_acessivel": 1.3,
+   "preco_medio_pago": 40.56,
+   "gasto_medio_por_visita": 59.72,
+   "ouro_medio_saida": 15.01,
+   "pct_compras_por_tipo": {
+    "arma": 36.6,
+    "armadura": 19.8,
+    "joia": 19.8,
+    "ativo": 18.4,
+    "consumivel": 5.4
+   },
+   "pct_compras_por_fase": {
+    "Mid": 46.5,
+    "Early": 41.1,
+    "Late": 12.4
+   },
+   "pechinchas": 13581
+  },
+  "Feiticeiro": {
+   "visitas": 29296,
+   "ouro_medio_na_chegada": 47.33,
+   "pct_comprou": 87.4,
+   "pct_duas_compras": 6.4,
+   "compras_por_visita": 0.94,
+   "pct_nada_acessivel": 12.3,
+   "preco_medio_pago": 38.36,
+   "gasto_medio_por_visita": 35.96,
+   "ouro_medio_saida": 11.37,
+   "pct_compras_por_tipo": {
+    "arma": 32.2,
+    "joia": 29.8,
+    "armadura": 19.9,
+    "ativo": 12.4,
+    "consumivel": 5.8
+   },
+   "pct_compras_por_fase": {
+    "Mid": 50.8,
+    "Early": 41.1,
+    "Late": 8.0
+   },
+   "pechinchas": 0
+  },
+  "Ferreiro": {
+   "visitas": 26245,
+   "ouro_medio_na_chegada": 47.4,
+   "pct_comprou": 90.4,
+   "pct_duas_compras": 5.9,
+   "compras_por_visita": 0.96,
+   "pct_nada_acessivel": 9.4,
+   "preco_medio_pago": 38.39,
+   "gasto_medio_por_visita": 36.98,
+   "ouro_medio_saida": 10.42,
+   "pct_compras_por_tipo": {
+    "arma": 32.9,
+    "armadura": 27.4,
+    "joia": 23.6,
+    "ativo": 11.4,
+    "consumivel": 4.6
+   },
+   "pct_compras_por_fase": {
+    "Mid": 50.8,
+    "Early": 43.1,
+    "Late": 6.1
+   },
+   "pechinchas": 0
+  }
+ },
+ "visitas_por_fase": {
+  "Early": 37599,
+  "Mid": 60217,
+  "Late": 22398
+ },
+ "partidas_que_viram_fase": {
+  "Mid": 99.1,
+  "Late": 47.3
+ },
+ "partidas_que_viram_fase_por_cenario": {
+  "4 jogadores (1 de cada)": {
+   "Mid": 100.0,
+   "Late": 52.5
+  },
+  "5-6 jogadores (raças sorteadas)": {
+   "Mid": 100.0,
+   "Late": 74.4
+  },
+  "duelos": {
+   "Mid": 96.1,
+   "Late": 16.1
+  }
+ },
+ "fases_do_comerciante": "Early até a rodada 9, Mid a partir da 10, Late a partir da 20",
+ "ouro_ganho_por_partida": {
+  "Ferreiro": 132.7,
+  "Goblin": 246.9,
+  "Feiticeiro": 143.2,
+  "Bárbaro": 173.0
+ },
+ "ouro_ganho_por_rodada_vivo": {
+  "Bárbaro": 8.25,
+  "Goblin": 12.71,
+  "Feiticeiro": 7.74,
+  "Ferreiro": 7.84
+ },
+ "ferreiro_niveis_forja_no_fim": 2.51,
+ "mais_comprados": [
+  [
+   "Armadura de Couro",
+   12797
+  ],
+  [
+   "Manoplas do Saqueador",
+   7488
+  ],
+  [
+   "Machadinha",
+   7452
+  ],
+  [
+   "Gibão Acolchoado",
+   7266
+  ],
+  [
+   "Orbe Mágico",
+   5039
+  ],
+  [
+   "Cálice Vital",
+   4622
+  ],
+  [
+   "Olho Protetor",
+   4349
+  ],
+  [
+   "Chifre de Guerra",
+   3945
+  ],
+  [
+   "Presa de Víbora",
+   3406
+  ],
+  [
+   "Espada de Aço",
+   3380
+  ],
+  [
+   "Luvas do Ladrão",
+   3335
+  ],
+  [
+   "Arco Longo",
+   3232
+  ],
+  [
+   "Maça Estilhaçadora",
+   3188
+  ],
+  [
+   "Machado Sedento",
+   3123
+  ],
+  [
+   "Anel da Fúria",
+   2882
+  ]
+ ],
+ "menos_comprados": [
+  [
+   "Bomba de Pólvora",
+   2
+  ],
+  [
+   "Pele de Pedra",
+   11
+  ],
+  [
+   "Poção de Cura",
+   50
+  ],
+  [
+   "Escamas de Dragão",
+   185
+  ],
+  [
+   "Armadura de Mithril",
+   202
+  ],
+  [
+   "Mosquete",
+   259
+  ],
+  [
+   "Elixir Maior",
+   300
+  ],
+  [
+   "Grimório Sombrio",
+   340
+  ],
+  [
+   "Lâmina Lunar",
+   451
+  ],
+  [
+   "Amuleto do Vampiro",
+   593
+  ]
+ ],
+ "nunca_comprados": [
+  "Poção de Fúria",
+  "Frasco de Veneno",
+  "Bombinha"
+ ],
+ "itens_usados": [
+  [
+   "🧿 Olho Protetor",
+   21888
+  ],
+  [
+   "🏺 Cálice Vital",
+   15502
+  ],
+  [
+   "🧤 Luvas do Ladrão",
+   13941
+  ],
+  [
+   "📯 Chifre de Guerra",
+   9340
+  ],
+  [
+   "👻 Capa da Invisibilidade",
+   4751
+  ],
+  [
+   "⚡ Cajado Relâmpago",
+   3085
+  ],
+  [
+   "🍶 Elixir Dourado",
+   2474
+  ],
+  [
+   "🦂 Essência de Escorpião",
+   1957
+  ],
+  [
+   "🍀 Trevo da Sorte",
+   1082
+  ],
+  [
+   "🌿 Antídoto",
+   939
+  ],
+  [
+   "🍷 Elixir Maior",
+   283
+  ],
+  [
+   "🧪 Poção de Cura",
+   50
+  ],
+  [
+   "🧱 Pele de Pedra",
+   11
+  ],
+  [
+   "💣 Bomba de Pólvora",
+   1
+  ]
+ ],
+ "posse_itens": {
+  "📖 Grimório Sombrio": {
+   "donos": 329,
+   "pct_vitoria_do_dono": 53.2
+  },
+  "🔫 Mosquete": {
+   "donos": 251,
+   "pct_vitoria_do_dono": 51.8
+  },
+  "📿 Amuleto Arcano": {
+   "donos": 711,
+   "pct_vitoria_do_dono": 50.9
+  },
+  "💍 Anel Venenoso": {
+   "donos": 1062,
+   "pct_vitoria_do_dono": 49.8
+  },
+  "👻 Capa da Invisibilidade": {
+   "donos": 1605,
+   "pct_vitoria_do_dono": 49.3
+  },
+  "🌙 Lâmina Lunar": {
+   "donos": 435,
+   "pct_vitoria_do_dono": 48.7
+  },
+  "📿 Amuleto da Fortuna": {
+   "donos": 1014,
+   "pct_vitoria_do_dono": 48.0
+  },
+  "💎 Armadura de Mithril": {
+   "donos": 199,
+   "pct_vitoria_do_dono": 47.7
+  },
+  "🍶 Elixir Dourado": {
+   "donos": 239,
+   "pct_vitoria_do_dono": 45.6
+  },
+  "🏺 Cálice Vital": {
+   "donos": 4270,
+   "pct_vitoria_do_dono": 45.5
+  },
+  "⚡ Cajado Relâmpago": {
+   "donos": 1601,
+   "pct_vitoria_do_dono": 44.5
+  },
+  "🧿 Olho Protetor": {
+   "donos": 4159,
+   "pct_vitoria_do_dono": 44.2
+  },
+  "📿 Amuleto do Vampiro": {
+   "donos": 570,
+   "pct_vitoria_do_dono": 44.0
+  },
+  "🐲 Escamas de Dragão": {
+   "donos": 185,
+   "pct_vitoria_do_dono": 42.2
+  },
+  "🔪 Espada Curta": {
+   "donos": 7304,
+   "pct_vitoria_do_dono": 37.9
+  },
+  "📯 Chifre de Guerra": {
+   "donos": 3796,
+   "pct_vitoria_do_dono": 37.6
+  },
+  "🧥 Gibão Acolchoado": {
+   "donos": 6891,
+   "pct_vitoria_do_dono": 36.7
+  },
+  "💍 Anel de Espinhos": {
+   "donos": 1291,
+   "pct_vitoria_do_dono": 34.8
+  },
+  "💍 Anel Regenerador": {
+   "donos": 2354,
+   "pct_vitoria_do_dono": 33.7
+  },
+  "🪓 Machado Sedento": {
+   "donos": 3081,
+   "pct_vitoria_do_dono": 32.9
+  },
+  "🐍 Presa de Víbora": {
+   "donos": 3354,
+   "pct_vitoria_do_dono": 32.5
+  },
+  "🔱 Lança Rúnica": {
+   "donos": 2424,
+   "pct_vitoria_do_dono": 31.8
+  },
+  "🏹 Arco Longo": {
+   "donos": 3187,
+   "pct_vitoria_do_dono": 31.2
+  },
+  "💍 Anel da Fúria": {
+   "donos": 2812,
+   "pct_vitoria_do_dono": 31.0
+  },
+  "🌟 Cajado Arcano": {
+   "donos": 2817,
+   "pct_vitoria_do_dono": 30.6
+  },
+  "💍 Anel Sanguessuga": {
+   "donos": 2114,
+   "pct_vitoria_do_dono": 30.0
+  },
+  "💍 Anel do Lucro": {
+   "donos": 2238,
+   "pct_vitoria_do_dono": 30.0
+  },
+  "💍 Anel da Sorte": {
+   "donos": 2455,
+   "pct_vitoria_do_dono": 29.5
+  },
+  "💍 Anel de Ferro": {
+   "donos": 877,
+   "pct_vitoria_do_dono": 29.2
+  },
+  "🪓 Machadinha": {
+   "donos": 7346,
+   "pct_vitoria_do_dono": 28.8
+  },
+  "🌵 Couraça de Espinhos": {
+   "donos": 1609,
+   "pct_vitoria_do_dono": 28.8
+  },
+  "🔪 Adaga cega": {
+   "donos": 2472,
+   "pct_vitoria_do_dono": 28.6
+  },
+  "💍 Anel do Bruto": {
+   "donos": 2404,
+   "pct_vitoria_do_dono": 28.2
+  },
+  "🔪 Espada de Aço": {
+   "donos": 3249,
+   "pct_vitoria_do_dono": 27.9
+  },
+  "🔨 Maça Estilhaçadora": {
+   "donos": 3158,
+   "pct_vitoria_do_dono": 27.7
+  },
+  "💍 Anel do Mago": {
+   "donos": 2758,
+   "pct_vitoria_do_dono": 27.5
+  },
+  "🔮 Orbe Mágico": {
+   "donos": 4898,
+   "pct_vitoria_do_dono": 25.4
+  },
+  "🧙 Manto Arcano": {
+   "donos": 2237,
+   "pct_vitoria_do_dono": 25.2
+  },
+  "🥋 Armadura de Couro": {
+   "donos": 12542,
+   "pct_vitoria_do_dono": 25.0
+  },
+  "🔰 Armadura de Placas": {
+   "donos": 1965,
+   "pct_vitoria_do_dono": 24.9
+  },
+  "🥊 Manoplas do Saqueador": {
+   "donos": 7284,
+   "pct_vitoria_do_dono": 24.7
+  },
+  "💍 Anel Perfurante": {
+   "donos": 2280,
+   "pct_vitoria_do_dono": 24.6
+  },
+  "🦺 Cota de Malha": {
+   "donos": 1698,
+   "pct_vitoria_do_dono": 24.0
+  },
+  "💍 Anel Arcano": {
+   "donos": 2725,
+   "pct_vitoria_do_dono": 21.9
+  },
+  "💍 Anel do Vigor": {
+   "donos": 2352,
+   "pct_vitoria_do_dono": 20.9
+  },
+  "📖 Livro velho": {
+   "donos": 7780,
+   "pct_vitoria_do_dono": 19.7
+  },
+  "🧤 Luvas do Ladrão": {
+   "donos": 3121,
+   "pct_vitoria_do_dono": 13.4
+  },
+  "🔨 Martelo desgastado": {
+   "donos": 7966,
+   "pct_vitoria_do_dono": 12.8
+  },
+  "🦂 Essência de Escorpião": {
+   "donos": 132,
+   "pct_vitoria_do_dono": 4.5
+  }
+ },
+ "ouro_parado_no_fim": {
+  "Bárbaro": 33.73,
+  "Goblin": 45.05,
+  "Ferreiro": 27.17,
+  "Feiticeiro": 28.83
+ },
+ "primeiro_eliminado_4j": {
+  "Ferreiro": 43.9,
+  "Feiticeiro": 25.7,
+  "Goblin": 20.2,
+  "Bárbaro": 10.2
+ },
+ "bugs": {
+  "item de ação livre com alvo (Luvas do Ladrão) encerra o turno": {
+   "n": 13941,
+   "exemplo": "mostrar_inventario devolve encerra_turno=True para todo item com alvo, mesmo com 'livre'"
+  },
+  "bomba/raio atinge alvo em postura ou com Escudo de Mana sem consumir a defesa": {
+   "n": 833,
+   "exemplo": "dano_direto ignora a postura e o Escudo de Mana, mas eles continuam ativos para o próximo ataque"
+  }
+ },
+ "segundos": 143
+}

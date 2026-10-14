@@ -1,0 +1,11 @@
+{
+    // O jogo precisa de um terminal de verdade (para digitar as escolhas e mostrar emoji/cores):
+    // o Code Runner roda no Terminal em vez da aba Output.
+    "code-runner.runInTerminal": true,
+    // Roda sempre o arquivo inteiro, mesmo com um trecho selecionado no editor.
+    "code-runner.ignoreSelection": true,
+    "code-runner.saveFileBeforeRun": true,
+    "code-runner.fileDirectoryAsCwd": true,
+    // Python da pasta do projeto (onde o rich está instalado).
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe"
+}
