@@ -2,7 +2,7 @@
 
 import random
 
-OURO_CRITICO = 6          # bônus de moedas no golpe crítico (antes: 10)
+OURO_CRITICO = 3          # bônus de moedas no golpe crítico (antes: 6)
 OURO_DEFESA_PERFEITA = 6  # bônus de moedas na defesa perfeita (antes: 10)
 CRIT_MINIMO = 6           # nem com muitos bônus o crítico começa abaixo deste valor do D10
 

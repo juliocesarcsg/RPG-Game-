@@ -20,19 +20,22 @@ console = Console()
 
 MIN_JOGADORES = 2
 MAX_JOGADORES = 6
-OURO_POR_TURNO = 5  # moedas ganhas no início de cada turno
+OURO_POR_TURNO = 6  # moedas ganhas no início de cada turno (antes: 5)
+AUMENTOS_OURO = ((10, 8), (20, 10))  # (depois do fim da rodada X, moedas por turno): 6 → 8 após a 10ª, → 10 após a 20ª
+CURA_COMERCIANTE = 0.10  # fração da vida máxima que todos os vivos recuperam quando o Comerciante chega
 INTERVALO_LOJA = 5  # o Comerciante chega ao fim de cada N rodadas completas
 OURO_LOJA = 10  # moedas que cada jogador vivo recebe quando o Comerciante chega
-OURO_GOBLIN = 5  # ouro extra do Goblin a cada rodada
-MAX_PIPS = 3  # barras de Fúria e Mana (3/3)
-FURIA_MULT = 1.5  # dano do ataque enfurecido
-ESCUDO_MANA = 0.40  # fração do dano mitigada pelo Escudo de Mana
-PENETRACAO_MAGICA = 0.50  # fração da Defesa do alvo ignorada pela parte mágica do dano (de qualquer raça)
+BONUS_GOBLIN = 0.5  # Goblin ganha 50% a mais de ouro (turno e Comerciante): 1,5x o das outras raças (antes: 2x)
+MAX_PIPS = 3  # barra de Mana (3/3)
+FURIA_MAX = 4  # ataques para encher a barra de Fúria (antes: 3)
+DADOS_FURIA = 2  # D10 de ataque rolados no ataque enfurecido (o dano de cada um se soma)
+ESCUDO_MANA = 0.60  # fração do dano mitigada pelo Escudo de Mana (antes: 0.55)
+PENETRACAO_MAGICA = 0.75  # fração da Defesa do alvo ignorada pela parte mágica do dano do Feiticeiro (só ele)
 MANA_REGEN = 1  # mana restaurada no fim de toda rodada
 MANA_REGEN_EXTRA = 1  # mana extra se o Feiticeiro não gastou mana na rodada
+PROTECAO_TURNOS = 1  # turnos seguintes a um ataque em que o alvo não pode ser atacado de novo (zera no fim da rodada)
 REFLEXO_POSTURA = 0.75  # fração do dano bloqueado pela postura que volta ao atacante
 POSTURA_FERREIRO = 0.10  # bloqueio extra do Ferreiro em postura defensiva
-OURO_POSTURA_GOBLIN = 5  # ouro que o Goblin ganha ao assumir a postura
 
 # Cores de cada jogador (por ordem de entrada)
 CORES_JOGADORES = ["red", "cyan", "green", "yellow", "magenta", "bright_blue"]
@@ -49,10 +52,10 @@ RACAS = {
         "dano_fisico": 3,
         "dano_magico": 0,
         "defesa": 0,
-        "passivo": "Fúria: barra 3/3. Cada ataque enche 1/3. Cheia, o próximo ataque causa +50% de dano, "
-                   "zera a barra e a desabilita por 1 rodada.",
+        "passivo": f"Fúria: barra {FURIA_MAX}/{FURIA_MAX}. Cada ataque enche 1/{FURIA_MAX}. Cheia, o próximo ataque rola {DADOS_FURIA} D10 de ataque "
+                   "e soma o dano dos dois golpes; depois zera a barra e a desabilita por 1 rodada.",
         "habilidade": None,
-        "postura": "Postura: enche +1/3 de Fúria.",
+        "postura": "Postura: sem bônus racial (não enche a Fúria).",
         "itens": [{"nome": "🔪 Espada Curta", "tipo": "arma", "efeitos": {"dano": 3}}],
     },
     "Goblin": {
@@ -63,11 +66,14 @@ RACAS = {
         "dano_fisico": 3,
         "dano_magico": 0,
         "defesa": 0,
-        "passivo": f"Ganancioso: recebe +{OURO_GOBLIN} de ouro a mais a cada rodada (e a cada visita do Comerciante).",
+        "passivo": f"Ganancioso: ganha {round(BONUS_GOBLIN * 100)}% a mais de ouro no turno "
+                   f"(+{f'{OURO_POR_TURNO * BONUS_GOBLIN:g}'.replace('.', ',')}"
+                   + "".join(f"; +{f'{v * BONUS_GOBLIN:g}'.replace('.', ',')} depois da rodada {r}" for r, v in AUMENTOS_OURO)
+                   + f") e no Comerciante (+{int(OURO_LOJA * BONUS_GOBLIN)}).",
         "habilidade": f"Pechinchar: ao comprar do Comerciante, {round(shop.CHANCE_PECHINCHA * 100)}% de chance de "
                       f"{round(shop.DESCONTO_PECHINCHA * 100)}% de desconto. "
                       "Depois do desconto, fica desabilitada até a próxima visita.",
-        "postura": f"Postura: ganha +{OURO_POSTURA_GOBLIN} de ouro.",
+        "postura": "Postura: sem bônus racial (não dá ouro).",
         "itens": [{"nome": "🔪 Adaga cega", "tipo": "arma", "efeitos": {"dano": 3}}],
     },
     "Feiticeiro": {
@@ -76,12 +82,12 @@ RACAS = {
         "descricao": "Mestre da mana. Poderoso, mas precisa gerenciar sua energia.",
         "hp": 110,
         "dano_fisico": 0,
-        "dano_magico": 4,
+        "dano_magico": 5,  # antes: 6 (com o Livro velho o ataque inicial é 8)
         "defesa": 0,
         "passivo": f"Mana: barra 3/3. Cada ataque custa 1/3. Ao fim de toda rodada restaura {MANA_REGEN}/3 "
                    f"(+{MANA_REGEN_EXTRA}/3 se não gastou mana). Seu dano é mágico: ignora "
                    f"{round(PENETRACAO_MAGICA * 100)}% da Defesa do alvo.",
-        "habilidade": "Escudo de Mana: gasta 2/3 da mana e mitiga 40% do dano do próximo ataque recebido.",
+        "habilidade": f"Escudo de Mana: gasta 2/3 da mana e mitiga {round(ESCUDO_MANA * 100)}% do dano do próximo ataque recebido.",
         "postura": "Postura: recupera +1/3 de mana.",
         "itens": [{"nome": "📖 Livro velho", "tipo": "arma", "efeitos": {"dano": 3}, "magico": True}],
     },
@@ -95,7 +101,9 @@ RACAS = {
         "defesa": 0,
         "passivo": f"Mestre do Metal: armas e armaduras são {round((shop.MESTRE_METAL - 1) * 100)}% mais eficientes nele.",
         "habilidade": f"A Forja: quando o Comerciante chega, melhora 1 item de combate físico em "
-                      f"+{round(shop.BONUS_FORJA * 100)}% (1 uso por visita, até {shop.MAX_FORJA} níveis por item).",
+                      f"+{round(shop.BONUS_FORJA * 100)}% e ainda {shop.texto_forja_fixo('arma')} (arma) ou "
+                      f"{shop.texto_forja_fixo('armadura')} (armadura) por nível "
+                      f"(1 uso por visita, até {shop.MAX_FORJA} níveis por item).",
         "postura": f"Postura: bloqueia +{round(POSTURA_FERREIRO * 100)}% a mais do dano.",
         "itens": [{"nome": "🔨 Martelo desgastado", "tipo": "arma", "efeitos": {"dano": 3}}],
     },
@@ -155,7 +163,8 @@ def criar_jogador(nome, raca, cor):
         "mult_equip": shop.MESTRE_METAL if raca == "Ferreiro" else 1.0,  # Mestre do Metal
         "postura": False,
         "escudo_mana": False,
-        "atacado_na_rodada": False,
+        "protegido": 0,  # turnos restantes sem poder ser atacado (contando o atual); ver PROTECAO_TURNOS
+        "compras_visita": {},  # compras por categoria na visita atual do Comerciante
         "furia": 0,
         "furia_bloqueio": 0,
         "furia_usada": False,
@@ -163,6 +172,7 @@ def criar_jogador(nome, raca, cor):
         "mana_gasta": False,
         "pechinchar_pronto": True,
         "forja_usada": False,
+        "resto_ouro_goblin": 0.0,  # fração acumulada do bônus de ouro do Goblin
         # estados criados por itens
         "invisivel": False,  # ninguém pode escolher como alvo até o próximo turno do dono
         "escudo_pv": 0,  # dano que o escudo ainda absorve
@@ -197,6 +207,14 @@ def ler_inteiro(mensagem, minimo, maximo):
         if entrada.isdigit() and minimo <= int(entrada) <= maximo:
             return int(entrada)
         erro(f"Entrada inválida. Digite um número de {minimo} a {maximo}.")
+
+
+def confirmar(pergunta=None):
+    """Confirmação simples: devolve True para confirmar e False para voltar."""
+    if pergunta:
+        console.print(f"\n  {pergunta}")
+    console.print("  [bold green]1.[/] ✅ Confirmar     [bold red]2.[/] 🔙 Voltar")
+    return ler_inteiro("[bold]👉 Escolha (1-2):[/] ", 1, 2) == 1
 
 
 def ler_nome(numero, nomes_usados, cor):
@@ -272,8 +290,8 @@ def painel_detalhes(nome_raca):
     corpo.add_row("[bold underline]Atributos[/]")
     corpo.add_row(atributos)
     corpo.add_row(
-        f"[bright_black]🌠 O dano mágico ignora {round(PENETRACAO_MAGICA * 100)}% da Defesa do alvo (para qualquer raça). "
-        "Itens de dano físico ou mágico podem ser comprados por todos.[/]"
+        f"[bright_black]🌠 Só o Feiticeiro tem penetração mágica (o dano mágico dele ignora {round(PENETRACAO_MAGICA * 100)}% "
+        "da Defesa do alvo). Itens de dano físico ou mágico podem ser comprados por todos, e alguns dão penetração própria.[/]"
     )
     corpo.add_row("")
     corpo.add_row("[bold underline]Passiva[/]")
@@ -284,7 +302,7 @@ def painel_detalhes(nome_raca):
         corpo.add_row(f"  🌟 {r['habilidade']}")
     corpo.add_row("")
     corpo.add_row("[bold underline]Postura Defensiva[/]")
-    corpo.add_row(f"  🔰 Bloqueia dano e reflete {round(REFLEXO_POSTURA * 100)}% do que bloqueou. {r['postura']}")
+    corpo.add_row(f"  🔰 Até a sua próxima vez, bloqueia dano e reflete {round(REFLEXO_POSTURA * 100)}% do que bloqueou. {r['postura']}")
     corpo.add_row("")
     corpo.add_row("[bold underline]Item Inicial[/]")
     corpo.add_row(itens)
@@ -308,9 +326,7 @@ def escolher_raca(nome_jogador, cor):
 
         console.print()
         console.print(painel_detalhes(nome_raca))
-        console.print("  [bold green]1.[/] ✅ Confirmar     [bold red]2.[/] 🔙 Voltar")
-        decisao = ler_inteiro("[bold]👉 Escolha (1-2):[/] ", 1, 2)
-        if decisao == 1:
+        if confirmar():
             return nome_raca
 
 
@@ -376,13 +392,10 @@ def pausar(mensagem="Pressione Enter para continuar..."):
     console.input(f"\n[bright_black]⏎ {mensagem}[/]")
 
 
-def sortear_ordem(jogadores, excluido_primeiro=None):
-    """Sorteia a ordem da rodada. Quem foi 1º na rodada anterior não pode ser 1º de novo."""
+def sortear_ordem(jogadores):
+    """Sorteia a ordem da rodada: sorteio livre a cada rodada (qualquer um pode abrir, inclusive de novo)."""
     ordem = vivos(jogadores)
     random.shuffle(ordem)
-    if excluido_primeiro is not None and len(ordem) > 1 and ordem[0] is excluido_primeiro:
-        i = random.randrange(1, len(ordem))
-        ordem[0], ordem[i] = ordem[i], ordem[0]
     return ordem
 
 
@@ -402,9 +415,13 @@ def animar_roleta(ordem):
     """Animação de roleta passando pelos nomes e desacelerando até o sorteado."""
     participantes = list(ordem)
     random.shuffle(participantes)
+    passos = 28
+    # gira a lista para que o último nome mostrado pela roleta seja exatamente o sorteado (ordem[0])
+    desvio = (participantes.index(ordem[0]) - (passos - 1)) % len(participantes)
+    participantes = participantes[desvio:] + participantes[:desvio]
     atraso = 0.05
     with Live(console=console, refresh_per_second=30, transient=True) as live:
-        for i in range(28):
+        for i in range(passos):
             j = participantes[i % len(participantes)]
             live.update(painel_roleta(f"👉  {j['nome']}  👈", j["cor"]))
             time.sleep(atraso)
@@ -445,9 +462,9 @@ def linha_recurso(j):
     """Recurso/habilidade da raça para o cabeçalho do turno e do Comerciante."""
     raca = j["raca"]
     if raca == "Bárbaro":
-        texto = f"🔥 Fúria {pips(j['furia'], 'red')}"
-        if j["furia"] >= MAX_PIPS:
-            texto += "  [bold red]ATIVA: o próximo ataque causa +50%![/]"
+        texto = f"🔥 Fúria {pips(j['furia'], 'red', FURIA_MAX)}"
+        if j["furia"] >= FURIA_MAX:
+            texto += f"  [bold red]ATIVA: o próximo ataque rola {DADOS_FURIA} D10![/]"
         elif j["furia_bloqueio"] > 0:
             texto += "  [bright_black](desabilitada nesta rodada)[/]"
         return texto
@@ -504,8 +521,8 @@ def tabela_arena(jogadores, ativo):
             status = "[red]💀 Eliminado[/]"
         else:
             partes = []
-            if j["atacado_na_rodada"]:
-                partes.append("[red]💢 Já atacado nesta rodada[/]")
+            if j["protegido"]:
+                partes.append("[red]💢 Protegido neste turno (foi atacado no turno anterior)[/]")
             if j["invisivel"]:
                 partes.append("[bright_black]👻 Invisível[/]")
             if j["postura"]:
@@ -562,6 +579,13 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
     if buffs:
         cabecalho.add_row(buffs, "")
     cabecalho.add_row(info_loja, "")
+    proximo = proximo_aumento_ouro(rodada)
+    info_ouro = f"🪙 Moedas por turno: [bold yellow]{ouro_base_do_turno(rodada)}[/] "
+    if proximo:
+        info_ouro += f"[bright_black](sobe para {proximo[1]} no fim da rodada {proximo[0]})[/]"
+    else:
+        info_ouro += "[bright_black](valor máximo)[/]"
+    cabecalho.add_row(info_ouro, "")
     console.print(
         Panel(
             cabecalho,
@@ -580,7 +604,7 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
         "[bold red]1.[/] 🔪 Atacar Oponente"
         + (" [bright_black](custa 1/3 de mana)[/]" if jogador["raca"] == "Feiticeiro" else "")
         + "\n[bold blue]2.[/] 🔰 Adotar Postura Defensiva "
-        f"[bright_black](bloqueia, reflete {round(REFLEXO_POSTURA * 100)}% e dá bônus racial)[/]\n"
+        f"[bright_black](até a sua próxima vez: bloqueia, reflete {round(REFLEXO_POSTURA * 100)}% e dá bônus racial)[/]\n"
         "[bold green]3.[/] 🎒 Inventário e Itens\n"
         "[bold yellow]4.[/] ⏩ Passar a Vez"
     )
@@ -592,10 +616,10 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
 
 
 def alvos_disponiveis(atacante, jogadores):
-    """Oponentes vivos que podem ser atacados: ainda não foram atacados nesta rodada e não estão invisíveis."""
+    """Oponentes vivos que podem ser atacados: não estão protegidos (atacados no turno anterior) nem invisíveis."""
     return [
         j for j in vivos(jogadores)
-        if j is not atacante and not j["atacado_na_rodada"] and not j["invisivel"]
+        if j is not atacante and not j["protegido"] and not j["invisivel"]
     ]
 
 
@@ -605,11 +629,10 @@ def alvos_afetaveis(jogador, jogadores):
 
 
 def escolher_alvo(atacante, jogadores, alvos=None, titulo="🎯 ESCOLHA O ALVO"):
-    """Com 1 alvo possível escolhe sozinho; com 2 ou mais mostra um menu só com os alvos válidos."""
+    """Mostra um menu só com os alvos válidos (mesmo com 1 alvo, para dar a opção de voltar).
+    Devolve o alvo escolhido ou None se o jogador voltou."""
     if alvos is None:
         alvos = alvos_disponiveis(atacante, jogadores)
-    if len(alvos) == 1:
-        return alvos[0]
     tabela = Table(title=titulo, box=box.ROUNDED, border_style="red")
     tabela.add_column("#", justify="center", style="bold")
     tabela.add_column("Jogador", style="bold")
@@ -618,8 +641,8 @@ def escolher_alvo(atacante, jogadores, alvos=None, titulo="🎯 ESCOLHA O ALVO")
         tabela.add_row(str(i), f"[{a['cor']}]{a['nome']}[/]", barra_hp(a["hp"], a["hp_max"]))
     console.print()
     console.print(tabela)
-    escolha = ler_inteiro(f"[bold red]👉 Alvo (1-{len(alvos)}):[/] ", 1, len(alvos))
-    return alvos[escolha - 1]
+    escolha = ler_inteiro(f"[bold red]👉 Alvo (1-{len(alvos)}, 0 = voltar):[/] ", 0, len(alvos))
+    return None if escolha == 0 else alvos[escolha - 1]
 
 
 def painel_dado(titulo, valor, cor):
@@ -645,6 +668,18 @@ def animar_dado(titulo, resultado, cor, duracao=3.0):
     console.print(painel_dado(titulo, resultado, cor))
 
 
+def proteger(alvo):
+    """Quem acabou de ser atacado não pode ser atacado no(s) PROTECAO_TURNOS turno(s) seguinte(s) da mesma rodada."""
+    alvo["protegido"] = PROTECAO_TURNOS + 1  # +1: o turno atual também conta (o contador cai no início de cada turno)
+
+
+def passar_protecao(jogadores):
+    """Início de um turno: a proteção de quem foi atacado diminui 1 turno."""
+    for j in jogadores:
+        if j["protegido"] > 0:
+            j["protegido"] -= 1
+
+
 def executar_ataque(atacante, alvo):
     """Ataque infalível com D10. Fúria do Bárbaro, bônus de itens (crítico, penetração, veneno, vampirismo...),
     postura do alvo (D10 + reflexo), Escudo de Mana, escudos de item, espinhos e Defesa fixa."""
@@ -652,29 +687,37 @@ def executar_ataque(atacante, alvo):
     linhas = [f"🔪 [bold {atacante['cor']}]{atacante['nome']}[/] ataca [bold {alvo['cor']}]{alvo['nome']}[/]!", ""]
 
     bonus_rolagem = atacante["buff_rolagem"]
-    ataque = dice.resultado_ataque(b.get("crit", 0), bonus_rolagem)
     atacante["buff_rolagem"] = 0
-    animar_dado(f"D10 DE ATAQUE • {atacante['nome']}", ataque["rolagem"], atacante["cor"])
-    enfurecido = atacante["raca"] == "Bárbaro" and atacante["furia"] >= MAX_PIPS
-    mult_furia = FURIA_MULT if enfurecido else 1
+    # Fúria cheia: rola DADOS_FURIA D10 de ataque (cada um igual ao ataque normal) e soma o dano dos golpes
+    enfurecido = atacante["raca"] == "Bárbaro" and atacante["furia"] >= FURIA_MAX
+    n_dados = DADOS_FURIA if enfurecido else 1
+    ataques = [dice.resultado_ataque(b.get("crit", 0), bonus_rolagem) for _ in range(n_dados)]
+    for n, ataque in enumerate(ataques, start=1):
+        titulo = f"D10 DE ATAQUE • {atacante['nome']}" + (f" ({n}/{n_dados})" if n_dados > 1 else "")
+        animar_dado(titulo, ataque["rolagem"], atacante["cor"])
     buff_dano = atacante["buff_dano"]
     atacante["buff_dano"] = 1.0
     fisico, magico = atacante["dano_fisico"], atacante["dano_magico"]
     poder = fisico + magico
-    dano = round(poder * ataque["fator"] * mult_furia * buff_dano)
-    extra_dado = f" ({ataque['base']} +{bonus_rolagem} 🍀)" if bonus_rolagem else ""
-    linhas.append(
-        f"🎲 D10 de ataque: [bold]{ataque['rolagem']}[/]{extra_dado} → {ataque['emoji']} [bold]{ataque['nome']}[/] (×{ataque['fator']:g})"
-    )
+    fator = sum(a["fator"] for a in ataques)
+    dano = round(poder * fator * buff_dano)
     if enfurecido:
-        linhas.append(f"🔥 [bold red]FÚRIA![/] O dano é multiplicado por ×{FURIA_MULT:g}")
+        linhas.append(f"🔥 [bold red]FÚRIA![/] {n_dados} D10 de ataque: o dano dos golpes se soma")
+    for ataque in ataques:
+        extra_dado = f" ({ataque['base']} +{bonus_rolagem} 🍀)" if bonus_rolagem else ""
+        linhas.append(
+            f"🎲 D10 de ataque: [bold]{ataque['rolagem']}[/]{extra_dado} → {ataque['emoji']} [bold]{ataque['nome']}[/] (×{ataque['fator']:g})"
+        )
+    if n_dados > 1:
+        linhas.append(f"   Multiplicador total ×{fator:g}")
     if buff_dano > 1:
         linhas.append(f"💪 Bônus de dano ×{buff_dano:g}")
     composicao = f" (🔪 {fisico:g} + 🌠 {magico:g})" if fisico and magico else ""
     linhas.append(f"   Dano base {poder:g}{composicao} → [bold]{dano}[/]")
-    if ataque["ouro"]:
-        atacante["ouro"] += ataque["ouro"]
-        linhas.append(f"💰 [bold yellow]{atacante['nome']} ganhou +{ataque['ouro']} moedas[/] de bônus!")
+    ouro_dados = sum(a["ouro"] for a in ataques)
+    if ouro_dados:
+        atacante["ouro"] += ouro_dados
+        linhas.append(f"💰 [bold yellow]{atacante['nome']} ganhou +{ouro_dados} moedas[/] de bônus!")
     if b.get("ouro_ataque"):
         atacante["ouro"] += b["ouro_ataque"]
         linhas.append(f"🪙 [yellow]+{b['ouro_ataque']} moedas saqueadas[/]")
@@ -707,15 +750,17 @@ def executar_ataque(atacante, alvo):
         linhas.append("")
         linhas.append(f"🔮 O Escudo de Mana de {alvo['nome']} mitigou [bold cyan]{mitigado}[/] de dano!")
 
-    # a parte mágica do dano ignora 50% da Defesa (proporcional à parte mágica do ataque); itens somam penetração
+    # Feiticeiro: a parte mágica do dano ignora PENETRACAO_MAGICA da Defesa (proporcional à parte mágica do ataque).
+    # As outras raças só têm a penetração que vem de itens.
     parte_magica = magico / poder if poder else 0
-    penetracao = min(0.9, PENETRACAO_MAGICA * parte_magica + b.get("penetracao", 0))
+    penetracao_racial = PENETRACAO_MAGICA * parte_magica if atacante["raca"] == "Feiticeiro" else 0
+    penetracao = min(0.9, penetracao_racial + b.get("penetracao", 0))
     defesa_alvo = alvo["defesa"] + alvo["defesa_temp"]
     defesa_efetiva = defesa_alvo * (1 - penetracao)
     dano_final = max(1, round(dano - defesa_efetiva))
     absorvido = dano - dano_final
     if penetracao > 0 and defesa_alvo > 0:
-        icone = "🌠" if parte_magica >= 0.5 else "⚡"
+        icone = "🌠" if penetracao_racial > 0 and parte_magica >= 0.5 else "⚡"
         linhas.append(
             f"{icone} A penetração ignorou [bold magenta]{round(defesa_alvo - defesa_efetiva, 1):g}[/] da Defesa de {alvo['nome']}"
         )
@@ -731,7 +776,7 @@ def executar_ataque(atacante, alvo):
     hp_antes = alvo["hp"]
     alvo["hp"] = max(0, alvo["hp"] - dano_final)
     perdido = hp_antes - alvo["hp"]
-    alvo["atacado_na_rodada"] = True
+    proteger(alvo)
     linhas.append("")
     linhas.append(f"💥 {alvo['nome']} sofreu [bold red]{dano_final}[/] de dano. 💖 {alvo['hp']}/{alvo['hp_max']}")
 
@@ -748,11 +793,19 @@ def executar_ataque(atacante, alvo):
         alvo["veneno"] = None
         linhas.append(f"💀 [bold red]{alvo['nome']} foi eliminado![/]")
     else:
-        # Veneno: da arma envenenada (poção) ou dos itens equipados; só se o golpe feriu de verdade
-        veneno = max(b.get("veneno", 0), atacante["arma_envenenada"])
+        # Veneno: da arma envenenada (poção) ou dos itens equipados; só se o golpe feriu de verdade.
+        # Itens com recarga (Anel Venenoso) só envenenam quando estão prontos e depois entram em recarga.
+        fontes = [i for i in atacante["itens"] if i["tipo"] in shop.SLOTADOS and "veneno" in i["efeitos"]
+                  and i.get("recarga_atual", 0) == 0]
+        item_veneno = max(fontes, key=lambda i: i["efeitos"]["veneno"]) if fontes else None
+        veneno = max(item_veneno["efeitos"]["veneno"] if item_veneno else 0, atacante["arma_envenenada"])
+        usou_item = item_veneno is not None and item_veneno["efeitos"]["veneno"] >= atacante["arma_envenenada"]
         atacante["arma_envenenada"] = 0
         if veneno and perdido > 0:
             shop.aplicar_veneno(alvo, veneno)
+            if usou_item and "recarga" in item_veneno["efeitos"]:
+                item_veneno["recarga_atual"] = item_veneno["efeitos"]["recarga"]
+                linhas.append(f"⏳ {item_veneno['nome']} entrou em recarga ({item_veneno['recarga_atual']} rodadas)")
             linhas.append(
                 f"🐍 {alvo['nome']} foi envenenado: [bold green]{alvo['veneno']['dano']}[/] por rodada durante {shop.VENENO_RODADAS} rodadas"
             )
@@ -774,14 +827,14 @@ def executar_ataque(atacante, alvo):
                     f"💖 {atacante['hp']}/{atacante['hp_max']}"
                 )
 
-    # Fúria do Bárbaro: gasta ao atacar enfurecido; senão enche 1/3 (se não estiver desabilitada)
+    # Fúria do Bárbaro: gasta ao atacar enfurecido; senão enche 1/FURIA_MAX (se não estiver desabilitada)
     if enfurecido:
         atacante["furia"] = 0
         atacante["furia_usada"] = True
         linhas.append("🔥 A Fúria foi zerada e fica desabilitada por 1 rodada.")
-    elif atacante["raca"] == "Bárbaro" and atacante["furia_bloqueio"] == 0 and atacante["furia"] < MAX_PIPS:
-        atacante["furia"] = min(MAX_PIPS, atacante["furia"] + 1 + b.get("furia_extra", 0))
-        linhas.append(f"🔥 Fúria {pips(atacante['furia'], 'red')}")
+    elif atacante["raca"] == "Bárbaro" and atacante["furia_bloqueio"] == 0 and atacante["furia"] < FURIA_MAX:
+        atacante["furia"] = min(FURIA_MAX, atacante["furia"] + 1 + b.get("furia_extra", 0))
+        linhas.append(f"🔥 Fúria {pips(atacante['furia'], 'red', FURIA_MAX)}")
 
     console.print()
     console.print(Panel("\n".join(linhas), title="💥 RESULTADO", box=box.HEAVY, border_style="red", padding=(1, 3)))
@@ -789,7 +842,7 @@ def executar_ataque(atacante, alvo):
 
 def dano_direto(atacante, alvo, dano, item):
     """Dano fixo de bombas e raios: ignora Defesa, postura e Escudo de Mana, mas o escudo de item ainda absorve.
-    Conta como um ataque (o alvo não pode ser atacado de novo na rodada)."""
+    Conta como um ataque (o alvo fica protegido no turno seguinte)."""
     linhas = [
         f"{item['nome']} • [bold {atacante['cor']}]{atacante['nome']}[/] atinge [bold {alvo['cor']}]{alvo['nome']}[/]!",
         "",
@@ -801,7 +854,7 @@ def dano_direto(atacante, alvo, dano, item):
         dano -= absorve
         linhas.append(f"🧿 O escudo de {alvo['nome']} absorveu [bold cyan]{absorve}[/] de dano")
     alvo["hp"] = max(0, alvo["hp"] - dano)
-    alvo["atacado_na_rodada"] = True
+    proteger(alvo)
     linhas.append("")
     linhas.append(f"💥 {alvo['nome']} sofreu [bold red]{dano}[/] de dano. 💖 {alvo['hp']}/{alvo['hp_max']}")
     if alvo["hp"] == 0:
@@ -847,36 +900,57 @@ def assumir_postura(jogador):
     jogador["postura"] = True
     msg = f"🔰 [bold blue]{jogador['nome']}[/] assumiu a postura defensiva!"
     raca = jogador["raca"]
-    if raca == "Bárbaro" and jogador["furia_bloqueio"] == 0 and jogador["furia"] < MAX_PIPS:
-        jogador["furia"] = min(MAX_PIPS, jogador["furia"] + 1 + jogador["bonus"].get("furia_extra", 0))
-        msg += f" 🔥 Fúria {pips(jogador['furia'], 'red')}"
-    elif raca == "Feiticeiro" and jogador["mana"] < MAX_PIPS:
+    if raca == "Feiticeiro" and jogador["mana"] < MAX_PIPS:
         jogador["mana"] += 1
         msg += f" 🔮 Mana {pips(jogador['mana'], 'cyan')}"
-    elif raca == "Goblin":
-        jogador["ouro"] += OURO_POSTURA_GOBLIN
-        msg += f" 💰 +{OURO_POSTURA_GOBLIN} moedas"
     elif raca == "Ferreiro":
         msg += f" 🔨 Bloqueio reforçado (+{round(POSTURA_FERREIRO * 100)}%)"
     return msg
 
 
-def ouro_do_turno(jogador):
+def ouro_base_do_turno(rodada):
+    """Moedas que todo jogador ganha no início do turno nesta rodada (sobe depois das rodadas de AUMENTOS_OURO)."""
+    valor = OURO_POR_TURNO
+    for depois_da_rodada, novo in AUMENTOS_OURO:
+        if rodada > depois_da_rodada:
+            valor = novo
+    return valor
+
+
+def proximo_aumento_ouro(rodada):
+    """(rodada, novo valor) do próximo aumento das moedas por turno, ou None se já está no máximo."""
+    for depois_da_rodada, novo in AUMENTOS_OURO:
+        if rodada <= depois_da_rodada:
+            return depois_da_rodada, novo
+    return None
+
+
+def ouro_do_turno(jogador, rodada=1):
     """Ouro recebido no início do turno. Devolve (total, extra_goblin, extra_itens)."""
-    extra_goblin = OURO_GOBLIN if jogador["raca"] == "Goblin" else 0
+    base = ouro_base_do_turno(rodada)
+    extra_goblin = 0
+    if jogador["raca"] == "Goblin":
+        # +50% da moeda de turno; se der fração, ela acumula para os próximos turnos
+        jogador["resto_ouro_goblin"] += base * BONUS_GOBLIN
+        extra_goblin = int(jogador["resto_ouro_goblin"])
+        jogador["resto_ouro_goblin"] -= extra_goblin
     extra_itens = jogador["bonus"].get("ouro_turno", 0)
-    total = OURO_POR_TURNO + extra_goblin + extra_itens
+    total = base + extra_goblin + extra_itens
     jogador["ouro"] += total
     return total, extra_goblin, extra_itens
 
 
-def inicio_de_turno(jogador):
+def inicio_de_turno(jogador, rodada=1):
     """Efeitos do início do turno (ouro, regeneração, fim da invisibilidade e do escudo). Devolve o aviso."""
     jogador["livre_usado"] = False
     jogador["invisivel"] = False
     jogador["escudo_pv"] = 0
-    total, extra_goblin, extra_itens = ouro_do_turno(jogador)
-    aviso = f"💰 [bold yellow]+{OURO_POR_TURNO} moedas[/] pelo início do turno!"
+    # a postura defensiva protege só até a próxima ação do jogador: na vez dele ela termina
+    # (se quiser continuar protegido, ele escolhe a postura de novo)
+    postura_terminou = jogador["postura"]
+    jogador["postura"] = False
+    total, extra_goblin, extra_itens = ouro_do_turno(jogador, rodada)
+    aviso = f"💰 [bold yellow]+{ouro_base_do_turno(rodada)} moedas[/] pelo início do turno!"
     if extra_goblin:
         aviso += f"  [green]👺 +{extra_goblin} do Goblin[/]"
     if extra_itens:
@@ -886,6 +960,8 @@ def inicio_de_turno(jogador):
         curou = min(cura, jogador["hp_max"] - jogador["hp"])
         jogador["hp"] += curou
         aviso += f"  [green]🌿 +{curou} de vida[/]"
+    if postura_terminou:
+        aviso += "  [blue]🔰 sua postura defensiva terminou[/]"
     return aviso
 
 
@@ -919,13 +995,15 @@ def mostrar_inventario(jogador, jogadores):
                 shop.descrever_efeitos(shop.efeitos_efetivos(jogador, item), item.get("magico", False))
             ) or "[bright_black]—[/]"
             forja = item.get("forja", 0)
-            nome_item = item["nome"] + (f" [yellow]🔨+{round(forja * 5)}%[/]" if forja else "")
+            nome_item = item["nome"] + (f" [yellow]🔨+{round(forja * shop.BONUS_FORJA * 100)}%[/]" if forja else "")
             if item["tipo"] == "consumivel" and item.get("usos", 1) > 1:
                 nome_item += f" [bold]×{item['usos']}[/]"
             if item["tipo"] == "ativo":
                 estado = "[green]pronto[/]" if item.get("recarga_atual", 0) == 0 else f"[yellow]⏳ {item['recarga_atual']} rod.[/]"
             elif item["tipo"] == "consumivel":
                 estado = f"[green]{item.get('usos', 1)} uso(s)[/]"
+            elif "recarga" in item["efeitos"] and item.get("recarga_atual", 0) > 0:
+                estado = f"[yellow]equipado • ⏳ {item['recarga_atual']} rod.[/]"
             else:
                 estado = "[bright_black]equipado[/]"
             tabela.add_row(str(i), nome_item, f"[{cor}]{rotulo}[/]", efeitos, estado)
@@ -953,9 +1031,11 @@ def mostrar_inventario(jogador, jogadores):
             else:
                 alvos, titulo = alvos_disponiveis(jogador, jogadores), "🎯 ESCOLHA O ALVO"
             if not alvos:
-                erro("Nenhum alvo disponível agora (já atacados nesta rodada ou invisíveis).")
+                erro("Nenhum alvo disponível agora (protegidos por terem sido atacados no turno anterior, ou invisíveis).")
                 continue
             alvo = escolher_alvo(jogador, jogadores, alvos, titulo)
+            if alvo is None:
+                continue
             aplicar_item_com_alvo(jogador, item, alvo)
             pausar()
             return True, None
@@ -973,7 +1053,7 @@ def mostrar_inventario(jogador, jogadores):
 
 def turno(rodada, jogador, jogadores):
     """Turno de um jogador. Ver inventário e usar itens de ação livre não encerram o turno."""
-    aviso = inicio_de_turno(jogador)
+    aviso = inicio_de_turno(jogador, rodada)
     feiticeiro = jogador["raca"] == "Feiticeiro"
     maximo = 5 if feiticeiro else 4
     while True:
@@ -982,16 +1062,22 @@ def turno(rodada, jogador, jogadores):
         escolha = ler_inteiro(f"[bold]👉 Escolha (1-{maximo}):[/] ", 1, maximo)
         if escolha == 1:
             if not alvos_disponiveis(jogador, jogadores):
-                aviso = "[bold red]✖ Todos os oponentes vivos já foram atacados nesta rodada (ou estão invisíveis)![/]"
+                aviso = "[bold red]✖ Todos os oponentes vivos estão protegidos (atacados no turno anterior) ou invisíveis![/]"
                 continue
             if feiticeiro and jogador["mana"] < 1:
                 aviso = "[bold red]✖ Sem mana para atacar! Escolha outra ação.[/]"
                 continue
+            if not confirmar("🔪 Atacar um oponente?"):
+                continue
             alvo = escolher_alvo(jogador, jogadores)
+            if alvo is None:  # voltou: escolhe outra ação
+                continue
             atacar(jogador, alvo)
             pausar()
             return
         if escolha == 2:
+            if not confirmar("🔰 Adotar a postura defensiva?"):
+                continue
             console.print(f"\n  {assumir_postura(jogador)}")
             pausar()
             return
@@ -1008,12 +1094,16 @@ def turno(rodada, jogador, jogadores):
             if jogador["escudo_mana"]:
                 aviso = "[bold red]✖ O Escudo de Mana já está ativo.[/]"
                 continue
+            if not confirmar("🔮 Erguer o Escudo de Mana (custa 2/3 de mana)?"):
+                continue
             jogador["mana"] -= 2
             jogador["mana_gasta"] = True
             jogador["escudo_mana"] = True
             console.print(f"\n  🔮 [bold magenta]{jogador['nome']}[/] ergueu um Escudo de Mana!")
             pausar()
             return
+        if not confirmar("⏩ Passar a vez?"):
+            continue
         console.print(f"\n  ⏩ [bold yellow]{jogador['nome']}[/] passou a vez.")
         pausar()
         return
@@ -1024,7 +1114,7 @@ def fim_de_rodada(jogadores):
     Feiticeiro. Devolve a lista de eventos (textos) para exibir."""
     eventos = []
     for j in jogadores:
-        j["atacado_na_rodada"] = False  # nova rodada: todos podem ser atacados de novo
+        j["protegido"] = 0  # a proteção de quem foi atacado não passa para a rodada seguinte
     for j in vivos(jogadores):
         veneno = j["veneno"]
         if veneno:
@@ -1148,7 +1238,7 @@ def escolher_substituicao(jogador, item):
     for i, c in enumerate(candidatos, start=1):
         efeitos = "\n".join(shop.descrever_efeitos(shop.efeitos_efetivos(jogador, c), c.get("magico", False)))
         forja = c.get("forja", 0)
-        nome_c = c["nome"] + (f" [yellow]🔨+{round(forja * 5)}%[/]" if forja else "")
+        nome_c = c["nome"] + (f" [yellow]🔨+{round(forja * shop.BONUS_FORJA * 100)}%[/]" if forja else "")
         tabela.add_row(str(i), nome_c, efeitos)
     console.print()
     console.print(tabela)
@@ -1167,7 +1257,8 @@ def menu_forja(jogador):
     if not forjaveis:
         return f"[bold red]✖ Todos os seus itens já estão no nível máximo da Forja ({shop.MAX_FORJA}).[/]"
     tabela = Table(
-        title=f"🔨 A FORJA • melhora 1 item em +{round(shop.BONUS_FORJA * 100)}% (máx. {shop.MAX_FORJA} níveis por item)",
+        title=f"🔨 A FORJA • +{round(shop.BONUS_FORJA * 100)}% e {shop.texto_forja_fixo('arma')} (arma) ou "
+              f"{shop.texto_forja_fixo('armadura')} (armadura) por nível (máx. {shop.MAX_FORJA} níveis por item)",
         box=box.ROUNDED,
         border_style="yellow",
         header_style="bold white",
@@ -1179,7 +1270,7 @@ def menu_forja(jogador):
     for i, item in enumerate(forjaveis, start=1):
         efeitos = "\n".join(shop.descrever_efeitos(shop.efeitos_efetivos(jogador, item), item.get("magico", False)))
         nivel = item.get("forja", 0)
-        tabela.add_row(str(i), item["nome"], efeitos, f"+{round(nivel * 5)}% ({nivel}/{shop.MAX_FORJA})")
+        tabela.add_row(str(i), item["nome"], efeitos, f"+{round(nivel * shop.BONUS_FORJA * 100)}% ({nivel}/{shop.MAX_FORJA})")
     console.print()
     console.print(tabela)
     escolha = ler_inteiro(f"[bold yellow]👉 Item para forjar (1-{len(forjaveis)}, 0 = voltar):[/] ", 0, len(forjaveis))
@@ -1190,10 +1281,9 @@ def menu_forja(jogador):
 
 
 def loja_jogador(jogador, estoque):
-    """Vez de um jogador no Comerciante (à vista de todos). Cada jogador compra no máximo 1 item."""
+    """Vez de um jogador no Comerciante (à vista de todos). Cada jogador compra até shop.LIMITE_COMPRAS
+    (1 equipamento e 1 consumível)."""
     ferreiro = jogador["raca"] == "Ferreiro"
-    limite_compras = shop.compras_permitidas(jogador)
-    compras = 0
     comprados = []  # nomes dos itens comprados nesta visita
     comprou = False  # True quando já esgotou as compras permitidas
     aviso = None
@@ -1228,7 +1318,9 @@ def loja_jogador(jogador, estoque):
         else:
             console.print(
                 f"  [bright_black]Este estoque foi sorteado só para {jogador['nome']}. "
-                f"Compras restantes: {limite_compras - compras} de {limite_compras}.[/]"
+                "Compras restantes: " + "   ".join(
+                    f"{shop.ROTULO_CATEGORIA[c]} {shop.compras_restantes(jogador, c)}/{n}" for c, n in shop.LIMITE_COMPRAS.items()
+                ) + ".[/]"
             )
         console.print()
         console.print(tabela_estoque(estoque, jogador))
@@ -1244,8 +1336,9 @@ def loja_jogador(jogador, estoque):
             aviso = menu_forja(jogador)
         else:
             item = estoque[escolha - 1]
-            if not item["disponivel"]:
-                aviso = "[bold red]✖ Esse item já foi vendido![/]"
+            bloqueio = shop.bloqueio_compra(jogador, item)
+            if bloqueio:
+                aviso = f"[bold red]✖ {bloqueio[2:]}[/]"
                 continue
             console.print()
             console.print(painel_item(item, jogador))
@@ -1258,9 +1351,8 @@ def loja_jogador(jogador, estoque):
                         continue
                 sucesso, mensagem = shop.comprar(jogador, item, substituir)
                 if sucesso:
-                    compras += 1
                     comprados.append(f"{item['emoji']} {item['nome']}")
-                    comprou = compras >= limite_compras
+                    comprou = shop.compras_esgotadas(jogador)
                     aviso = f"[bold green]{mensagem}[/]"
                 else:
                     aviso = f"[bold red]✖ {mensagem[2:]}[/]"
@@ -1274,27 +1366,35 @@ def loja_jogador(jogador, estoque):
 
 def fase_loja(jogadores, ordem, rodada=INTERVALO_LOJA):
     """Rodada exclusiva do Comerciante: cada jogador vivo compra em sequência, num estoque só dele (sorteado à
-    parte, então os itens podem se repetir entre jogadores). O estoque só tem itens da fase da rodada:
-    Early até a rodada 15, Mid até a 30 e Late depois."""
+    parte, então os itens podem se repetir entre jogadores). O estoque só tem itens da fase da rodada
+    (limites em shop.FASES_POR_RODADA)."""
     fase = shop.fase_da_rodada(rodada)
     compradores = [j for j in ordem if j["vivo"]]
+    curas = []
     for j in compradores:
-        j["ouro"] += OURO_LOJA + (OURO_GOBLIN if j["raca"] == "Goblin" else 0)
+        j["ouro"] += OURO_LOJA + (int(OURO_LOJA * BONUS_GOBLIN) if j["raca"] == "Goblin" else 0)
+        cura = min(round(j["hp_max"] * CURA_COMERCIANTE), j["hp_max"] - j["hp"])
+        j["hp"] += cura
+        curas.append(f"[{j['cor']}]{j['nome']}[/] +{cura} 💖 {j['hp']}/{j['hp_max']}")
         j["forja_usada"] = False
         j["pechinchar_pronto"] = True
+        j["compras_visita"] = {}
 
     console.clear()
     abertura = Text(justify="center")
     abertura.append("🧳  O COMERCIANTE CHEGOU!  🧳\n\n", style="bold yellow")
-    abertura.append(f"Rodada exclusiva de compras • cada jogador recebe +{OURO_LOJA} moedas\n", style="white")
+    abertura.append(f"Rodada exclusiva de compras • cada jogador recebe +{OURO_LOJA} moedas e recupera "
+                    f"{round(CURA_COMERCIANTE * 100)}% da vida máxima\n", style="white")
     abertura.append(
-        f"Cada jogador tem um estoque próprio de {shop.ITENS_POR_JOGADOR} itens, sorteado só para ele • 1 compra por jogador!\n",
+        f"Cada jogador tem um estoque próprio de {shop.ITENS_POR_JOGADOR} itens, sorteado só para ele, "
+        f"mais a {shop.pocao_fixa(rodada)['emoji']} {shop.pocao_fixa(rodada)['nome']} sempre à venda • até {shop.texto_limite_compras()} por jogador!\n",
         style="bright_black",
     )
     nome_fase, cor_fase = TIERS[fase]
     abertura.append(f"Rodada {rodada} • só itens da fase ", style="bright_black")
     abertura.append(nome_fase, style=f"bold {cor_fase}")
-    abertura.append(" (Early até a rodada 15, Mid até a 30, Late depois)", style="bright_black")
+    abertura.append(f" ({shop.texto_fases()})", style="bright_black")
+    abertura.append(Text.from_markup("\n\n💚 " + "   ".join(curas)))
     console.print()
     console.print(Align.center(Panel(Align.center(abertura), box=box.DOUBLE, border_style="yellow", padding=(1, 6))))
     mostrar_ordem(compradores, "DE COMPRAS")
@@ -1327,20 +1427,28 @@ def fase_loja(jogadores, ordem, rodada=INTERVALO_LOJA):
 def jogar(jogadores):
     """Loop de rodadas. Devolve o vencedor quando restar apenas 1 jogador vivo."""
     rodada = 1
-    primeiro_anterior = None
     while True:
         console.clear()
-        ordem = sortear_ordem(jogadores, primeiro_anterior)
+        ordem = sortear_ordem(jogadores)
         if rodada == 1:
             console.print()
             animar_roleta(ordem)
+        if rodada > 1 and ouro_base_do_turno(rodada) > ouro_base_do_turno(rodada - 1):
+            console.print()
+            console.print(
+                Align.center(Panel(
+                    Text(f"💰 A ECONOMIA AQUECEU! 💰\nA partir de agora cada turno dá +{ouro_base_do_turno(rodada)} moedas "
+                         f"(antes: +{ouro_base_do_turno(rodada - 1)}).", justify="center", style="bold yellow"),
+                    box=box.DOUBLE, border_style="yellow", padding=(1, 6),
+                ))
+            )
         mostrar_ordem(ordem, rodada)
         pausar("Pressione Enter para iniciar a rodada...")
-        primeiro_anterior = ordem[0]
 
         for jogador in ordem:
             if not jogador["vivo"]:
                 continue
+            passar_protecao(jogadores)
             turno(rodada, jogador, jogadores)
             sobreviventes = vivos(jogadores)
             if len(sobreviventes) == 1:

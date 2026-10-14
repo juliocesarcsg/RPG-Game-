@@ -1,6 +1,6 @@
 # Relatório dos ajustes de balanceamento
 
-Data: 14/10/2026. Compara a versão ajustada com a do primeiro relatório (`RELATORIO_nv.md`, chamada aqui de **"antes"**).
+Data: 14/10/2026. Compara a versão ajustada com a do primeiro relatório (`RELATORIO.md`, chamada aqui de **"antes"**).
 
 ## O que mudou no jogo
 
@@ -30,7 +30,7 @@ Com os outros ajustes já aplicados, uma simulação pequena (2.000 partidas) mo
   - o Goblin recebe 7, 8, 7, 8 por turno;
   - o Comerciante permite 2 compras;
   - a Forja dá +15%.
-- Duas partidas completas com a interface renderizada (`partida_teste_1_nv.txt` e `partida_teste_2_nv.txt`) terminaram normalmente.
+- Duas partidas completas com a interface renderizada (`partida_teste_1.txt` e `partida_teste_2.txt`) terminaram normalmente.
 - **10.000 partidas simuladas, sem nenhum erro ou travamento.** O problema da postura que não expirava sumiu: zero ocorrências, contra 180 mil antes.
 
 Os robôs são os mesmos do primeiro relatório, com os mesmos limites. Em especial, preferem atacar quem tem menos vida, o que favorece raças com mais vida nas partidas com 3 ou mais jogadores.
@@ -156,11 +156,11 @@ As partidas ficaram cerca de 3 rodadas mais longas, porque nenhuma raça atropel
 
 ## Arquivos
 
-- `simulacao/resultados_ajustes_nv.json`: números brutos destas 10.000 partidas.
-- `simulacao/resultados_pequena_nv.json`: simulação pequena, feita antes de mudar as fases.
-- `simulacao/resultados_nv.json` e `resultados_regras_antigas_nv.json`: dados do primeiro relatório.
+- `simulacao/resultados_ajustes.json`: números brutos destas 10.000 partidas.
+- `simulacao/resultados_pequena.json`: simulação pequena, feita antes de mudar as fases.
+- `simulacao/resultados.json` e `resultados_regras_antigas.json`: dados do primeiro relatório.
 - Para rodar de novo:
 
 ```bash
-python simulacao/simular_nv.py massa 10000 _nome
+python simulacao/simular.py massa 10000 _nome
 ```

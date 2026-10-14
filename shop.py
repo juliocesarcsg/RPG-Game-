@@ -9,16 +9,25 @@ ROTULO_SLOT = {"arma": "armas", "armadura": "armadura", "joia": "joias", "ativo"
 SLOTADOS = tuple(LIMITE_SLOTS)      # tipos que ocupam espaço e dão bônus enquanto equipados
 CHANCE_PECHINCHA = 0.35     # Goblin: chance de conseguir desconto (antes: 25%)
 DESCONTO_PECHINCHA = 0.15   # Goblin: tamanho do desconto (antes: 10%)
-BONUS_FORJA = 0.05          # Ferreiro: ganho por uso de A Forja
+BONUS_FORJA = 0.10          # Ferreiro: ganho por uso de A Forja (antes: 0.15)
 MAX_FORJA = 3               # Ferreiro: níveis máximos de Forja por item
+PENALIDADE_AFINIDADE = 0.5  # dano de item fora da afinidade: mágico em quem não é Feiticeiro, físico no Feiticeiro
+FORJA_FIXO = {"arma": {"dano": 1}, "armadura": {"defesa": 1, "hp_max": 10}}  # Ferreiro: pontos inteiros por nível de Forja (além do %)
 MESTRE_METAL = 1.10         # Ferreiro: eficiência de armas e armaduras (antes: 1.25)
-COMPRAS_POR_VISITA = 1      # itens que cada jogador compra na sua vez no Comerciante
+LIMITE_COMPRAS = {"equipamento": 1, "consumivel": 1}  # por visita: 1 equipamento e 1 consumível (antes: 2 itens quaisquer)
+ROTULO_CATEGORIA = {"equipamento": "equipamento", "consumivel": "consumível"}
 VENENO_RODADAS = 3          # duração do veneno (ele nunca elimina: deixa no mínimo 1 de vida)
 DEFESA_TEMP_RODADAS = 2     # duração da Defesa temporária das poções
 
 # Fases do jogo: o Comerciante só oferece itens da fase em que a partida está
 TIERS = {1: "Early", 2: "Mid", 3: "Late"}
-FASES_POR_RODADA = ((15, 1), (30, 2))  # até a rodada 15: Early; até a 30: Mid; depois: Late
+FASES_POR_RODADA = ((9, 1), (19, 2))  # até a rodada 9: Early; Mid a partir da 10; Late a partir da 20 (antes: 15 e 30)
+
+
+def texto_fases():
+    """Texto dos limites de fase para a interface (ex.: 'Early até a rodada 9, Mid a partir da 10, Late a partir da 20')."""
+    (lim1, _), (lim2, _) = FASES_POR_RODADA
+    return f"Early até a rodada {lim1}, Mid a partir da {lim1 + 1}, Late a partir da {lim2 + 1}"
 
 
 def fase_da_rodada(rodada):
@@ -66,25 +75,27 @@ def _item(nome, emoji, tipo, tier, preco, efeitos, descricao, magico=False, usos
 # tipo: "consumivel" (uso único), "arma"/"armadura"/"joia"/"ativo" (equipados em espaços limitados)
 CATALOGO = [
     # ------------------------------ CONSUMÍVEIS ------------------------------
+    # (preços cerca de 30% menores que na versão anterior, para competirem com os equipamentos; as curas mantêm o
+    #  preço original, porque curas baratas deixavam partidas sem fim)
     _item("Poção de Cura", "🧪", "consumivel", 1, 24, {"cura": 30},
           "Frascos de ervas curativas. Barato e confiável.", usos=1),
-    _item("Antídoto", "🌿", "consumivel", 1, 16, {"antidoto": True, "cura": 10},
+    _item("Antídoto", "🌿", "consumivel", 1, 10, {"antidoto": True, "cura": 10},
           "Neutraliza qualquer veneno e ainda devolve um pouco de vida.", usos=1),
-    _item("Trevo da Sorte", "🍀", "consumivel", 2, 26, {"buff_rolagem": 4, "livre": True},
+    _item("Trevo da Sorte", "🍀", "consumivel", 2, 18, {"buff_rolagem": 4, "livre": True},
           "Mastigue antes de atacar: soma +4 na rolagem do próximo D10 de ataque.", usos=1),
-    _item("Poção de Fúria", "🔥", "consumivel", 1, 30, {"buff_dano": 2.0, "livre": True},
+    _item("Poção de Fúria", "🔥", "consumivel", 1, 20, {"buff_dano": 2.0, "livre": True},
           "Um gole e o sangue ferve: o seu próximo ataque causa o DOBRO de dano.", usos=1),
-    _item("Frasco de Veneno", "🐍", "consumivel", 1, 35, {"veneno_arma": 2, "livre": True},
+    _item("Frasco de Veneno", "🐍", "consumivel", 1, 24, {"veneno_arma": 2, "livre": True},
           "Banhe a lâmina: o próximo ataque que ferir envenena o alvo.", usos=1),
-    _item("Bombinha", "🧨", "consumivel", 1, 32, {"bomba": 10},
-          "Explosivos caseiros. Atingem um oponente ainda não atacado na rodada, ignorando Defesa e postura.", usos=1),
+    _item("Bombinha", "🧨", "consumivel", 1, 22, {"bomba": 10},
+          "Explosivos caseiros. Atingem um oponente que não esteja protegido, ignorando Defesa e postura.", usos=1),
     _item("Elixir Maior", "🍷", "consumivel", 2, 40, {"cura": 60},
           "Elixir concentrado que fecha até feridas profundas."),
-    _item("Pele de Pedra", "🧱", "consumivel", 2, 42, {"defesa_temp": 4, "livre": True},
+    _item("Pele de Pedra", "🧱", "consumivel", 2, 30, {"defesa_temp": 4, "livre": True},
           "A pele endurece como rocha por um tempo.", usos=1),
-    _item("Bomba de Pólvora", "💣", "consumivel", 2, 48, {"bomba": 14},
-          "Estrondosas. Atingem um oponente ainda não atacado na rodada, ignorando Defesa e postura.", usos=1),
-    _item("Essência de Escorpião", "🦂", "consumivel", 3, 60, {"veneno_arma": 4, "livre": True},
+    _item("Bomba de Pólvora", "💣", "consumivel", 2, 34, {"bomba": 14},
+          "Estrondosas. Atingem um oponente que não esteja protegido, ignorando Defesa e postura.", usos=1),
+    _item("Essência de Escorpião", "🦂", "consumivel", 3, 42, {"veneno_arma": 4, "livre": True},
           "Veneno concentrado: o próximo ataque que ferir envenena com força.", usos=1),
     _item("Elixir Dourado", "🍶", "consumivel", 3, 55, {"cura": 70, "antidoto": True},
           "A cura dos reis: restaura vida e remove venenos.", usos=1),
@@ -160,8 +171,9 @@ CATALOGO = [
           "Um poço de mana no dedo (ideal para Feiticeiros)."),
     _item("Anel do Mago", "💍", "joia", 2, 36, {"dano": 4},
           "Poder arcano condensado em um aro de prata.", magico=True),
-    _item("Anel Venenoso", "💍", "joia", 3, 70, {"veneno": 4},
-          "Uma agulha oculta: seus ataques envenenam o alvo."),
+    _item("Anel Venenoso", "💍", "joia", 3, 70, {"veneno": 4, "recarga": 3},
+          "Uma agulha oculta: o ataque envenena o alvo (4 de dano por rodada durante 3 rodadas). "
+          "Depois de envenenar, o anel recarrega por 3 rodadas (3 turnos seus)."),
     _item("Amuleto Arcano", "📿", "joia", 3, 80, {"dano": 6, "hp_max": 20},
           "Pulsa com magia pura: mais poder mágico e vitalidade.", magico=True),
     _item("Amuleto do Vampiro", "📿", "joia", 3, 85, {"vampirismo": 0.20, "hp_max": 40},
@@ -181,8 +193,21 @@ CATALOGO = [
     _item("Capa da Invisibilidade", "👻", "ativo", 3, 75, {"invisibilidade": True, "buff_dano": 1.5, "livre": True, "recarga": 3},
           "Ninguém pode te escolher como alvo até o seu próximo turno, e a emboscada causa +50% no próximo ataque."),
     _item("Cajado Relâmpago", "⚡", "ativo", 3, 75, {"raio": 16, "recarga": 3},
-          "Um raio que ignora Defesa e postura. Atinge um oponente ainda não atacado na rodada."),
+          "Um raio que ignora Defesa e postura. Atinge um oponente que não esteja protegido."),
 ]
+
+
+# Poção simples que o Comerciante SEMPRE oferece (fora do sorteio e de qualquer fase)
+POCAO_FIXA = _item("Poção Simples", "🩹", "consumivel", 1, 10, {"cura": 15},
+                   "Sempre à venda: um gole rápido para fechar arranhões.", usos=1)
+POCAO_REFORCADA = _item("Poção Reforçada", "🧴", "consumivel", 2, 20, {"cura": 30},
+                        "Sempre à venda a partir da rodada 20: uma dose caprichada.", usos=1)
+RODADA_POCAO_REFORCADA = 20  # a partir desta visita do Comerciante, a poção fixa vira a Reforçada
+
+
+def pocao_fixa(rodada):
+    """Poção que o Comerciante sempre oferece nesta rodada."""
+    return POCAO_REFORCADA if rodada >= RODADA_POCAO_REFORCADA else POCAO_FIXA
 
 
 def num(x):
@@ -195,8 +220,8 @@ def num(x):
 # Estoque
 # ----------------------------------------------------------------------
 def sortear_estoque(rodada=5, tamanho=ITENS_POR_JOGADOR):
-    """Sorteia o estoque de UM jogador numa visita: só itens da fase da rodada (Early até a 15, Mid até a 30,
-    Late depois), sem repetir item dentro do mesmo estoque. Cada jogador recebe o seu próprio sorteio, então os
+    """Sorteia o estoque de UM jogador numa visita: só itens da fase da rodada (ver FASES_POR_RODADA),
+    sem repetir item dentro do mesmo estoque. Cada jogador recebe o seu próprio sorteio, então os
     estoques podem ser diferentes (e repetir itens entre jogadores).
     Os tipos 'consumível, arma, armadura, joia e ativo' aparecem pelo menos uma vez quando a fase tem itens deles
     e o estoque comporta. Cada item é uma cópia com a flag `disponivel`."""
@@ -219,6 +244,7 @@ def sortear_estoque(rodada=5, tamanho=ITENS_POR_JOGADOR):
         escolhidos.append(item)
         pool.remove(item)
     random.shuffle(escolhidos)
+    escolhidos.append(pocao_fixa(rodada))  # sempre à venda, além dos itens sorteados
     return [dict(i, efeitos=dict(i["efeitos"]), disponivel=True) for i in escolhidos]
 
 
@@ -240,6 +266,8 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if "dano" in e:
         metade = " (metade físico, metade mágico)" if magico == DANO_HIBRIDO else ""
         linhas.append(f"{icone_dano(magico)} +{num(e['dano'])} de Dano{metade}")
+    if "dano_rende" in e:
+        linhas.append(f"⚠️ Para a sua raça este dano rende só {e['dano_rende']}%")
     if "defesa" in e:
         linhas.append(f"🔰 +{num(e['defesa'])} de Defesa")
     if "hp_max" in e:
@@ -302,17 +330,46 @@ def multiplicador_item(jogador, item):
 
 
 def efeitos_efetivos(jogador, item):
-    """Efeitos do item já considerando os bônus do jogador (Ferreiro e A Forja)."""
+    """Efeitos do item já considerando os bônus do jogador (Ferreiro e A Forja).
+    A Forja multiplica os valores (BONUS_FORJA por nível) e ainda soma pontos inteiros (FORJA_FIXO por nível)."""
     mult = multiplicador_item(jogador, item)
+    nivel = item.get("forja", 0) if item["tipo"] in EQUIPAVEIS else 0
+    fixo = FORJA_FIXO.get(item["tipo"], {})
     efeitos = {}
     for chave, valor in item["efeitos"].items():
-        if mult == 1.0 or chave not in ESCALAVEIS:
+        if chave not in ESCALAVEIS or (mult == 1.0 and not nivel):
             efeitos[chave] = valor
-        elif chave == "hp_max":
-            efeitos[chave] = round(valor * mult)
-        else:
-            efeitos[chave] = num(valor * mult)
+            continue
+        novo = valor * mult + fixo.get(chave, 0) * nivel
+        efeitos[chave] = round(novo) if chave == "hp_max" else num(novo)
+    for chave, extra in fixo.items():  # atributo que o item ainda não tinha (ex.: armadura sem Defesa)
+        if nivel and chave not in efeitos:
+            efeitos[chave] = extra * nivel
+    if "dano" in efeitos and "raca" in jogador:
+        rende = rendimento_dano(jogador, item.get("magico", False))
+        if rende < 1:
+            efeitos["dano_rende"] = round(rende * 100)
     return efeitos
+
+
+def fator_afinidade(jogador, parte):
+    """Quanto rende o dano de item de um tipo ('fisico' ou 'magico') para a raça do jogador."""
+    feiticeiro = jogador.get("raca") == "Feiticeiro"
+    fora = (parte == "magico") != feiticeiro  # mágico fora do Feiticeiro, ou físico no Feiticeiro
+    return PENALIDADE_AFINIDADE if fora else 1.0
+
+
+def rendimento_dano(jogador, magico):
+    """Fração do dano de um item que vale para o jogador (híbrido: metade de cada tipo)."""
+    if magico == DANO_HIBRIDO:
+        return (fator_afinidade(jogador, "fisico") + fator_afinidade(jogador, "magico")) / 2
+    return fator_afinidade(jogador, "magico" if magico else "fisico")
+
+
+def texto_forja_fixo(tipo):
+    """Pontos inteiros que 1 nível de Forja dá para o tipo de item (ex.: '+1 de Dano')."""
+    rotulos = {"dano": "de Dano", "defesa": "de Defesa", "hp_max": "de Vida máxima"}
+    return " e ".join(f"+{v} {rotulos[k]}" for k, v in FORJA_FIXO.get(tipo, {}).items())
 
 
 def recalcular_status(jogador):
@@ -327,15 +384,13 @@ def recalcular_status(jogador):
             continue
         efeitos = efeitos_efetivos(jogador, item)
         d_fis, d_mag = partes_do_dano(efeitos.get("dano", 0), item.get("magico", False))
-        fisico += d_fis
-        magico += d_mag
+        fisico += d_fis * fator_afinidade(jogador, "fisico")
+        magico += d_mag * fator_afinidade(jogador, "magico")
         defesa += efeitos.get("defesa", 0)
         hp_max += efeitos.get("hp_max", 0)
         for chave in SOMADOS:
             if chave in item["efeitos"]:
                 bonus[chave] = bonus.get(chave, 0) + item["efeitos"][chave]
-        if "veneno" in item["efeitos"]:
-            bonus["veneno"] = max(bonus.get("veneno", 0), item["efeitos"]["veneno"])
     for chave, teto in TETOS_BONUS.items():
         if chave in bonus:
             bonus[chave] = min(bonus[chave], teto)
@@ -367,21 +422,48 @@ def pior_item_do_slot(jogador, tipo):
     return min(itens, key=lambda i: i.get("valor", 0) + 5 * i.get("forja", 0)) if itens else None
 
 
-def compras_permitidas(jogador):
-    """Quantos itens o jogador pode comprar em cada visita do Comerciante."""
-    return COMPRAS_POR_VISITA
+def categoria_compra(item):
+    """Categoria do item para o limite de compras por visita: 'consumivel' ou 'equipamento' (arma, armadura, joia, ativo)."""
+    return "consumivel" if item["tipo"] == "consumivel" else "equipamento"
 
 
-def poder(jogador):
-    """Quanto o jogador investiu em equipamento (itens equipados comprados e níveis de Forja)."""
-    return sum(i.get("valor", 0) + 5 * i.get("forja", 0) for i in jogador["itens"] if i["tipo"] in SLOTADOS)
+def compras_restantes(jogador, categoria):
+    """Quantas compras da categoria o jogador ainda pode fazer nesta visita do Comerciante."""
+    return LIMITE_COMPRAS[categoria] - jogador["compras_visita"].get(categoria, 0)
+
+
+def compras_esgotadas(jogador):
+    return all(compras_restantes(jogador, c) <= 0 for c in LIMITE_COMPRAS)
+
+
+def texto_limite_compras():
+    """Ex.: '1 equipamento e 1 consumível'."""
+    return " e ".join(f"{n} {ROTULO_CATEGORIA[c]}" for c, n in LIMITE_COMPRAS.items())
+
+
+def ativo_repetido(jogador, item):
+    """Itens ativos não podem se repetir: o jogador já tem um ativo igual a este?"""
+    nome = f"{item['emoji']} {item['nome']}"
+    return item["tipo"] == "ativo" and any(i["tipo"] == "ativo" and i["nome"] == nome for i in jogador["itens"])
+
+
+def bloqueio_compra(jogador, item):
+    """Motivo que impede a compra do item agora (sem contar o ouro), ou None se pode comprar."""
+    if not item["disponivel"]:
+        return "❌ Esse item já foi vendido!"
+    categoria = categoria_compra(item)
+    if compras_restantes(jogador, categoria) <= 0:
+        return f"❌ Você já comprou {LIMITE_COMPRAS[categoria]} {ROTULO_CATEGORIA[categoria]} nesta visita."
+    if ativo_repetido(jogador, item):
+        return "❌ Você já tem esse item ativo: itens ativos não podem se repetir."
+    return None
 
 
 def ordem_compras(jogadores):
-    """Ordem no Comerciante: do jogador menos equipado ao mais equipado (empates sorteados)."""
+    """Ordem no Comerciante: sorteada a cada visita (antes: do menos equipado ao mais equipado).
+    Cada jogador tem um estoque próprio, então a ordem não muda o que cada um pode comprar."""
     ordem = [j for j in jogadores if j["vivo"]]
     random.shuffle(ordem)
-    ordem.sort(key=poder)  # sort é estável: o sorteio desempata
     return ordem
 
 
@@ -392,8 +474,9 @@ def comprar(jogador, item, substituir=None):
     """Tenta comprar. Devolve (sucesso, mensagem). O item comprado some do estoque de quem comprou.
 
     Se o espaço do tipo estiver cheio, `substituir` deve ser o item equipado que será descartado."""
-    if not item["disponivel"]:
-        return False, "❌ Esse item já foi vendido!"
+    bloqueio = bloqueio_compra(jogador, item)
+    if bloqueio:
+        return False, bloqueio
     if jogador["ouro"] < item["preco"]:
         faltam = item["preco"] - jogador["ouro"]
         return False, f"❌ Moedas insuficientes (faltam {faltam})."
@@ -417,6 +500,8 @@ def comprar(jogador, item, substituir=None):
 
     jogador["ouro"] -= preco
     item["disponivel"] = False
+    categoria = categoria_compra(item)
+    jogador["compras_visita"][categoria] = jogador["compras_visita"].get(categoria, 0) + 1
     nome = f"{item['emoji']} {item['nome']}"
     if substituir is not None:
         jogador["itens"].remove(substituir)
@@ -441,7 +526,7 @@ def comprar(jogador, item, substituir=None):
 
 
 def forjar(jogador, item):
-    """Ferreiro: A Forja. Melhora 1 item de combate físico em +5% (1 uso por visita, até MAX_FORJA por item)."""
+    """Ferreiro: A Forja. Melhora 1 item de combate físico em +BONUS_FORJA (1 uso por visita, até MAX_FORJA por item)."""
     if jogador["raca"] != "Ferreiro":
         return False, "❌ Só o Ferreiro pode usar A Forja."
     if jogador["forja_usada"]:

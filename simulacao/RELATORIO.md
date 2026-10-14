@@ -16,7 +16,7 @@ Data: 14/10/2026. Versão do jogo: com a Fúria de 2 D10 (soma), o Escudo de Man
 
 ## Como a simulação foi feita
 
-- O simulador está em `simulacao/simular_nv.py`. Robôs respondem aos **mesmos menus que uma pessoa**, pelo `console.input` do `main_nv.py`: escolha de raça, menu de ações, voltar no ataque, confirmações, inventário, alvos, Comerciante, substituição de item e Forja. Ou seja, o fluxo real do jogo foi usado, não uma cópia das regras.
+- O simulador está em `simulacao/simular.py`. Robôs respondem aos **mesmos menus que uma pessoa**, pelo `console.input` do `main.py`: escolha de raça, menu de ações, voltar no ataque, confirmações, inventário, alvos, Comerciante, substituição de item e Forja. Ou seja, o fluxo real do jogo foi usado, não uma cópia das regras.
 - **Como os robôs jogam (heurística de "jogador comum"):**
   - Atacam na maior parte do tempo.
   - Escolhem o alvo assim: 60% das vezes o de menor vida, 25% o de mais dano e 15% ao acaso; tendem a evitar quem está em postura.
@@ -44,18 +44,18 @@ Data: 14/10/2026. Versão do jogo: com a Fúria de 2 D10 (soma), o Escudo de Man
 Para rodar de novo (na pasta do projeto):
 
 ```bash
-python simulacao/simular_nv.py teste
+python simulacao/simular.py teste
 ```
 
 ```bash
-python simulacao/simular_nv.py massa 20000
+python simulacao/simular.py massa 20000
 ```
 
 ```bash
-python simulacao/simular_nv.py antigas 10000
+python simulacao/simular.py antigas 10000
 ```
 
-O modo `teste` joga 2 partidas e salva a tela completa em `simulacao/partida_teste_1_nv.txt` e `partida_teste_2_nv.txt`. Os números brutos ficam em `simulacao/resultados_nv.json` e `resultados_regras_antigas_nv.json`.
+O modo `teste` joga 2 partidas e salva a tela completa em `simulacao/partida_teste_1.txt` e `partida_teste_2.txt`. Os números brutos ficam em `simulacao/resultados.json` e `resultados_regras_antigas.json`.
 
 ## 1. Vitórias por raça
 
@@ -236,9 +236,9 @@ Itens de ação livre foram usados em cerca de 1% dos turnos, sem encerrar a vez
 
 | # | Problema | Onde | Como apareceu na simulação |
 |---|---|---|---|
-| B1 | **Luvas do Ladrão encerram o turno**, embora sejam "ação livre" (a descrição diz "sem nem parar de lutar"). `mostrar_inventario` devolve `encerra_turno=True` para todo item com alvo, sem olhar a flag `livre`. | `main_nv.py`, `mostrar_inventario` | 1.199 usos, e todos encerraram o turno. |
-| B2 | **A postura não expira quando o jogador age.** `assumir_postura` liga a postura e ela só é desligada quando o jogador é atingido. Quem assume a postura e depois ataca por vários turnos continua protegido, com bloqueio e reflexo de 75%. | `main_nv.py`, `executar_ataque` e `assumir_postura` | 180 mil ataques foram feitos por jogadores ainda em postura; 21% dos ataques acertaram alguém em postura. |
-| B3 | **Bombinha, Bomba de Pólvora e Cajado Relâmpago** ignoram a postura e o Escudo de Mana, mas não os consomem, então a defesa continua guardada para o próximo ataque. Pode ser intencional; vale decidir. | `main_nv.py`, `dano_direto` | 51 casos (esses itens são pouco usados). |
+| B1 | **Luvas do Ladrão encerram o turno**, embora sejam "ação livre" (a descrição diz "sem nem parar de lutar"). `mostrar_inventario` devolve `encerra_turno=True` para todo item com alvo, sem olhar a flag `livre`. | `main.py`, `mostrar_inventario` | 1.199 usos, e todos encerraram o turno. |
+| B2 | **A postura não expira quando o jogador age.** `assumir_postura` liga a postura e ela só é desligada quando o jogador é atingido. Quem assume a postura e depois ataca por vários turnos continua protegido, com bloqueio e reflexo de 75%. | `main.py`, `executar_ataque` e `assumir_postura` | 180 mil ataques foram feitos por jogadores ainda em postura; 21% dos ataques acertaram alguém em postura. |
+| B3 | **Bombinha, Bomba de Pólvora e Cajado Relâmpago** ignoram a postura e o Escudo de Mana, mas não os consomem, então a defesa continua guardada para o próximo ataque. Pode ser intencional; vale decidir. | `main.py`, `dano_direto` | 51 casos (esses itens são pouco usados). |
 
 ## 8. Contradições e inconsistências
 
@@ -248,9 +248,9 @@ Itens de ação livre foram usados em cerca de 1% dos turnos, sem encerrar a vez
 | C2 | **Penetração mágica para qualquer raça.** O Readme antigo dizia que só o Feiticeiro tinha penetração racial; o código e a tela de raças aplicam a qualquer dano mágico. O README novo já descreve o comportamento do código, mas a decisão de design continua em aberto. |
 | C3 | **A regra do Pechinchar "desabilitado até a próxima visita" é inútil** com 1 compra por visita (e `fase_loja` reativa o Pechinchar de qualquer forma). |
 | C4 | **Fúria com dois críticos dá o bônus de ouro duas vezes (+12),** e o Trevo da Sorte soma +4 nos dois dados. São efeitos da regra nova; vale confirmar se é o desejado. |
-| C5 | **O nível da Forja aparece calculado com `5` fixo** (`round(forja * 5)`) em 3 lugares do `main_nv.py`, em vez de usar `shop.BONUS_FORJA`. Se o bônus mudar, a tela mostra o valor errado. |
+| C5 | **O nível da Forja aparece calculado com `5` fixo** (`round(forja * 5)`) em 3 lugares do `main.py`, em vez de usar `shop.BONUS_FORJA`. Se o bônus mudar, a tela mostra o valor errado. |
 | C6 | **Cabeçalho do Comerciante cortado:** com o terminal em cerca de 110 colunas, a linha de espaços sai como "Joias 0/…". É só visual e depende da largura do terminal. |
-| C7 | **A `.venv` da pasta não tem o `rich`** (ele foi instalado no Python global). Se o VS Code ou o terminal ativar a `.venv`, `python main_nv.py` falha com `ModuleNotFoundError: No module named 'rich'`. |
+| C7 | **A `.venv` da pasta não tem o `rich`** (ele foi instalado no Python global). Se o VS Code ou o terminal ativar a `.venv`, `python main.py` falha com `ModuleNotFoundError: No module named 'rich'`. |
 
 ## 9. Desbalanceamentos
 

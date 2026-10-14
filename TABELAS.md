@@ -1,6 +1,6 @@
 # Tabelas da Arena de Combate
 
-Gerado automaticamente a partir do código (`main_nv.py` e `shop_nv.py`).
+Gerado automaticamente a partir do código (`main.py` e `shop.py`).
 
 ## Raças
 

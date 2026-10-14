@@ -1,13 +1,13 @@
 """Simulador de partidas da Arena de Combate com jogadores-robô.
 
-Os robôs respondem aos mesmos prompts que uma pessoa (via console.input do main_nv.py), então todo o fluxo
+Os robôs respondem aos mesmos prompts que uma pessoa (via console.input do main.py), então todo o fluxo
 real é exercitado: menu de ações, voltar/confirmar, inventário, alvos, Comerciante, substituição e Forja.
 Eles jogam com heurísticas simples de "jogador comum" e um pouco de aleatoriedade (às vezes desistem de
 um ataque, cancelam uma confirmação, poupam ouro...).
 
 Uso (na pasta do projeto):
-    python simulacao/simular_nv.py teste        # 2 partidas com a interface renderizada em simulacao/partida_teste_*.txt
-    python simulacao/simular_nv.py massa [N] [sufixo]  # ~N partidas (padrão 5000) sem renderizar; gera simulacao/resultados[sufixo].json
+    python simulacao/simular.py teste        # 2 partidas com a interface renderizada em simulacao/partida_teste_*.txt
+    python simulacao/simular.py massa [N] [sufixo]  # ~N partidas (padrão 5000) sem renderizar; gera simulacao/resultados[sufixo].json
 """
 
 import collections
@@ -24,9 +24,9 @@ import traceback
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(AQUI))
 
-import dice_nv as dice  # noqa: E402
-import main_nv as main  # noqa: E402
-import shop_nv as shop  # noqa: E402
+import dice  # noqa: E402
+import main  # noqa: E402
+import shop  # noqa: E402
 
 RACAS = list(main.RACAS)
 LIMITE_ENTRADAS = 30000
