@@ -89,7 +89,7 @@ RACAS = {
                    f"{round(PENETRACAO_MAGICA * 100)}% da Defesa do alvo.",
         "habilidade": f"Escudo de Mana: gasta 2/3 da mana e mitiga {round(ESCUDO_MANA * 100)}% do dano do próximo ataque recebido. "
                       f"Dura no máximo {ESCUDO_MANA_RODADAS} rodadas (contando a rodada em que foi erguido).",
-        "postura": "Não usa a postura defensiva: no lugar dela tem o Escudo de Mana.",
+        "postura": "Não usa a postura defensiva: no lugar dela há o Escudo de Mana.",
         "itens": [{"nome": "📖 Livro velho", "tipo": "arma", "efeitos": {"dano": 3}, "magico": True}],
     },
     "Ferreiro": {
@@ -291,10 +291,6 @@ def painel_detalhes(nome_raca):
     corpo.add_row("")
     corpo.add_row("[bold underline]Atributos[/]")
     corpo.add_row(atributos)
-    corpo.add_row(
-        f"[bright_black]🌠 Só o Feiticeiro tem penetração mágica (o dano mágico dele ignora {round(PENETRACAO_MAGICA * 100)}% "
-        "da Defesa do alvo). Itens de dano físico ou mágico podem ser comprados por todos, e alguns dão penetração própria.[/]"
-    )
     corpo.add_row("")
     corpo.add_row("[bold underline]Passiva[/]")
     corpo.add_row(f"  ✨ {r['passivo']}")
@@ -307,7 +303,7 @@ def painel_detalhes(nome_raca):
     if nome_raca == "Feiticeiro":
         corpo.add_row(f"  🚫 {r['postura']}")
     else:
-        corpo.add_row(f"  🔰 Até a sua próxima vez, o D10 de defesa bloqueia parte do dano ({dice.texto_bloqueio_defesa()}). {r['postura']}")
+        corpo.add_row(f"  🔰 Até a sua próxima vez, o D10 de defesa bloqueia parte do dano com base no valor sorteado. {r['postura']}")
     corpo.add_row("")
     corpo.add_row("[bold underline]Item Inicial[/]")
     corpo.add_row(itens)
