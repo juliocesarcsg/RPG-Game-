@@ -173,16 +173,18 @@ class Robo:
             return "1"
         if self.decisoes == 1 and r < 0.05:
             self.cancelar = True
-            return rng.choice(["2", "4"])
+            return "4" if feiticeiro else rng.choice(["2", "4"])
         plano = self.planejar_item(j, js, alvos, pode_atacar)
         if plano:
             self.plano_item = plano
             return "3"
         if feiticeiro:
-            if j["mana"] < 1:
-                return "2"
+            # o Feiticeiro não tem postura: a opção 2 do menu dele é o Escudo de Mana
             if not j["escudo_mana"] and j["mana"] >= 2 and j["hp"] < 0.5 * j["hp_max"] and rng.random() < 0.35:
-                return "5"
+                return "2"
+            if not pode_atacar or rng.random() < 0.01:
+                return "4"
+            return "1"
         if not pode_atacar:
             return "2"
         if j["hp"] < 0.3 * j["hp_max"] and not j["postura"] and rng.random() < 0.35:

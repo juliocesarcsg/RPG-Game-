@@ -31,11 +31,29 @@ FAIXAS_ATAQUE = [
     {"nome": "GOLPE CRÍTICO", "emoji": "💥", "min": 9, "max": 10, "fator": 2.0, "ouro": OURO_CRITICO},
 ]
 
+# Postura defensiva: fração do dano bloqueada para cada resultado do D10 de defesa
+# (1–2 não bloqueiam; do 3 ao 9 sobe 10% por ponto; o 10 bloqueia 95%). Antes: 30% / 60% / 90% por faixa.
+BLOQUEIO_DEFESA = {1: 0.0, 2: 0.0, 3: 0.10, 4: 0.20, 5: 0.30, 6: 0.40, 7: 0.50, 8: 0.60, 9: 0.70, 10: 0.95}
+
+# Na defesa o fator vem de BLOQUEIO_DEFESA (por resultado); as faixas só dão nome, emoji e ouro
 FAIXAS_DEFESA = [
-    {"nome": "Defesa Parcial",  "emoji": "🔹", "min": 1,  "max": 4,  "fator": 0.30, "ouro": 0},
-    {"nome": "Defesa Padrão",   "emoji": "🔰", "min": 5,  "max": 9,  "fator": 0.60, "ouro": 0},
-    {"nome": "DEFESA PERFEITA", "emoji": "✨", "min": 10, "max": 10, "fator": 0.90, "ouro": OURO_DEFESA_PERFEITA},
+    {"nome": "Defesa Falhou",   "emoji": "💢", "min": 1,  "max": 2,  "ouro": 0},
+    {"nome": "Defesa Parcial",  "emoji": "🔹", "min": 3,  "max": 6,  "ouro": 0},
+    {"nome": "Defesa Sólida",   "emoji": "🔰", "min": 7,  "max": 9,  "ouro": 0},
+    {"nome": "DEFESA PERFEITA", "emoji": "✨", "min": 10, "max": 10, "ouro": OURO_DEFESA_PERFEITA},
 ]
+
+
+def texto_bloqueio_defesa():
+    """Bloqueio da postura por resultado do D10, para a interface (ex.: '1–2: 0%, 3: 10%, ..., 10: 95%')."""
+    partes = []  # [rótulo, porcentagem]; resultados seguidos com a mesma porcentagem viram um intervalo
+    for rolagem in range(1, 11):
+        pct = round(BLOQUEIO_DEFESA[rolagem] * 100)
+        if partes and partes[-1][1] == pct:
+            partes[-1][0] = f"{partes[-1][0].split('–')[0]}–{rolagem}"
+        else:
+            partes.append([str(rolagem), pct])
+    return ", ".join(f"{r}: {p}%" for r, p in partes)
 
 
 def _montar(rolagem, faixa, base=None):
@@ -44,7 +62,7 @@ def _montar(rolagem, faixa, base=None):
         "base": rolagem if base is None else base,  # valor puro do dado (antes de bônus)
         "nome": faixa["nome"],
         "emoji": faixa["emoji"],
-        "fator": faixa["fator"],
+        "fator": faixa.get("fator"),
         "ouro": faixa["ouro"],
     }
 
@@ -76,5 +94,7 @@ def resultado_ataque(bonus_crit=0, bonus_rolagem=0):
 
 
 def resultado_defesa():
-    """Rola o D10 de defesa. Devolve dict com rolagem, nome, emoji, fator e ouro."""
-    return _resultado(FAIXAS_DEFESA)
+    """Rola o D10 de defesa. Devolve dict com rolagem, nome, emoji, fator (fração do dano bloqueada) e ouro."""
+    resultado = _resultado(FAIXAS_DEFESA)
+    resultado["fator"] = BLOQUEIO_DEFESA[resultado["rolagem"]]
+    return resultado

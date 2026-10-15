@@ -21,7 +21,7 @@ console = Console()
 MIN_JOGADORES = 2
 MAX_JOGADORES = 6
 OURO_POR_TURNO = 6  # moedas ganhas no início de cada turno (antes: 5)
-AUMENTOS_OURO = ((10, 8), (20, 10))  # (depois do fim da rodada X, moedas por turno): 6 → 8 após a 10ª, → 10 após a 20ª
+AUMENTOS_OURO = ((10, 8), (20, 10), (30, 12))  # (depois do fim da rodada X, moedas por turno): 6 → 8 após a 10ª, → 10 após a 20ª, → 12 após a 30ª
 CURA_COMERCIANTE = 0.10  # fração da vida máxima que todos os vivos recuperam quando o Comerciante chega
 INTERVALO_LOJA = 5  # o Comerciante chega ao fim de cada N rodadas completas
 OURO_LOJA = 10  # moedas que cada jogador vivo recebe quando o Comerciante chega
@@ -29,12 +29,12 @@ BONUS_GOBLIN = 0.5  # Goblin ganha 50% a mais de ouro (turno e Comerciante): 1,5
 MAX_PIPS = 3  # barra de Mana (3/3)
 FURIA_MAX = 4  # ataques para encher a barra de Fúria (antes: 3)
 DADOS_FURIA = 2  # D10 de ataque rolados no ataque enfurecido (o dano de cada um se soma)
-ESCUDO_MANA = 0.60  # fração do dano mitigada pelo Escudo de Mana (antes: 0.55)
+ESCUDO_MANA = 0.50  # fração do dano mitigada pelo Escudo de Mana (antes: 0.60)
+ESCUDO_MANA_RODADAS = 3  # o Escudo de Mana se desfaz no fim da 3ª rodada (contando a rodada em que foi erguido) se não for atingido
 PENETRACAO_MAGICA = 0.75  # fração da Defesa do alvo ignorada pela parte mágica do dano do Feiticeiro (só ele)
 MANA_REGEN = 1  # mana restaurada no fim de toda rodada
 MANA_REGEN_EXTRA = 1  # mana extra se o Feiticeiro não gastou mana na rodada
 PROTECAO_TURNOS = 1  # turnos seguintes a um ataque em que o alvo não pode ser atacado de novo (zera no fim da rodada)
-REFLEXO_POSTURA = 0.75  # fração do dano bloqueado pela postura que volta ao atacante
 POSTURA_FERREIRO = 0.10  # bloqueio extra do Ferreiro em postura defensiva
 
 # Cores de cada jogador (por ordem de entrada)
@@ -87,8 +87,9 @@ RACAS = {
         "passivo": f"Mana: barra 3/3. Cada ataque custa 1/3. Ao fim de toda rodada restaura {MANA_REGEN}/3 "
                    f"(+{MANA_REGEN_EXTRA}/3 se não gastou mana). Seu dano é mágico: ignora "
                    f"{round(PENETRACAO_MAGICA * 100)}% da Defesa do alvo.",
-        "habilidade": f"Escudo de Mana: gasta 2/3 da mana e mitiga {round(ESCUDO_MANA * 100)}% do dano do próximo ataque recebido.",
-        "postura": "Postura: recupera +1/3 de mana.",
+        "habilidade": f"Escudo de Mana: gasta 2/3 da mana e mitiga {round(ESCUDO_MANA * 100)}% do dano do próximo ataque recebido. "
+                      f"Dura no máximo {ESCUDO_MANA_RODADAS} rodadas (contando a rodada em que foi erguido).",
+        "postura": "Não usa a postura defensiva: no lugar dela tem o Escudo de Mana.",
         "itens": [{"nome": "📖 Livro velho", "tipo": "arma", "efeitos": {"dano": 3}, "magico": True}],
     },
     "Ferreiro": {
@@ -163,6 +164,7 @@ def criar_jogador(nome, raca, cor):
         "mult_equip": shop.MESTRE_METAL if raca == "Ferreiro" else 1.0,  # Mestre do Metal
         "postura": False,
         "escudo_mana": False,
+        "escudo_mana_rodadas": 0,  # rodadas que faltam para o Escudo de Mana se desfazer (contando a atual)
         "protegido": 0,  # turnos restantes sem poder ser atacado (contando o atual); ver PROTECAO_TURNOS
         "compras_visita": {},  # compras por categoria na visita atual do Comerciante
         "furia": 0,
@@ -302,7 +304,10 @@ def painel_detalhes(nome_raca):
         corpo.add_row(f"  🌟 {r['habilidade']}")
     corpo.add_row("")
     corpo.add_row("[bold underline]Postura Defensiva[/]")
-    corpo.add_row(f"  🔰 Até a sua próxima vez, bloqueia dano e reflete {round(REFLEXO_POSTURA * 100)}% do que bloqueou. {r['postura']}")
+    if nome_raca == "Feiticeiro":
+        corpo.add_row(f"  🚫 {r['postura']}")
+    else:
+        corpo.add_row(f"  🔰 Até a sua próxima vez, o D10 de defesa bloqueia parte do dano ({dice.texto_bloqueio_defesa()}). {r['postura']}")
     corpo.add_row("")
     corpo.add_row("[bold underline]Item Inicial[/]")
     corpo.add_row(itens)
@@ -471,7 +476,7 @@ def linha_recurso(j):
     if raca == "Feiticeiro":
         texto = f"🔮 Mana {pips(j['mana'], 'cyan')}"
         if j["escudo_mana"]:
-            texto += "  [cyan]Escudo de Mana ativo[/]"
+            texto += f"  [cyan]Escudo de Mana ativo ({j['escudo_mana_rodadas']} rod.)[/]"
         return texto
     if raca == "Goblin":
         estado = "[green]pronto[/]" if j["pechinchar_pronto"] else "[bright_black]desabilitado[/]"
@@ -528,7 +533,7 @@ def tabela_arena(jogadores, ativo):
             if j["postura"]:
                 partes.append("[blue]🔰 Postura defensiva[/]")
             if j["escudo_mana"]:
-                partes.append("[cyan]🔮 Escudo de Mana[/]")
+                partes.append(f"[cyan]🔮 Escudo de Mana ({j['escudo_mana_rodadas']} rod.)[/]")
             if j["escudo_pv"]:
                 partes.append(f"[cyan]🧿 Escudo {j['escudo_pv']}[/]")
             if j["veneno"]:
@@ -545,6 +550,13 @@ def tabela_arena(jogadores, ativo):
             status,
         )
     return tabela
+
+
+def acoes_do_turno(jogador):
+    """Ações do menu do turno, na ordem em que aparecem. O Feiticeiro não tem postura: no lugar dela, o Escudo de Mana."""
+    if jogador["raca"] == "Feiticeiro":
+        return ["atacar", "escudo_mana", "inventario", "passar"]
+    return ["atacar", "postura", "inventario", "passar"]
 
 
 def tela_turno(rodada, jogador, jogadores, aviso=None):
@@ -600,16 +612,20 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
     console.print()
     console.print(tabela_arena(jogadores, jogador))
     console.print()
-    menu = (
-        "[bold red]1.[/] 🔪 Atacar Oponente"
-        + (" [bright_black](custa 1/3 de mana)[/]" if jogador["raca"] == "Feiticeiro" else "")
-        + "\n[bold blue]2.[/] 🔰 Adotar Postura Defensiva "
-        f"[bright_black](até a sua próxima vez: bloqueia, reflete {round(REFLEXO_POSTURA * 100)}% e dá bônus racial)[/]\n"
-        "[bold green]3.[/] 🎒 Inventário e Itens\n"
-        "[bold yellow]4.[/] ⏩ Passar a Vez"
+    opcoes = {
+        "atacar": ("red", "🔪 Atacar Oponente"
+                   + (" [bright_black](custa 1/3 de mana)[/]" if jogador["raca"] == "Feiticeiro" else "")),
+        "postura": ("blue", "🔰 Adotar Postura Defensiva "
+                    "[bright_black](até a sua próxima vez: o D10 de defesa bloqueia de 0% a 95% do dano)[/]"),
+        "escudo_mana": ("magenta", f"🔮 Escudo de Mana [bright_black](custa 2/3 de mana • mitiga {round(ESCUDO_MANA * 100)}% "
+                                   f"do próximo ataque • dura até {ESCUDO_MANA_RODADAS} rodadas)[/]"),
+        "inventario": ("green", "🎒 Inventário e Itens"),
+        "passar": ("yellow", "⏩ Passar a Vez"),
+    }
+    menu = "\n".join(
+        f"[bold {opcoes[acao][0]}]{n}.[/] {opcoes[acao][1]}"
+        for n, acao in enumerate(acoes_do_turno(jogador), start=1)
     )
-    if jogador["raca"] == "Feiticeiro":
-        menu += "\n[bold magenta]5.[/] 🔮 Escudo de Mana [bright_black](custa 2/3 de mana)[/]"
     console.print(
         Panel(menu, title="📜 ESCOLHA SUA AÇÃO", box=box.ROUNDED, border_style="white", padding=(1, 3))
     )
@@ -682,7 +698,7 @@ def passar_protecao(jogadores):
 
 def executar_ataque(atacante, alvo):
     """Ataque infalível com D10. Fúria do Bárbaro, bônus de itens (crítico, penetração, veneno, vampirismo...),
-    postura do alvo (D10 + reflexo), Escudo de Mana, escudos de item, espinhos e Defesa fixa."""
+    postura do alvo (D10 de defesa), Escudo de Mana, escudos de item, espinhos e Defesa fixa."""
     b = atacante["bonus"]
     linhas = [f"🔪 [bold {atacante['cor']}]{atacante['nome']}[/] ataca [bold {alvo['cor']}]{alvo['nome']}[/]!", ""]
 
@@ -722,7 +738,6 @@ def executar_ataque(atacante, alvo):
         atacante["ouro"] += b["ouro_ataque"]
         linhas.append(f"🪙 [yellow]+{b['ouro_ataque']} moedas saqueadas[/]")
 
-    refletido = 0
     if alvo["postura"]:
         defesa = dice.resultado_defesa()
         animar_dado(f"D10 DE DEFESA • {alvo['nome']}", defesa["rolagem"], alvo["cor"])
@@ -731,7 +746,6 @@ def executar_ataque(atacante, alvo):
         fator_def = min(0.95, fator_def)
         bloqueado = round(dano * fator_def)
         dano -= bloqueado
-        refletido = round(bloqueado * REFLEXO_POSTURA)
         alvo["postura"] = False  # a postura expira quando o impacto é processado
         linhas.append("")
         linhas.append(
@@ -747,6 +761,7 @@ def executar_ataque(atacante, alvo):
         mitigado = round(dano * ESCUDO_MANA)
         dano -= mitigado
         alvo["escudo_mana"] = False  # expira no impacto
+        alvo["escudo_mana_rodadas"] = 0
         linhas.append("")
         linhas.append(f"🔮 O Escudo de Mana de {alvo['nome']} mitigou [bold cyan]{mitigado}[/] de dano!")
 
@@ -817,15 +832,6 @@ def executar_ataque(atacante, alvo):
                 f"🌵 Os espinhos de {alvo['nome']} causaram [bold blue]{espinhos}[/] de dano em {atacante['nome']}. "
                 f"💖 {atacante['hp']}/{atacante['hp_max']}"
             )
-        if refletido > 0:
-            # o reflexo da postura nunca elimina o atacante (deixa no mínimo 1 de vida)
-            refletido = min(refletido, atacante["hp"] - 1)
-            if refletido > 0:
-                atacante["hp"] -= refletido
-                linhas.append(
-                    f"🔁 A postura de {alvo['nome']} refletiu [bold blue]{refletido}[/] de dano em {atacante['nome']}. "
-                    f"💖 {atacante['hp']}/{atacante['hp_max']}"
-                )
 
     # Fúria do Bárbaro: gasta ao atacar enfurecido; senão enche 1/FURIA_MAX (se não estiver desabilitada)
     if enfurecido:
@@ -899,11 +905,7 @@ def assumir_postura(jogador):
     """Ativa a postura defensiva e aplica o bônus racial. Devolve a mensagem para exibir."""
     jogador["postura"] = True
     msg = f"🔰 [bold blue]{jogador['nome']}[/] assumiu a postura defensiva!"
-    raca = jogador["raca"]
-    if raca == "Feiticeiro" and jogador["mana"] < MAX_PIPS:
-        jogador["mana"] += 1
-        msg += f" 🔮 Mana {pips(jogador['mana'], 'cyan')}"
-    elif raca == "Ferreiro":
+    if jogador["raca"] == "Ferreiro":
         msg += f" 🔨 Bloqueio reforçado (+{round(POSTURA_FERREIRO * 100)}%)"
     return msg
 
@@ -1055,12 +1057,12 @@ def turno(rodada, jogador, jogadores):
     """Turno de um jogador. Ver inventário e usar itens de ação livre não encerram o turno."""
     aviso = inicio_de_turno(jogador, rodada)
     feiticeiro = jogador["raca"] == "Feiticeiro"
-    maximo = 5 if feiticeiro else 4
+    acoes = acoes_do_turno(jogador)
     while True:
         tela_turno(rodada, jogador, jogadores, aviso)
         aviso = None
-        escolha = ler_inteiro(f"[bold]👉 Escolha (1-{maximo}):[/] ", 1, maximo)
-        if escolha == 1:
+        acao = acoes[ler_inteiro(f"[bold]👉 Escolha (1-{len(acoes)}):[/] ", 1, len(acoes)) - 1]
+        if acao == "atacar":
             if not alvos_disponiveis(jogador, jogadores):
                 aviso = "[bold red]✖ Todos os oponentes vivos estão protegidos (atacados no turno anterior) ou invisíveis![/]"
                 continue
@@ -1075,19 +1077,19 @@ def turno(rodada, jogador, jogadores):
             atacar(jogador, alvo)
             pausar()
             return
-        if escolha == 2:
+        if acao == "postura":
             if not confirmar("🔰 Adotar a postura defensiva?"):
                 continue
             console.print(f"\n  {assumir_postura(jogador)}")
             pausar()
             return
-        if escolha == 3:
+        if acao == "inventario":
             encerra, mensagem = mostrar_inventario(jogador, jogadores)
             if encerra:
                 return
             aviso = mensagem
             continue
-        if escolha == 5:  # Escudo de Mana (só Feiticeiro)
+        if acao == "escudo_mana":  # só o Feiticeiro (no lugar da postura)
             if jogador["mana"] < 2:
                 aviso = "[bold red]✖ Mana insuficiente para o Escudo de Mana (precisa de 2/3).[/]"
                 continue
@@ -1099,7 +1101,11 @@ def turno(rodada, jogador, jogadores):
             jogador["mana"] -= 2
             jogador["mana_gasta"] = True
             jogador["escudo_mana"] = True
-            console.print(f"\n  🔮 [bold magenta]{jogador['nome']}[/] ergueu um Escudo de Mana!")
+            jogador["escudo_mana_rodadas"] = ESCUDO_MANA_RODADAS
+            console.print(
+                f"\n  🔮 [bold magenta]{jogador['nome']}[/] ergueu um Escudo de Mana! "
+                f"[bright_black](dura até o próximo ataque recebido, no máximo {ESCUDO_MANA_RODADAS} rodadas)[/]"
+            )
             pausar()
             return
         if not confirmar("⏩ Passar a vez?"):
@@ -1131,6 +1137,11 @@ def fim_de_rodada(jogadores):
             if j["defesa_temp_rodadas"] <= 0:
                 j["defesa_temp"] = 0
         shop.avancar_recargas(j)
+        if j["escudo_mana"]:
+            j["escudo_mana_rodadas"] -= 1
+            if j["escudo_mana_rodadas"] <= 0:
+                j["escudo_mana"] = False
+                eventos.append(f"🔮 O Escudo de Mana de [bold {j['cor']}]{j['nome']}[/] se desfez.")
         if j["furia_usada"]:
             j["furia_usada"] = False
             j["furia_bloqueio"] = 1  # desabilitada durante a próxima rodada

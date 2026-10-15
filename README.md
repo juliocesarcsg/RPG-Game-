@@ -32,13 +32,12 @@ Use um terminal com suporte a emoji e cores (Windows Terminal, terminal do VS Co
 
 ### Turno e rodada
 
-A ordem da rodada é **sorteada livremente a cada rodada** (qualquer um pode abrir, inclusive duas rodadas seguidas). No início do turno o jogador ganha **6 moedas**, que sobem para **8 depois do fim da rodada 10** e para **10 depois do fim da rodada 20** (com aviso na tela; o valor atual e o próximo aumento aparecem sempre no cabeçalho do turno). Depois escolhe uma entre:
+A ordem da rodada é **sorteada livremente a cada rodada** (qualquer um pode abrir, inclusive duas rodadas seguidas). No início do turno o jogador ganha **6 moedas**, que sobem para **8 depois do fim da rodada 10**, para **10 depois do fim da rodada 20** e para **12 depois do fim da rodada 30** (com aviso na tela; o valor atual e o próximo aumento aparecem sempre no cabeçalho do turno). Depois escolhe uma entre:
 
 1. Atacar
-2. Postura defensiva
+2. Postura defensiva (no Feiticeiro, que não tem postura, esta opção é o **Escudo de Mana**)
 3. Inventário e itens
 4. Passar a vez
-5. Escudo de Mana (só o Feiticeiro)
 
 Itens de ação livre não gastam o turno.
 
@@ -55,8 +54,14 @@ Itens de ação livre não gastam o turno.
   | 9–10 | Golpe Crítico | ×2 e +3 moedas |
 
 - Quem é atacado fica **protegido no turno seguinte** (não pode ser atacado em dois turnos seguidos), mas pode levar dois ou mais ataques na mesma rodada. A proteção **zera no fim da rodada**: quem foi atacado no último turno pode ser atacado no primeiro turno da rodada seguinte. Bombas e o Cajado Relâmpago contam como ataque.
-- O dano passa por esta ordem: postura (D10 de defesa que bloqueia 30%, 60% ou 90% e reflete 75% do bloqueado), Escudo de Mana, Defesa fixa (dano mínimo 1), escudos de item e vida.
-- A postura dura até a próxima vez do jogador (ela termina quando chega a vez dele de agir) ou até ele ser atingido, o que vier primeiro. Para continuar protegido, ele escolhe a postura de novo.
+- O dano passa por esta ordem: postura (D10 de defesa, tabela abaixo), Escudo de Mana, Defesa fixa (dano mínimo 1), escudos de item e vida.
+- A postura dura até a próxima vez do jogador (ela termina quando chega a vez dele de agir) ou até ele ser atingido, o que vier primeiro. Para continuar protegido, ele escolhe a postura de novo. A postura **não reflete** dano. O Feiticeiro não tem postura.
+
+  | D10 de defesa | 1–2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+  |---|---|---|---|---|---|---|---|---|---|
+  | Dano bloqueado | 0% | 10% | 20% | 30% | 40% | 50% | 60% | 70% | 95% (+6 moedas) |
+
+  Os bônus de bloqueio (Ferreiro +10%, Escamas de Dragão +15%) somam a esses valores, com teto de 95%.
 
 ### Dano físico e mágico
 
@@ -71,8 +76,8 @@ Todas as raças têm os mesmos três status: vida, dano físico e dano mágico. 
 | Raça | Vida | Dano inicial | Identidade |
 |---|---|---|---|
 | Bárbaro | 120 | físico 3 | **Fúria 4/4:** cada ataque enche 1/4. Cheia, o próximo ataque rola **dois D10 de ataque** e soma o dano dos dois golpes; depois a barra zera e fica bloqueada por 1 rodada. A postura **não** enche a Fúria (sem bônus racial de postura). |
-| Goblin | 115 | físico 3 | **Ganancioso:** ganha 50% a mais de ouro (1,5x): +3 por turno (+4 depois da rodada 10, +5 depois da rodada 20) e +5 no Comerciante. **Pechinchar** (35% de chance de 15% de desconto; depois do desconto fica desabilitado até a próxima visita). A postura não dá bônus racial. |
-| Feiticeiro | 110 | mágico 5 (ataque inicial 8 com o Livro velho) | **Mana 3/3:** cada ataque custa 1/3. **Escudo de Mana** (custa 2/3, mitiga **60%** do próximo ataque recebido). Postura recupera +1/3 de mana. |
+| Goblin | 115 | físico 3 | **Ganancioso:** ganha 50% a mais de ouro (1,5x): +3 por turno (+4 depois da rodada 10, +5 depois da rodada 20, +6 depois da rodada 30) e +5 no Comerciante. **Pechinchar** (35% de chance de 15% de desconto; depois do desconto fica desabilitado até a próxima visita). A postura não dá bônus racial. |
+| Feiticeiro | 110 | mágico 5 (ataque inicial 8 com o Livro velho) | **Mana 3/3:** cada ataque custa 1/3. Ao fim de cada rodada recupera 1/3 (+1/3 se não gastou mana). **Escudo de Mana** (custa 2/3, mitiga **50%** do próximo ataque recebido e dura **no máximo 3 rodadas**, contando a rodada em que foi erguido). **Não tem postura defensiva:** o Escudo de Mana ocupa o lugar dela no menu. |
 | Ferreiro | 110 | físico 3 | **Mestre do Metal** (+10% em armas e armaduras), **A Forja** (por nível: +10% e ainda **+1 de dano** em arma ou **+1 de Defesa e +10 de vida** em armadura; 1 uso por visita, até 3 níveis por item). Postura bloqueia +10%. |
 
 Cada raça começa com uma arma de +3 de dano.
@@ -141,6 +146,7 @@ Quarta rodada de ajustes (depois do primeiro teste jogado):
 - Quinta rodada de ajustes: Poção Reforçada (fixa a partir da rodada 20); afinidade de dano (50% fora da raça); moedas 6 → 8 (depois da 10ª rodada) → 10 (depois da 20ª); Comerciante cura 10%; Anel Venenoso com recarga de 3 rodadas.
 - Sexta rodada de ajustes: Forja +10% por nível (antes +15%); Feiticeiro com dano mágico inicial 5 (ataque inicial 8, antes 9).
 - Sorteios: a ordem das rodadas e a ordem de compra no Comerciante são sorteadas livremente (saiu a regra de "quem abriu não abre a próxima" e a ordem "do menos equipado ao mais equipado"); a roleta da rodada 1 agora para no nome sorteado.
+- Sétima rodada de ajustes: Escudo de Mana mitiga 50% (antes: 60%) e dura no máximo 3 rodadas (antes: até ser atingido); o Feiticeiro perdeu a postura defensiva (e o +1/3 de mana que ela dava); D10 de defesa da postura por resultado (1–2: 0%, +10% por ponto do 3 ao 9, 10: 95%; antes 30% / 60% / 90% por faixa); a postura não reflete mais dano (antes: 75% do bloqueado); moedas por turno sobem para 12 depois da rodada 30.
 
 ## Propostas e pontos em aberto
 

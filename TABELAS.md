@@ -14,8 +14,8 @@ Gerado automaticamente a partir do código (`main.py` e `shop.py`).
 | Raça | Passiva | Habilidade | Postura defensiva |
 |---|---|---|---|
 | 🪓 Bárbaro | Fúria: barra 4/4. Cada ataque enche 1/4. Cheia, o próximo ataque rola 2 D10 de ataque e soma o dano dos dois golpes; depois zera a barra e a desabilita por 1 rodada. | — | Postura: sem bônus racial (não enche a Fúria). |
-| 👺 Goblin | Ganancioso: ganha 50% a mais de ouro no turno (+3; +4 depois da rodada 10; +5 depois da rodada 20) e no Comerciante (+5). | Pechinchar: ao comprar do Comerciante, 35% de chance de 15% de desconto. Depois do desconto, fica desabilitada até a próxima visita. | Postura: sem bônus racial (não dá ouro). |
-| 🔮 Feiticeiro | Mana: barra 3/3. Cada ataque custa 1/3. Ao fim de toda rodada restaura 1/3 (+1/3 se não gastou mana). Seu dano é mágico: ignora 75% da Defesa do alvo. | Escudo de Mana: gasta 2/3 da mana e mitiga 60% do dano do próximo ataque recebido. | Postura: recupera +1/3 de mana. |
+| 👺 Goblin | Ganancioso: ganha 50% a mais de ouro no turno (+3; +4 depois da rodada 10; +5 depois da rodada 20; +6 depois da rodada 30) e no Comerciante (+5). | Pechinchar: ao comprar do Comerciante, 35% de chance de 15% de desconto. Depois do desconto, fica desabilitada até a próxima visita. | Postura: sem bônus racial (não dá ouro). |
+| 🔮 Feiticeiro | Mana: barra 3/3. Cada ataque custa 1/3. Ao fim de toda rodada restaura 1/3 (+1/3 se não gastou mana). Seu dano é mágico: ignora 75% da Defesa do alvo. | Escudo de Mana: gasta 2/3 da mana e mitiga 50% do dano do próximo ataque recebido. Dura no máximo 3 rodadas (contando a rodada em que foi erguido). | Não usa a postura defensiva: no lugar dela tem o Escudo de Mana. |
 | 🔨 Ferreiro | Mestre do Metal: armas e armaduras são 10% mais eficientes nele. | A Forja: quando o Comerciante chega, melhora 1 item de combate físico em +10% e ainda +1 de Dano (arma) ou +1 de Defesa e +10 de Vida máxima (armadura) por nível (1 uso por visita, até 3 níveis por item). | Postura: bloqueia +10% a mais do dano. |
 
 ## Itens
