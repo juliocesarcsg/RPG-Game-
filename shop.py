@@ -11,13 +11,18 @@ CHANCE_PECHINCHA = 0.35     # Goblin: chance de conseguir desconto (antes: 25%)
 DESCONTO_PECHINCHA = 0.15   # Goblin: tamanho do desconto (antes: 10%)
 BONUS_FORJA = 0.10          # Ferreiro: ganho por uso de A Forja (antes: 0.15)
 MAX_FORJA = 3               # Ferreiro: níveis máximos de Forja por item
-PENALIDADE_AFINIDADE = 0.5  # dano de item fora da afinidade: mágico em quem não é Feiticeiro, físico no Feiticeiro
+PENALIDADE_AFINIDADE = 0.5  # dano de item fora da afinidade do personagem (ex.: mágico num personagem físico) rende 50%
+PENALIDADE_MIRA = 1         # arma de alcance diferente do personagem (corpo a corpo x à distância): −1 no D10 de ataque
+ALCANCES = {"melee": "corpo a corpo", "ranged": "à distância", "hibrido": "híbrido"}
 FORJA_FIXO = {"arma": {"dano": 1}, "armadura": {"defesa": 1, "hp_max": 10}}  # Ferreiro: pontos inteiros por nível de Forja (além do %)
 MESTRE_METAL = 1.10         # Ferreiro: eficiência de armas e armaduras (antes: 1.25)
 LIMITE_COMPRAS = {"equipamento": 1, "consumivel": 1}  # por visita: 1 equipamento e 1 consumível (antes: 2 itens quaisquer)
 ROTULO_CATEGORIA = {"equipamento": "equipamento", "consumivel": "consumível"}
-VENENO_RODADAS = 3          # duração do veneno (ele nunca elimina: deixa no mínimo 1 de vida)
+ROTULO_CATEGORIA_PLURAL = {"equipamento": "equipamentos", "consumivel": "consumíveis"}
+VENENO_TURNOS = 3           # duração do veneno, em turnos de quem está envenenado (nunca elimina: deixa no mínimo 1 de vida)
 DEFESA_TEMP_RODADAS = 2     # duração da Defesa temporária das poções
+ACIDO_TURNOS = 3            # Frasco de Ácido: turnos do alvo com a Defesa reduzida
+PROVACAO_VIDA_MINIMA = 0.05 # Armadura da Provação: só salva quem está com pelo menos 5% da vida
 
 # Fases do jogo: o Comerciante só oferece itens da fase em que a partida está
 TIERS = {1: "Early", 2: "Mid", 3: "Late"}
@@ -67,9 +72,9 @@ def partes_do_dano(valor, magico):
     return (0, valor) if magico else (valor, 0)
 
 
-def _item(nome, emoji, tipo, tier, preco, efeitos, descricao, magico=False, usos=1):
+def _item(nome, emoji, tipo, tier, preco, efeitos, descricao, magico=False, usos=1, alcance=None):
     return {"nome": nome, "emoji": emoji, "tipo": tipo, "tier": tier, "preco": preco,
-            "efeitos": efeitos, "descricao": descricao, "magico": magico, "usos": usos}
+            "efeitos": efeitos, "descricao": descricao, "magico": magico, "usos": usos, "alcance": alcance}
 
 
 # tipo: "consumivel" (uso único), "arma"/"armadura"/"joia"/"ativo" (equipados em espaços limitados)
@@ -97,36 +102,45 @@ CATALOGO = [
           "Estrondosas. Atingem um oponente que não esteja protegido, ignorando Defesa e postura.", usos=1),
     _item("Essência de Escorpião", "🦂", "consumivel", 3, 42, {"veneno_arma": 4, "livre": True},
           "Veneno concentrado: o próximo ataque que ferir envenena com força.", usos=1),
-    _item("Elixir Dourado", "🍶", "consumivel", 3, 55, {"cura": 70, "antidoto": True},
+    _item("Frasco de Ácido", "🧪", "consumivel", 3, 38, {"acido": 3},
+          "Arremesse num oponente: a Defesa dele cai 3 por 3 turnos dele. Usar de novo no mesmo alvo renova a duração.",
+          usos=1),
+    _item("Elixir Dourado", "🍶", "consumivel", 3, 55, {"cura": 55, "antidoto": True},  # antes: cura 70
           "A cura dos reis: restaura vida e remove venenos.", usos=1),
 
     # --------------------------------- ARMAS ---------------------------------
+    # alcance: "melee" (corpo a corpo) ou "ranged" (à distância). Arma de alcance diferente do personagem: −1 no D10.
     _item("Espada de Aço", "🔪", "arma", 1, 25, {"dano": 4},
-          "Lâmina bem forjada, equilibrada e afiada."),
+          "Lâmina bem forjada, equilibrada e afiada.", alcance="melee"),
     _item("Orbe Mágico", "🔮", "arma", 1, 25, {"dano": 4},
-          "Orbe que carrega consigo um grande poder mágico.", magico=True),
+          "Orbe que carrega consigo um grande poder mágico.", magico=True, alcance="ranged"),
     _item("Machadinha", "🪓", "arma", 1, 30, {"dano": 4, "crit": 1},
-          "Leve e traiçoeira: acerta pontos fracos com mais frequência."),
+          "Leve e traiçoeira: acerta pontos fracos com mais frequência.", alcance="melee"),
     _item("Manoplas do Saqueador", "🥊", "arma", 1, 30, {"dano": 3, "ouro_ataque": 2},
-          "Cada soco derruba algumas moedas do bolso do adversário."),
+          "Cada soco derruba algumas moedas do bolso do adversário.", alcance="melee"),
+    _item("Besta Leve", "🏹", "arma", 1, 28, {"dano": 4},
+          "Pequena e fácil de recarregar: a primeira arma de quem luta à distância.", alcance="ranged"),
     _item("Lança Rúnica", "🔱", "arma", 2, 60, {"dano": 7},
-          "Arma encantada com runas antigas que brilham em combate."),
+          "Arma encantada com runas antigas que brilham em combate.", alcance="melee"),
     _item("Arco Longo", "🏹", "arma", 2, 50, {"dano": 5, "crit": 1},
-          "Mira precisa: pontos vitais ficam mais fáceis de acertar."),
+          "Mira precisa: pontos vitais ficam mais fáceis de acertar.", alcance="ranged"),
     _item("Maça Estilhaçadora", "🔨", "arma", 2, 50, {"dano": 5, "penetracao": 0.30},
-          "Pesada o bastante para amassar armaduras: ignora parte da Defesa."),
+          "Pesada o bastante para amassar armaduras: ignora parte da Defesa.", alcance="melee"),
     _item("Machado Sedento", "🪓", "arma", 2, 52, {"dano": 5, "vampirismo": 0.15},
-          "Bebe o sangue do inimigo: devolve parte do dano causado como vida."),
+          "Bebe o sangue do inimigo: devolve parte do dano causado como vida.", alcance="melee"),
     _item("Presa de Víbora", "🐍", "arma", 2, 46, {"dano": 3, "veneno": 3},
-          "Os ferimentos infeccionam: seus ataques envenenam o alvo.", ),
+          "Os ferimentos infeccionam: seus ataques envenenam o alvo.", alcance="melee"),
     _item("Cajado Arcano", "🌟", "arma", 2, 55, {"dano": 5, "penetracao": 0.25},
-          "Canaliza energia pura que atravessa parte das defesas.", magico=True),
+          "Canaliza energia pura que atravessa parte das defesas.", magico=True, alcance="ranged"),
     _item("Lâmina Lunar", "🌙", "arma", 3, 90, {"dano": 7, "crit": 2},
-          "Forjada sob a lua cheia: aço e magia em um só golpe, com críticos muito mais comuns.", magico=DANO_HIBRIDO),
+          "Forjada sob a lua cheia: aço e magia em um só golpe, com críticos muito mais comuns.", magico=DANO_HIBRIDO,
+          alcance="melee"),
+    _item("Espada da Provação", "⚔️", "arma", 3, 120, {"dano": 9, "crit": 1, "ignora_postura": True},
+          "Lâmina de quem passou pela provação: atravessa qualquer guarda.", alcance="melee"),
     _item("Mosquete", "🔫", "arma", 3, 100, {"dano": 9, "penetracao": 0.40},
-          "Estampido devastador que atravessa couraças."),
+          "Estampido devastador que atravessa couraças.", alcance="ranged"),
     _item("Grimório Sombrio", "📖", "arma", 3, 95, {"dano": 7, "vampirismo": 0.15, "penetracao": 0.15},
-          "Páginas famintas: drena a vida de quem as magias tocam.", magico=True),
+          "Páginas famintas: drena a vida de quem as magias tocam.", magico=True, alcance="ranged"),
 
     # -------------------------------- ARMADURAS --------------------------------
     _item("Armadura de Couro", "🥋", "armadura", 1, 30, {"hp_max": 35, "defesa": 1},
@@ -143,8 +157,10 @@ CATALOGO = [
           "Tecido encantado que revigora corpo e mana."),
     _item("Armadura de Mithril", "💎", "armadura", 3, 100, {"hp_max": 70, "defesa": 5},
           "Leve como seda e dura como diamante."),
-    _item("Escamas de Dragão", "🐲", "armadura", 3, 105, {"hp_max": 75, "defesa": 3, "bloqueio_postura": 0.15, "espinhos": 1},
-          "Couraça lendária: em postura defensiva quase nada passa."),
+    _item("Armadura da Provação", "🛡️", "armadura", 3, 125,
+          {"hp_max": 65, "defesa": 4, "imune_critico": True, "ultima_provacao": True},
+          "A armadura de um guerreiro que já viu de tudo: nunca é pego desprevenido (críticos contra ele viram golpes "
+          "normais) e não aceita cair: um golpe que mataria o deixa com 1 de vida, e ele responde com um crítico."),
 
     # --------------------------- JOIAS (anéis e amuletos) ---------------------------
     _item("Anel de Ferro", "💍", "joia", 1, 18, {"defesa": 1, "hp_max": 10},
@@ -172,8 +188,8 @@ CATALOGO = [
     _item("Anel do Mago", "💍", "joia", 2, 36, {"dano": 4},
           "Poder arcano condensado em um aro de prata.", magico=True),
     _item("Anel Venenoso", "💍", "joia", 3, 70, {"veneno": 4, "recarga": 3},
-          "Uma agulha oculta: o ataque envenena o alvo (4 de dano por rodada durante 3 rodadas). "
-          "Depois de envenenar, o anel recarrega por 3 rodadas (3 turnos seus)."),
+          "Uma agulha oculta: o ataque envenena o alvo (4 de dano por turno dele, durante 3 turnos). "
+          "Depois de envenenar, o anel recarrega por 3 turnos seus."),
     _item("Amuleto Arcano", "📿", "joia", 3, 80, {"dano": 6, "hp_max": 20},
           "Pulsa com magia pura: mais poder mágico e vitalidade.", magico=True),
     _item("Amuleto do Vampiro", "📿", "joia", 3, 85, {"vampirismo": 0.20, "hp_max": 40},
@@ -192,6 +208,8 @@ CATALOGO = [
           "Dedos ágeis: rouba moedas de um oponente sem nem parar de lutar."),
     _item("Capa da Invisibilidade", "👻", "ativo", 3, 75, {"invisibilidade": True, "buff_dano": 1.5, "livre": True, "recarga": 3},
           "Ninguém pode te escolher como alvo até o seu próximo turno, e a emboscada causa +50% no próximo ataque."),
+    _item("Coroa da Provação", "👑", "ativo", 3, 80, {"sentenca": 0.45, "livre": True, "recarga": 4},
+          "Sentença: marque um oponente; até o próximo turno dele, todos os ataques que ele receber causam +45% de dano."),
     _item("Cajado Relâmpago", "⚡", "ativo", 3, 75, {"raio": 16, "recarga": 3},
           "Um raio que ignora Defesa e postura. Atinge um oponente que não esteja protegido."),
 ]
@@ -261,13 +279,17 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
         linhas.append(f"📦 Pacote com {usos} usos")
     if "cura" in e:
         linhas.append(f"💚 Cura {num(e['cura'])} de vida")
+    if "cura_rende" in e:
+        linhas.append(f"⚠️ Para o seu personagem esta cura rende só {e['cura_rende']}%")
     if e.get("antidoto"):
         linhas.append("🌿 Remove veneno")
     if "dano" in e:
         metade = " (metade físico, metade mágico)" if magico == DANO_HIBRIDO else ""
         linhas.append(f"{icone_dano(magico)} +{num(e['dano'])} de Dano{metade}")
     if "dano_rende" in e:
-        linhas.append(f"⚠️ Para a sua raça este dano rende só {e['dano_rende']}%")
+        linhas.append(f"⚠️ Para o seu personagem este dano rende só {e['dano_rende']}%")
+    if "mira_penalidade" in e:
+        linhas.append(f"⚠️ Arma {ALCANCES[e['alcance_arma']]}: para você, −{e['mira_penalidade']} no D10 de ataque")
     if "defesa" in e:
         linhas.append(f"🔰 +{num(e['defesa'])} de Defesa")
     if "hp_max" in e:
@@ -279,11 +301,19 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if "vampirismo" in e:
         linhas.append(f"🩸 Cura {pct(e['vampirismo'])}% do dano causado")
     if "veneno" in e:
-        linhas.append(f"🐍 Ataques envenenam ({e['veneno']}/rodada por {VENENO_RODADAS} rodadas)")
+        linhas.append(f"🐍 Ataques envenenam ({e['veneno']} por turno do alvo, durante {VENENO_TURNOS} turnos)")
     if "espinhos" in e:
         linhas.append(f"🌵 Reflete {e['espinhos']} de dano em quem te atacar")
     if "bloqueio_postura" in e:
         linhas.append(f"🔰 +{pct(e['bloqueio_postura'])}% de bloqueio na postura")
+    if e.get("imune_critico"):
+        linhas.append("🧠 Leitura de Combate: golpes críticos contra você contam como golpes normais")
+    if e.get("ultima_provacao"):
+        linhas.append(f"🛡️ Última Provação: um golpe que mataria deixa você com 1 de vida (se estiver com pelo menos "
+                      f"{pct(PROVACAO_VIDA_MINIMA)}% da vida) e o seu próximo ataque é crítico garantido; "
+                      "recarrega a cada visita do Comerciante")
+    if e.get("ignora_postura"):
+        linhas.append("⚔️ Ignora a postura defensiva do alvo")
     if "ouro_turno" in e:
         linhas.append(f"🪙 +{e['ouro_turno']} moedas por turno")
     if "ouro_ataque" in e:
@@ -299,7 +329,7 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if "buff_rolagem" in e:
         linhas.append(f"🍀 +{e['buff_rolagem']} na rolagem do próximo ataque")
     if "veneno_arma" in e:
-        linhas.append(f"🐍 Próximo ataque envenena ({e['veneno_arma']}/rodada por {VENENO_RODADAS} rodadas)")
+        linhas.append(f"🐍 Próximo ataque envenena ({e['veneno_arma']} por turno do alvo, durante {VENENO_TURNOS} turnos)")
     if "defesa_temp" in e:
         linhas.append(f"🧱 +{e['defesa_temp']} de Defesa por {DEFESA_TEMP_RODADAS} rodadas")
     if "bomba" in e:
@@ -308,6 +338,10 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
         linhas.append(f"⚡ Raio de {e['raio']} de dano fixo (ignora Defesa e postura)")
     if "roubo" in e:
         linhas.append(f"🧤 Rouba até {e['roubo']} moedas de um oponente")
+    if "acido" in e:
+        linhas.append(f"🧪 Tira {e['acido']} de Defesa de um oponente por {ACIDO_TURNOS} turnos dele")
+    if "sentenca" in e:
+        linhas.append(f"⚖️ Marca um oponente: até o próximo turno dele, os ataques contra ele causam +{pct(e['sentenca'])}% de dano")
     if e.get("invisibilidade"):
         linhas.append("👻 Invisível até o seu próximo turno (ninguém pode te escolher)")
     if "escudo_pv" in e:
@@ -315,7 +349,7 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if e.get("livre"):
         linhas.append("🆓 Ação livre (não gasta o turno)")
     if "recarga" in e:
-        linhas.append(f"⏳ Recarga de {e['recarga']} rodadas")
+        linhas.append(f"⏳ Recarga de {e['recarga']} turnos seus")
     return linhas
 
 
@@ -323,7 +357,7 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
 # Status e bônus dos itens equipados
 # ----------------------------------------------------------------------
 def multiplicador_item(jogador, item):
-    """Eficiência de um item de combate físico para este jogador (raça Ferreiro e níveis de forja)."""
+    """Eficiência de um item de combate físico para este jogador (Ferreiro e níveis de forja)."""
     if item["tipo"] not in EQUIPAVEIS:
         return 1.0
     return jogador.get("mult_equip", 1.0) * (1 + BONUS_FORJA * item.get("forja", 0))
@@ -349,14 +383,27 @@ def efeitos_efetivos(jogador, item):
         rende = rendimento_dano(jogador, item.get("magico", False))
         if rende < 1:
             efeitos["dano_rende"] = round(rende * 100)
+    if item["tipo"] == "arma" and fora_do_alcance(jogador, item):
+        efeitos["mira_penalidade"] = PENALIDADE_MIRA
+        efeitos["alcance_arma"] = item["alcance"]
+    if item["tipo"] == "consumivel" and "cura" in efeitos and jogador.get("mult_cura_consumivel", 1.0) < 1:
+        efeitos["cura_rende"] = round(jogador["mult_cura_consumivel"] * 100)
     return efeitos
 
 
+def fora_do_alcance(jogador, item):
+    """A arma é de alcance diferente do personagem? (híbridos e armas sem alcance definido nunca são)"""
+    alcance = jogador.get("alcance")
+    return bool(item.get("alcance")) and alcance in ("melee", "ranged") and item["alcance"] != alcance
+
+
 def fator_afinidade(jogador, parte):
-    """Quanto rende o dano de item de um tipo ('fisico' ou 'magico') para a raça do jogador."""
-    feiticeiro = jogador.get("raca") == "Feiticeiro"
-    fora = (parte == "magico") != feiticeiro  # mágico fora do Feiticeiro, ou físico no Feiticeiro
-    return PENALIDADE_AFINIDADE if fora else 1.0
+    """Quanto rende o dano de item de um tipo ('fisico' ou 'magico') para o personagem do jogador.
+    Personagens híbridos aproveitam tudo; os outros perdem PENALIDADE_AFINIDADE no tipo que não é o deles."""
+    afinidade = jogador.get("afinidade", "fisico")
+    if afinidade == "hibrido" or parte == afinidade:
+        return 1.0
+    return PENALIDADE_AFINIDADE
 
 
 def rendimento_dano(jogador, magico):
@@ -391,6 +438,13 @@ def recalcular_status(jogador):
         for chave in SOMADOS:
             if chave in item["efeitos"]:
                 bonus[chave] = bonus.get(chave, 0) + item["efeitos"][chave]
+        for chave in ("ultima_provacao", "ignora_postura", "imune_critico"):  # efeitos de liga/desliga
+            if item["efeitos"].get(chave):
+                bonus[chave] = True
+    if jogador.get("vampirismo_base"):  # Hemomante: vampirismo do personagem (soma com os itens, dentro do teto)
+        bonus["vampirismo"] = bonus.get("vampirismo", 0) + jogador["vampirismo_base"]
+    jogador["penalidade_mira"] = PENALIDADE_MIRA if any(
+        i["tipo"] == "arma" and fora_do_alcance(jogador, i) for i in jogador["itens"]) else 0
     for chave, teto in TETOS_BONUS.items():
         if chave in bonus:
             bonus[chave] = min(bonus[chave], teto)
@@ -411,8 +465,13 @@ def itens_do_slot(jogador, tipo):
     return [i for i in jogador["itens"] if i["tipo"] == tipo]
 
 
+def limite_slot(jogador, tipo):
+    """Quantos itens daquele tipo o jogador pode ter equipados (o Alquimista só tem 1 espaço de arma)."""
+    return jogador.get("limite_slots", {}).get(tipo, LIMITE_SLOTS.get(tipo))
+
+
 def slot_cheio(jogador, tipo):
-    limite = LIMITE_SLOTS.get(tipo)
+    limite = limite_slot(jogador, tipo)
     return limite is not None and len(itens_do_slot(jogador, tipo)) >= limite
 
 
@@ -427,9 +486,14 @@ def categoria_compra(item):
     return "consumivel" if item["tipo"] == "consumivel" else "equipamento"
 
 
+def limite_compras(jogador, categoria):
+    """Compras da categoria por visita para este jogador (o Alquimista compra 1 consumível a mais)."""
+    return LIMITE_COMPRAS[categoria] + jogador.get("compras_extra", {}).get(categoria, 0)
+
+
 def compras_restantes(jogador, categoria):
     """Quantas compras da categoria o jogador ainda pode fazer nesta visita do Comerciante."""
-    return LIMITE_COMPRAS[categoria] - jogador["compras_visita"].get(categoria, 0)
+    return limite_compras(jogador, categoria) - jogador["compras_visita"].get(categoria, 0)
 
 
 def compras_esgotadas(jogador):
@@ -453,7 +517,9 @@ def bloqueio_compra(jogador, item):
         return "❌ Esse item já foi vendido!"
     categoria = categoria_compra(item)
     if compras_restantes(jogador, categoria) <= 0:
-        return f"❌ Você já comprou {LIMITE_COMPRAS[categoria]} {ROTULO_CATEGORIA[categoria]} nesta visita."
+        n = limite_compras(jogador, categoria)
+        rotulo = ROTULO_CATEGORIA_PLURAL[categoria] if n > 1 else ROTULO_CATEGORIA[categoria]
+        return f"❌ Você já comprou {n} {rotulo} nesta visita."
     if ativo_repetido(jogador, item):
         return "❌ Você já tem esse item ativo: itens ativos não podem se repetir."
     return None
@@ -515,7 +581,8 @@ def comprar(jogador, item, substituir=None):
             "valor": item["preco"],
             "magico": item.get("magico", False),
             "recarga_atual": 0,
-            "usos": item.get("usos", 1),
+            "usos": item.get("usos", 1) + (jogador.get("usos_extra_consumivel", 0) if item["tipo"] == "consumivel" else 0),
+            "alcance": item.get("alcance"),
         }
     )
 
@@ -545,7 +612,7 @@ def forjar(jogador, item):
 # ----------------------------------------------------------------------
 # Uso de itens (consumíveis e ativos)
 # ----------------------------------------------------------------------
-ACOES_COM_ALVO = ("bomba", "raio", "roubo")  # precisam de um alvo escolhido pela interface
+ACOES_COM_ALVO = ("bomba", "raio", "roubo", "acido", "sentenca")  # precisam de um alvo escolhido pela interface
 
 
 def exige_alvo(item):
@@ -559,7 +626,7 @@ def _efeitos_uteis(jogador, e):
         uteis.append("cura")
     if e.get("antidoto") and jogador["veneno"]:
         uteis.append("antidoto")
-    if "buff_dano" in e and jogador["buff_dano"] <= 1:
+    if "buff_dano" in e and jogador["buff_dano"] < e["buff_dano"]:  # bônus de dano não acumulam: vale o maior
         uteis.append("buff_dano")
     if "buff_rolagem" in e and jogador["buff_rolagem"] <= 0:
         uteis.append("buff_rolagem")
@@ -580,7 +647,7 @@ def pode_usar(jogador, item):
     if item["tipo"] not in ("consumivel", "ativo"):
         return False, "❌ Esse item é um equipamento: o bônus já está valendo."
     if item["tipo"] == "ativo" and item.get("recarga_atual", 0) > 0:
-        return False, f"❌ {item['nome']} em recarga ({item['recarga_atual']} rodada(s))."
+        return False, f"❌ {item['nome']} em recarga ({item['recarga_atual']} turno(s))."
     if e.get("livre") and jogador["livre_usado"]:
         return False, "❌ Você já usou um item de ação livre neste turno."
     if exige_alvo(item):
@@ -611,8 +678,8 @@ def usar_item(jogador, item):
     uteis = _efeitos_uteis(jogador, e)
     partes = []
     if "cura" in uteis:
-        cura = min(e["cura"], jogador["hp_max"] - jogador["hp"])
-        jogador["hp"] += cura
+        valor = e["cura"] * (jogador.get("mult_cura_consumivel", 1.0) if item["tipo"] == "consumivel" else 1.0)
+        cura = aplicar_cura(jogador, valor, "poções e itens")
         partes.append(f"💚 +{cura} de vida ({jogador['hp']}/{jogador['hp_max']})")
     if "antidoto" in uteis:
         jogador["veneno"] = None
@@ -625,7 +692,7 @@ def usar_item(jogador, item):
         partes.append(f"🍀 +{e['buff_rolagem']} na rolagem do próximo ataque")
     if "veneno_arma" in uteis:
         jogador["arma_envenenada"] = e["veneno_arma"]
-        partes.append(f"🐍 arma envenenada ({e['veneno_arma']}/rodada)")
+        partes.append(f"🐍 arma envenenada ({e['veneno_arma']} por turno do alvo)")
     if "defesa_temp" in uteis:
         jogador["defesa_temp"] = e["defesa_temp"]
         jogador["defesa_temp_rodadas"] = DEFESA_TEMP_RODADAS
@@ -640,14 +707,70 @@ def usar_item(jogador, item):
     return True, f"✅ {item['nome']} usado! " + " • ".join(partes)
 
 
+# Morte súbita: a partir de certa rodada todas as curas rendem menos (o main.py ajusta este fator a cada rodada)
+fator_cura_global = 1.0
+
+
+def aplicar_cura(jogador, valor, fonte=""):
+    """Cura o jogador (respeitando a vida máxima e a morte súbita). Devolve quanto curou de fato.
+    `fonte` só identifica a origem da cura (útil para estatísticas)."""
+    cura = max(0, min(round(valor * fator_cura_global), jogador["hp_max"] - jogador["hp"]))
+    jogador["hp"] += cura
+    return cura
+
+
+# ----------------------------------------------------------------------
+# Alquimista: Mistura
+# ----------------------------------------------------------------------
+def misturaveis(jogador):
+    """Consumíveis que podem entrar numa Mistura (os que precisam de alvo, como bombas, ficam de fora)."""
+    return [i for i in jogador["itens"] if i["tipo"] == "consumivel" and not exige_alvo(i)]
+
+
+def misturar(jogador, item_a, item_b):
+    """Alquimista: junta 2 consumíveis num só, com os efeitos dos dois (1 vez por visita do Comerciante).
+    Gasta 1 uso de cada um. Curas, rolagem, Defesa e veneno se somam; bônus de dano vale o maior."""
+    if jogador["raca"] != "Alquimista":
+        return False, "❌ Só o Alquimista pode fazer Misturas."
+    if jogador.get("mistura_usada"):
+        return False, "❌ A Mistura já foi usada nesta visita do Comerciante."
+    if item_a not in misturaveis(jogador) or item_b not in misturaveis(jogador):
+        return False, "❌ Escolha 2 consumíveis (bombas não entram na Mistura)."
+    if item_a is item_b and item_a.get("usos", 1) < 2:
+        return False, "❌ Para misturar um consumível com ele mesmo, ele precisa ter 2 usos."
+    efeitos = {}
+    for origem in (item_a["efeitos"], item_b["efeitos"]):
+        for chave, valor in origem.items():
+            if chave == "livre":
+                continue
+            if chave == "antidoto":
+                efeitos["antidoto"] = True
+            elif chave == "buff_dano":
+                efeitos["buff_dano"] = max(efeitos.get("buff_dano", 1.0), valor)
+            else:
+                efeitos[chave] = efeitos.get(chave, 0) + valor
+    if item_a["efeitos"].get("livre") and item_b["efeitos"].get("livre"):
+        efeitos["livre"] = True  # só não gasta o turno se os dois ingredientes também não gastavam
+    nome = f"⚗️ Mistura ({item_a['nome']} + {item_b['nome']})"
+    for ingrediente in (item_a, item_b):
+        ingrediente["usos"] = ingrediente.get("usos", 1) - 1
+        if ingrediente["usos"] <= 0:
+            jogador["itens"].remove(ingrediente)
+    jogador["itens"].append({"nome": nome, "tipo": "consumivel", "efeitos": efeitos, "forja": 0,
+                             "valor": item_a.get("valor", 0) + item_b.get("valor", 0), "magico": False,
+                             "recarga_atual": 0, "usos": 1, "alcance": None})
+    jogador["mistura_usada"] = True
+    return True, f"⚗️ Mistura pronta: {nome}! " + ", ".join(descrever_efeitos(efeitos))
+
+
 def aplicar_veneno(alvo, dano):
     """Envenena o alvo (refresca a duração; mantém o maior dano por rodada)."""
     atual = alvo["veneno"]["dano"] if alvo["veneno"] else 0
-    alvo["veneno"] = {"dano": max(atual, dano), "rodadas": VENENO_RODADAS}
+    alvo["veneno"] = {"dano": max(atual, dano), "turnos": VENENO_TURNOS}
 
 
 def avancar_recargas(jogador):
-    """Fim de rodada: itens ativos em recarga ficam mais perto de ficar prontos."""
+    """Início do turno do dono: itens em recarga (ativos e Anel Venenoso) ficam 1 turno mais perto de ficar prontos."""
     for item in jogador["itens"]:
         if item.get("recarga_atual", 0) > 0:
             item["recarga_atual"] -= 1
