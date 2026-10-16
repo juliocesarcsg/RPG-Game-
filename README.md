@@ -94,7 +94,7 @@ Cada personagem começa com uma arma inicial (+3 de dano; o Par de luvas do Alqu
 
 Chega ao fim de cada 5 rodadas.
 
-- Cada jogador recebe +10 moedas, **recupera 10% da vida máxima** e vê um estoque próprio de 5 itens, sorteado só para ele, mais uma poção fixa que está sempre à venda: **🩹 Poção Simples** (cura 15, 10 moedas, gasta o turno) até a rodada 15 e **🧴 Poção Reforçada** (cura 30, 20 moedas, gasta o turno) a partir da rodada 20.
+- Cada jogador recebe +10 moedas, **recupera 10% da vida máxima** e vê um estoque próprio de 5 itens, sorteado só para ele, mais uma poção fixa que está sempre à venda: **💊 Poção Simples** (cura 15, 10 moedas, gasta o turno) até a rodada 15 e **🧴 Poção Reforçada** (cura 30, 20 moedas, gasta o turno) a partir da rodada 20.
 - O estoque depende da fase: **Early** até a rodada 9, **Mid** a partir da rodada 10, **Late** a partir da 20. Na prática: visita da rodada 5 é Early, das rodadas 10 e 15 é Mid, e da 20 em diante é Late.
 - Cada jogador compra até **1 equipamento** (arma, armadura, joia ou ativo) **e 1 consumível** por visita. A ordem de compra é **sorteada a cada visita** (como cada um tem o seu próprio estoque, a ordem não muda o que cada um pode comprar).
 - Itens ativos não podem se repetir (não dá para ter dois Olhos Protetores, por exemplo).
@@ -108,8 +108,8 @@ Chega ao fim de cada 5 rodadas.
 - **Armaduras e joias.**
 - **Ativos** reutilizáveis com recarga (contada nos turnos do dono): Cálice Vital, Olho Protetor, Chifre de Guerra, Luvas do Ladrão, Capa da Invisibilidade, Cajado Relâmpago, Coroa da Provação. Ativos de ação livre que pedem alvo (Luvas, Coroa) não gastam o turno.
 - **Itens da Provação (Late):**
-  - **🛡️ Armadura da Provação** (125): +4 de Defesa, +65 de vida, **Leitura de Combate** (golpes críticos contra o portador contam como golpes normais: sem ×2, sem moedas do crítico e sem crítico ladrão; na Fúria, cada dado crítico vira normal) e **Última Provação**: um golpe que mataria (ataque, bomba, raio) deixa o portador com 1 de vida, se ele estiver com pelo menos 5% da vida, e o próximo ataque dele é crítico garantido. Com 1 de vida, o próximo golpe mata. Recarrega a cada visita do Comerciante (não acumula). Substituiu as Escamas de Dragão. É a armadura de técnica; a Mithril continua sendo a de defesa bruta.
-  - **⚔️ Espada da Provação** (120): +9 de dano físico, corpo a corpo, +1 na faixa de crítico, **ignora a postura** do alvo.
+  - **🏰 Armadura da Provação** (125): +4 de Defesa, +65 de vida, **Leitura de Combate** (golpes críticos contra o portador contam como golpes normais: sem ×2, sem moedas do crítico e sem crítico ladrão; na Fúria, cada dado crítico vira normal) e **Última Provação**: um golpe que mataria (ataque, bomba, raio) deixa o portador com 1 de vida, se ele estiver com pelo menos 5% da vida, e o próximo ataque dele é crítico garantido. Com 1 de vida, o próximo golpe mata. Recarrega a cada visita do Comerciante (não acumula). Substituiu as Escamas de Dragão. É a armadura de técnica; a Mithril continua sendo a de defesa bruta.
+  - **🤺 Espada da Provação** (120): +9 de dano físico, corpo a corpo, +1 na faixa de crítico, **ignora a postura** do alvo.
   - **👑 Coroa da Provação** (80, ativo): **Sentença**, ação livre, recarga de 4 turnos seus: marca um oponente; até o próximo turno dele, todos os ataques que ele receber (de qualquer jogador, inclusive bombas e raios) causam +45% de dano.
 - **🧪 Frasco de Ácido** (Late, 38, consumível): arremessado num oponente, tira 3 de Defesa dele por 3 turnos dele (usar de novo renova a duração, não acumula). Gasta o turno.
 - **Efeitos de status:** veneno (nunca elimina), invisibilidade, escudo, Defesa temporária.

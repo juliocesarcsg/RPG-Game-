@@ -114,7 +114,7 @@ CATALOGO = [
           "Lâmina bem forjada, equilibrada e afiada.", alcance="melee"),
     _item("Orbe Mágico", "🔮", "arma", 1, 25, {"dano": 4},
           "Orbe que carrega consigo um grande poder mágico.", magico=True, alcance="ranged"),
-    _item("Machadinha", "🪓", "arma", 1, 30, {"dano": 4, "crit": 1},
+    _item("Machadinha", "🔪", "arma", 1, 30, {"dano": 4, "crit": 1},
           "Leve e traiçoeira: acerta pontos fracos com mais frequência.", alcance="melee"),
     _item("Manoplas do Saqueador", "🥊", "arma", 1, 30, {"dano": 3, "ouro_ataque": 2},
           "Cada soco derruba algumas moedas do bolso do adversário.", alcance="melee"),
@@ -126,7 +126,7 @@ CATALOGO = [
           "Mira precisa: pontos vitais ficam mais fáceis de acertar.", alcance="ranged"),
     _item("Maça Estilhaçadora", "🔨", "arma", 2, 50, {"dano": 5, "penetracao": 0.30},
           "Pesada o bastante para amassar armaduras: ignora parte da Defesa.", alcance="melee"),
-    _item("Machado Sedento", "🪓", "arma", 2, 52, {"dano": 5, "vampirismo": 0.15},
+    _item("Machado Sedento", "🧛", "arma", 2, 52, {"dano": 5, "vampirismo": 0.15},
           "Bebe o sangue do inimigo: devolve parte do dano causado como vida.", alcance="melee"),
     _item("Presa de Víbora", "🐍", "arma", 2, 46, {"dano": 3, "veneno": 3},
           "Os ferimentos infeccionam: seus ataques envenenam o alvo.", alcance="melee"),
@@ -135,7 +135,7 @@ CATALOGO = [
     _item("Lâmina Lunar", "🌙", "arma", 3, 90, {"dano": 7, "crit": 2},
           "Forjada sob a lua cheia: aço e magia em um só golpe, com críticos muito mais comuns.", magico=DANO_HIBRIDO,
           alcance="melee"),
-    _item("Espada da Provação", "⚔️", "arma", 3, 120, {"dano": 9, "crit": 1, "ignora_postura": True},
+    _item("Espada da Provação", "🤺", "arma", 3, 120, {"dano": 9, "crit": 1, "ignora_postura": True},
           "Lâmina de quem passou pela provação: atravessa qualquer guarda.", alcance="melee"),
     _item("Mosquete", "🔫", "arma", 3, 100, {"dano": 9, "penetracao": 0.40},
           "Estampido devastador que atravessa couraças.", alcance="ranged"),
@@ -147,7 +147,7 @@ CATALOGO = [
           "Leve e flexível. Protege sem atrapalhar os movimentos."),
     _item("Gibão Acolchoado", "🧥", "armadura", 1, 26, {"hp_max": 20, "defesa": 1, "cura_turno": 1},
           "Confortável: descansar entre os golpes ajuda a se recuperar."),
-    _item("Cota de Malha", "🦺", "armadura", 2, 42, {"hp_max": 45, "defesa": 2, "espinhos": 1},
+    _item("Cota de Malha", "🎽", "armadura", 2, 42, {"hp_max": 45, "defesa": 2, "espinhos": 1},
           "Anéis de metal trançados que machucam quem bate."),
     _item("Armadura de Placas", "🔰", "armadura", 2, 50, {"hp_max": 65, "defesa": 3},
           "Pesada e imponente. Aguenta muito mais castigo."),
@@ -157,7 +157,7 @@ CATALOGO = [
           "Tecido encantado que revigora corpo e mana."),
     _item("Armadura de Mithril", "💎", "armadura", 3, 100, {"hp_max": 70, "defesa": 5},
           "Leve como seda e dura como diamante."),
-    _item("Armadura da Provação", "🛡️", "armadura", 3, 125,
+    _item("Armadura da Provação", "🏰", "armadura", 3, 125,
           {"hp_max": 65, "defesa": 4, "imune_critico": True, "ultima_provacao": True},
           "A armadura de um guerreiro que já viu de tudo: nunca é pego desprevenido (críticos contra ele viram golpes "
           "normais) e não aceita cair: um golpe que mataria o deixa com 1 de vida, e ele responde com um crítico."),
@@ -216,7 +216,7 @@ CATALOGO = [
 
 
 # Poção simples que o Comerciante SEMPRE oferece (fora do sorteio e de qualquer fase)
-POCAO_FIXA = _item("Poção Simples", "🩹", "consumivel", 1, 10, {"cura": 15},
+POCAO_FIXA = _item("Poção Simples", "💊", "consumivel", 1, 10, {"cura": 15},
                    "Sempre à venda: um gole rápido para fechar arranhões.", usos=1)
 POCAO_REFORCADA = _item("Poção Reforçada", "🧴", "consumivel", 2, 20, {"cura": 30},
                         "Sempre à venda a partir da rodada 20: uma dose caprichada.", usos=1)
@@ -280,16 +280,16 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if "cura" in e:
         linhas.append(f"💚 Cura {num(e['cura'])} de vida")
     if "cura_rende" in e:
-        linhas.append(f"⚠️ Para o seu personagem esta cura rende só {e['cura_rende']}%")
+        linhas.append(f"❗ Para o seu personagem esta cura rende só {e['cura_rende']}%")
     if e.get("antidoto"):
         linhas.append("🌿 Remove veneno")
     if "dano" in e:
         metade = " (metade físico, metade mágico)" if magico == DANO_HIBRIDO else ""
         linhas.append(f"{icone_dano(magico)} +{num(e['dano'])} de Dano{metade}")
     if "dano_rende" in e:
-        linhas.append(f"⚠️ Para o seu personagem este dano rende só {e['dano_rende']}%")
+        linhas.append(f"❗ Para o seu personagem este dano rende só {e['dano_rende']}%")
     if "mira_penalidade" in e:
-        linhas.append(f"⚠️ Arma {ALCANCES[e['alcance_arma']]}: para você, −{e['mira_penalidade']} no D10 de ataque")
+        linhas.append(f"❗ Arma {ALCANCES[e['alcance_arma']]}: para você, −{e['mira_penalidade']} no D10 de ataque")
     if "defesa" in e:
         linhas.append(f"🔰 +{num(e['defesa'])} de Defesa")
     if "hp_max" in e:
@@ -299,7 +299,7 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if "penetracao" in e:
         linhas.append(f"⚡ Ignora {pct(e['penetracao'])}% da Defesa do alvo")
     if "vampirismo" in e:
-        linhas.append(f"🩸 Cura {pct(e['vampirismo'])}% do dano causado")
+        linhas.append(f"🦇 Cura {pct(e['vampirismo'])}% do dano causado")
     if "veneno" in e:
         linhas.append(f"🐍 Ataques envenenam ({e['veneno']} por turno do alvo, durante {VENENO_TURNOS} turnos)")
     if "espinhos" in e:
@@ -309,15 +309,15 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if e.get("imune_critico"):
         linhas.append("🧠 Leitura de Combate: golpes críticos contra você contam como golpes normais")
     if e.get("ultima_provacao"):
-        linhas.append(f"🛡️ Última Provação: um golpe que mataria deixa você com 1 de vida (se estiver com pelo menos "
+        linhas.append(f"🏰 Última Provação: um golpe que mataria deixa você com 1 de vida (se estiver com pelo menos "
                       f"{pct(PROVACAO_VIDA_MINIMA)}% da vida) e o seu próximo ataque é crítico garantido; "
                       "recarrega a cada visita do Comerciante")
     if e.get("ignora_postura"):
-        linhas.append("⚔️ Ignora a postura defensiva do alvo")
+        linhas.append("🤺 Ignora a postura defensiva do alvo")
     if "ouro_turno" in e:
-        linhas.append(f"🪙 +{e['ouro_turno']} moedas por turno")
+        linhas.append(f"💰 +{e['ouro_turno']} moedas por turno")
     if "ouro_ataque" in e:
-        linhas.append(f"🪙 +{e['ouro_ataque']} moedas por ataque")
+        linhas.append(f"💰 +{e['ouro_ataque']} moedas por ataque")
     if "cura_turno" in e:
         linhas.append(f"🌿 Regenera {e['cura_turno']} de vida por turno")
     if "furia_extra" in e:
@@ -341,7 +341,7 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if "acido" in e:
         linhas.append(f"🧪 Tira {e['acido']} de Defesa de um oponente por {ACIDO_TURNOS} turnos dele")
     if "sentenca" in e:
-        linhas.append(f"⚖️ Marca um oponente: até o próximo turno dele, os ataques contra ele causam +{pct(e['sentenca'])}% de dano")
+        linhas.append(f"📜 Marca um oponente: até o próximo turno dele, os ataques contra ele causam +{pct(e['sentenca'])}% de dano")
     if e.get("invisibilidade"):
         linhas.append("👻 Invisível até o seu próximo turno (ninguém pode te escolher)")
     if "escudo_pv" in e:
@@ -555,14 +555,14 @@ def comprar(jogador, item, substituir=None):
     # Goblin: Pechinchar (só rola quando a compra é possível pelo preço cheio) e sempre informa o resultado
     if jogador["raca"] == "Goblin":
         if not jogador["pechinchar_pronto"]:
-            extra = " 🪙 Pechinchar desabilitado: nenhum desconto aplicado."
+            extra = " 💰 Pechinchar desabilitado: nenhum desconto aplicado."
         elif random.random() < CHANCE_PECHINCHA:
             preco = int(item["preco"] * (1 - DESCONTO_PECHINCHA) + 0.5)
             jogador["pechinchar_pronto"] = False
-            extra = (f" 🪙 Pechinchar funcionou! Desconto de {round(DESCONTO_PECHINCHA * 100)}%: "
+            extra = (f" 💰 Pechinchar funcionou! Desconto de {round(DESCONTO_PECHINCHA * 100)}%: "
                      f"pagou {preco} em vez de {item['preco']}.")
         else:
-            extra = " 🪙 Pechinchar: o desconto NÃO foi aplicado desta vez."
+            extra = " 💰 Pechinchar: o desconto NÃO foi aplicado desta vez."
 
     jogador["ouro"] -= preco
     item["disponivel"] = False
@@ -751,7 +751,7 @@ def misturar(jogador, item_a, item_b):
                 efeitos[chave] = efeitos.get(chave, 0) + valor
     if item_a["efeitos"].get("livre") and item_b["efeitos"].get("livre"):
         efeitos["livre"] = True  # só não gasta o turno se os dois ingredientes também não gastavam
-    nome = f"⚗️ Mistura ({item_a['nome']} + {item_b['nome']})"
+    nome = f"🔬 Mistura ({item_a['nome']} + {item_b['nome']})"
     for ingrediente in (item_a, item_b):
         ingrediente["usos"] = ingrediente.get("usos", 1) - 1
         if ingrediente["usos"] <= 0:
@@ -760,7 +760,7 @@ def misturar(jogador, item_a, item_b):
                              "valor": item_a.get("valor", 0) + item_b.get("valor", 0), "magico": False,
                              "recarga_atual": 0, "usos": 1, "alcance": None})
     jogador["mistura_usada"] = True
-    return True, f"⚗️ Mistura pronta: {nome}! " + ", ".join(descrever_efeitos(efeitos))
+    return True, f"🔬 Mistura pronta: {nome}! " + ", ".join(descrever_efeitos(efeitos))
 
 
 def aplicar_veneno(alvo, dano):

@@ -57,7 +57,7 @@ MAXIMOS = {"hp": 150, "dano": 10, "defesa": 10}
 
 RACAS = {
     "Bárbaro": {
-        "emoji": "🪓",
+        "emoji": "💪",
         "cor": "red",
         "descricao": "Guerreiro selvagem. Cada golpe alimenta sua fúria.",
         "hp": 120,
@@ -131,7 +131,7 @@ RACAS = {
         "itens": [{"nome": "🔨 Martelo desgastado", "tipo": "arma", "efeitos": {"dano": 3}, "alcance": "melee"}],
     },
     "Hemomante": {
-        "emoji": "🩸",
+        "emoji": "🦇",
         "cor": "bright_red",
         "descricao": "Mago de sangue. Vive do dano que causa e paga feitiços com a própria vida.",
         "hp": 110,
@@ -146,11 +146,11 @@ RACAS = {
                       f"×{f'{PACTO_MULT:g}'.replace('.', ',')}. Não pode matar a si mesmo e não acumula com outros bônus de "
                       "dano (vale o maior).",
         "postura": "Postura: sem bônus especial.",
-        "itens": [{"nome": "🩸 Frasco de sangue", "tipo": "arma", "efeitos": {"dano": 3}, "magico": True, "alcance": "ranged"}],
+        "itens": [{"nome": "🦇 Frasco de sangue", "tipo": "arma", "efeitos": {"dano": 3}, "magico": True, "alcance": "ranged"}],
         "config": {"vampirismo_base": VAMPIRISMO_HEMOMANTE, "mult_cura_consumivel": CURA_CONSUMIVEL_HEMOMANTE},
     },
     "Alquimista": {
-        "emoji": "⚗️",
+        "emoji": "🔬",
         "cor": "cyan",
         "descricao": "Mestre das poções. Tira o máximo dos consumíveis, mas só carrega uma arma.",
         "hp": 110,
@@ -183,7 +183,7 @@ RACAS = {
         "habilidade": f"Na mira (ação livre, recarga de {NA_MIRA_RECARGA} turnos seus): o próximo disparo ignora a Defesa e a postura "
                       f"do alvo e causa +{NA_MIRA_FIXO} de dano + {round(NA_MIRA_FRACAO * 100)}% do dano físico das armas à distância.",
         "postura": "Postura: se a munição estiver zerada, recarrega a barra inteira.",
-        "itens": [{"nome": "🪨 Estilingue de madeira", "tipo": "arma", "efeitos": {"dano": 3}, "alcance": "ranged"}],
+        "itens": [{"nome": "⚾ Estilingue de madeira", "tipo": "arma", "efeitos": {"dano": 3}, "alcance": "ranged"}],
         "config": {"municao": MUNICAO_MAX},
     },
 }
@@ -576,13 +576,13 @@ def linha_recurso(j):
         return texto
     if raca == "Goblin":
         estado = "[green]pronto[/]" if j["pechinchar_pronto"] else "[bright_black]desabilitado[/]"
-        return f"🪙 Pechinchar: {estado}"
+        return f"💰 Pechinchar: {estado}"
     if raca == "Ferreiro":
         estado = "[bright_black]já usada nesta visita[/]" if j["forja_usada"] else "[green]disponível com o Comerciante[/]"
         return f"🔨 A Forja: {estado}"
     if raca == "Hemomante":
         estado = "[bright_black]já usado neste turno[/]" if j["pacto_usado"] else "[green]pronto[/]"
-        return f"🩸 Vampirismo {round(j['bonus'].get('vampirismo', 0) * 100)}%  •  Pacto de Sangue: {estado}"
+        return f"🦇 Vampirismo {round(j['bonus'].get('vampirismo', 0) * 100)}%  •  Pacto de Sangue: {estado}"
     if raca == "Mosqueteiro":
         if j["na_mira"]:
             mira = "[bold yellow]ATIVA no próximo disparo[/]"
@@ -596,7 +596,7 @@ def linha_recurso(j):
         return texto
     if raca == "Alquimista":
         estado = "[bright_black]já usada nesta visita[/]" if j["mistura_usada"] else "[green]disponível com o Comerciante[/]"
-        return f"⚗️ Mistura: {estado}"
+        return f"🔬 Mistura: {estado}"
     return ""
 
 
@@ -654,12 +654,12 @@ def tabela_arena(jogadores, ativo):
             if j["escudo_pv"]:
                 partes.append(f"[cyan]🧿 Escudo {j['escudo_pv']}[/]")
             if j["sentenca"]:
-                partes.append(f"[bold red]⚖️ Sentenciado (+{round(j['sentenca'] * 100)}% de dano recebido)[/]")
+                partes.append(f"[bold red]📜 Sentenciado (+{round(j['sentenca'] * 100)}% de dano recebido)[/]")
             if j["acido"]:
                 partes.append(f"[red]🧪 Ácido: −{j['acido']['valor']} Defesa ({j['acido']['turnos']} turno(s))[/]")
             if j["bonus"].get("ultima_provacao"):
-                partes.append("[yellow]🛡️ Última Provação pronta[/]" if j["provacao_pronta"]
-                              else "[bright_black]🛡️ Última Provação usada[/]")
+                partes.append("[yellow]🏰 Última Provação pronta[/]" if j["provacao_pronta"]
+                              else "[bright_black]🏰 Última Provação usada[/]")
             if j["veneno"]:
                 partes.append(f"[green]🐍 Envenenado (−{j['veneno']['dano']} por turno)[/]")
             status = "\n".join(partes) or "[green]✔ Em pé[/]"
@@ -709,6 +709,8 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
     cabecalho = Table.grid(padding=(0, 3))
     cabecalho.add_column()
     cabecalho.add_column()
+    detalhes = Table.grid()  # linhas longas numa grade de 1 coluna (na de 2 colunas elas quebravam no meio)
+    detalhes.add_column()
     cabecalho.add_row(
         f"{r['emoji']} [bold {r['cor']}]{jogador['raca']}[/]",
         f"💖 {barra_hp(jogador['hp'], jogador['hp_max'])}",
@@ -717,27 +719,27 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
         f"💰 [bold yellow]{jogador['ouro']} moedas[/]",
         f"🔪 Físico {jogador['dano_fisico']}   🌠 Mágico {jogador['dano_magico']}   {defesa_txt}",
     )
-    cabecalho.add_row(linha_recurso(jogador), "")
-    cabecalho.add_row(texto_equipamentos(jogador), "")
+    detalhes.add_row(linha_recurso(jogador))
+    detalhes.add_row(texto_equipamentos(jogador))
     buffs = linha_buffs(jogador)
     if buffs:
-        cabecalho.add_row(buffs, "")
-    cabecalho.add_row(info_loja, "")
+        detalhes.add_row(buffs)
+    detalhes.add_row(info_loja)
     proximo = proximo_aumento_ouro(rodada)
-    info_ouro = f"🪙 Moedas por turno: [bold yellow]{ouro_base_do_turno(rodada)}[/] "
+    info_ouro = f"💰 Moedas por turno: [bold yellow]{ouro_base_do_turno(rodada)}[/] "
     if proximo:
         info_ouro += f"[bright_black](sobe para {proximo[1]} no fim da rodada {proximo[0]})[/]"
     else:
         info_ouro += "[bright_black](valor máximo)[/]"
-    cabecalho.add_row(info_ouro, "")
+    detalhes.add_row(info_ouro)
     if shop.fator_cura_global < 1:
-        cabecalho.add_row(f"☠️ [bold red]Morte súbita: todas as curas rendem {round(shop.fator_cura_global * 100)}%[/]", "")
+        detalhes.add_row(f"💀 [bold red]Morte súbita: todas as curas rendem {round(shop.fator_cura_global * 100)}%[/]")
     elif rodada >= RODADA_MORTE_SUBITA - 5:
-        cabecalho.add_row(f"☠️ [red]Morte súbita a partir da rodada {RODADA_MORTE_SUBITA}: as curas vão render "
-                          f"{round(CURA_MORTE_SUBITA * 100)}%[/]", "")
+        detalhes.add_row(f"💀 [red]Morte súbita a partir da rodada {RODADA_MORTE_SUBITA}: as curas vão render "
+                          f"{round(CURA_MORTE_SUBITA * 100)}%[/]")
     console.print(
         Panel(
-            cabecalho,
+            Group(cabecalho, detalhes),
             title=f"[bold]🔔 RODADA {rodada}  |  TURNO DE [{jogador['cor']}]{jogador['nome'].upper()}[/][/]",
             box=box.DOUBLE,
             border_style=jogador["cor"],
@@ -756,9 +758,9 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
         "postura": ("blue", "🔰 Adotar Postura Defensiva "
                     "[bright_black](até a sua próxima vez: o D10 de defesa bloqueia de 0% a 95% do dano"
                     + ("; com a munição zerada, recarrega" if jogador["raca"] == "Mosqueteiro" else "") + ")[/]"),
-        "folego": ("red", f"🌬️ Fôlego de Batalha [bright_black](ação livre • com a Fúria cheia, cura "
+        "folego": ("red", f"😤 Fôlego de Batalha [bright_black](ação livre • com a Fúria cheia, cura "
                           f"{round(FOLEGO_CURA * 100)}% da vida máxima)[/]"),
-        "pacto": ("bright_red", f"🩸 Pacto de Sangue [bright_black](ação livre • paga {PACTO_CUSTO} de vida: próximo ataque "
+        "pacto": ("bright_red", f"🦇 Pacto de Sangue [bright_black](ação livre • paga {PACTO_CUSTO} de vida: próximo ataque "
                                 f"×{f'{PACTO_MULT:g}'.replace('.', ',')})[/]"),
         "na_mira": ("yellow", f"🎯 Na mira [bright_black](ação livre • próximo disparo ignora Defesa e postura • "
                               f"recarga de {NA_MIRA_RECARGA} turnos seus)[/]"),
@@ -888,7 +890,7 @@ def executar_ataque(atacante, alvo):
         atacante["critico_garantido"] = False
         if ataques[0]["nome"] != critico["nome"]:
             ataques[0] = dice._montar(ataques[0]["rolagem"], critico, ataques[0]["base"])
-        linhas.append("🛡️ [bold yellow]Provação: crítico garantido![/]")
+        linhas.append("🏰 [bold yellow]Provação: crítico garantido![/]")
     if alvo["bonus"].get("imune_critico"):  # Leitura de Combate: críticos contra o portador viram golpes normais
         cancelados = sum(1 for a in ataques if a["nome"] == critico["nome"])
         if cancelados:
@@ -936,24 +938,24 @@ def executar_ataque(atacante, alvo):
         alvo["ouro"] -= roubo
         atacante["ouro"] += roubo
         if roubo:
-            linhas.append(f"🪙 [bold yellow]Crítico ladrão! {atacante['nome']} roubou {roubo} moedas[/] de {alvo['nome']}!")
+            linhas.append(f"💰 [bold yellow]Crítico ladrão! {atacante['nome']} roubou {roubo} moedas[/] de {alvo['nome']}!")
         else:
-            linhas.append(f"🪙 Crítico ladrão, mas {alvo['nome']} não tinha moedas para roubar.")
+            linhas.append(f"💰 Crítico ladrão, mas {alvo['nome']} não tinha moedas para roubar.")
     elif ouro_dados:
         atacante["ouro"] += ouro_dados
         linhas.append(f"💰 [bold yellow]{atacante['nome']} ganhou +{ouro_dados} moedas[/] de bônus!")
     if b.get("ouro_ataque"):
         atacante["ouro"] += b["ouro_ataque"]
-        linhas.append(f"🪙 [yellow]+{b['ouro_ataque']} moedas saqueadas[/]")
+        linhas.append(f"💰 [yellow]+{b['ouro_ataque']} moedas saqueadas[/]")
 
     if alvo["sentenca"]:  # Coroa da Provação
         extra = round(dano * alvo["sentenca"])
         dano += extra
-        linhas.append(f"⚖️ {alvo['nome']} está sentenciado: +{extra} de dano (+{round(alvo['sentenca'] * 100)}%)")
+        linhas.append(f"📜 {alvo['nome']} está sentenciado: +{extra} de dano (+{round(alvo['sentenca'] * 100)}%)")
     if alvo["postura"] and mira:
         linhas.append(f"🎯 A postura de {alvo['nome']} não adianta contra um disparo na mira.")
     elif alvo["postura"] and b.get("ignora_postura"):
-        linhas.append(f"⚔️ A arma de {atacante['nome']} atravessa a postura de {alvo['nome']}.")
+        linhas.append(f"🤺 A arma de {atacante['nome']} atravessa a postura de {alvo['nome']}.")
     elif alvo["postura"]:
         defesa = dice.resultado_defesa()
         animar_dado(f"D10 DE DEFESA • {alvo['nome']}", defesa["rolagem"], alvo["cor"])
@@ -1007,7 +1009,7 @@ def executar_ataque(atacante, alvo):
     hp_antes = alvo["hp"]
     dano_final, salvou = ultima_provacao(alvo, dano_final)
     if salvou:
-        linhas.append(f"🛡️ [bold yellow]Última Provação! {alvo['nome']} resistiu com 1 de vida, e o próximo ataque dele "
+        linhas.append(f"🏰 [bold yellow]Última Provação! {alvo['nome']} resistiu com 1 de vida, e o próximo ataque dele "
                       "será crítico![/]")
     alvo["hp"] = max(0, alvo["hp"] - dano_final)
     perdido = hp_antes - alvo["hp"]
@@ -1019,7 +1021,7 @@ def executar_ataque(atacante, alvo):
     if b.get("vampirismo") and perdido > 0 and atacante["hp"] < atacante["hp_max"]:
         curou = shop.aplicar_cura(atacante, max(1, perdido * b["vampirismo"]), "vampirismo")
         if curou:
-            linhas.append(f"🩸 {atacante['nome']} drenou [bold green]{curou}[/] de vida. 💖 {atacante['hp']}/{atacante['hp_max']}")
+            linhas.append(f"🦇 {atacante['nome']} drenou [bold green]{curou}[/] de vida. 💖 {atacante['hp']}/{atacante['hp_max']}")
 
     if alvo["hp"] == 0:
         alvo["vivo"] = False
@@ -1079,7 +1081,7 @@ def dano_direto(atacante, alvo, dano, item):
     if alvo["sentenca"]:  # Coroa da Provação
         extra = round(dano * alvo["sentenca"])
         dano += extra
-        linhas.append(f"⚖️ {alvo['nome']} está sentenciado: +{extra} de dano")
+        linhas.append(f"📜 {alvo['nome']} está sentenciado: +{extra} de dano")
     if alvo["escudo_pv"] > 0:
         absorve = min(alvo["escudo_pv"], dano)
         alvo["escudo_pv"] -= absorve
@@ -1087,7 +1089,7 @@ def dano_direto(atacante, alvo, dano, item):
         linhas.append(f"🧿 O escudo de {alvo['nome']} absorveu [bold cyan]{absorve}[/] de dano")
     dano, salvou = ultima_provacao(alvo, dano)
     if salvou:
-        linhas.append(f"🛡️ [bold yellow]Última Provação! {alvo['nome']} resistiu com 1 de vida, e o próximo ataque dele "
+        linhas.append(f"🏰 [bold yellow]Última Provação! {alvo['nome']} resistiu com 1 de vida, e o próximo ataque dele "
                       "será crítico![/]")
     alvo["hp"] = max(0, alvo["hp"] - dano)
     proteger(alvo)
@@ -1123,7 +1125,7 @@ def aplicar_item_com_alvo(jogador, item, alvo):
         console.print(Panel(
             f"{item['nome']} • [bold {jogador['cor']}]{jogador['nome']}[/] sentenciou [bold {alvo['cor']}]{alvo['nome']}[/]: "
             f"até o próximo turno dele, todos os ataques contra ele causam [bold red]+{round(e['sentenca'] * 100)}%[/] de dano.",
-            title="⚖️ SENTENÇA DA PROVAÇÃO", box=box.HEAVY, border_style="yellow", padding=(1, 3)))
+            title="📜 SENTENÇA DA PROVAÇÃO", box=box.HEAVY, border_style="yellow", padding=(1, 3)))
         return
     if "roubo" in e:
         roubado = min(e["roubo"], alvo["ouro"])
@@ -1152,8 +1154,8 @@ def atacar(jogador, alvo):
 
 
 PERGUNTAS_HABILIDADE = {
-    "folego": "🌬️ Consumir a Fúria para curar?",
-    "pacto": f"🩸 Pagar {PACTO_CUSTO} de vida pelo Pacto de Sangue?",
+    "folego": "😤 Consumir a Fúria para curar?",
+    "pacto": f"🦇 Pagar {PACTO_CUSTO} de vida pelo Pacto de Sangue?",
     "na_mira": "🎯 Colocar o próximo disparo na mira?",
 }
 
@@ -1186,13 +1188,13 @@ def usar_habilidade(jogador, acao):
         curou = shop.aplicar_cura(jogador, jogador["hp_max"] * FOLEGO_CURA, "Fôlego de Batalha")
         jogador["furia"] = 0
         jogador["furia_usada"] = True  # a barra fica desabilitada por 1 rodada, como depois do ataque enfurecido
-        return (f"🌬️ [bold red]{jogador['nome']}[/] consumiu a Fúria: [bold green]+{curou} de vida[/] "
+        return (f"😤 [bold red]{jogador['nome']}[/] consumiu a Fúria: [bold green]+{curou} de vida[/] "
                 f"({jogador['hp']}/{jogador['hp_max']}). A Fúria fica desabilitada por 1 rodada.")
     if acao == "pacto":
         jogador["hp"] -= PACTO_CUSTO
         jogador["buff_dano"] = PACTO_MULT
         jogador["pacto_usado"] = True
-        return (f"🩸 [bold bright_red]{jogador['nome']}[/] pagou {PACTO_CUSTO} de vida "
+        return (f"🦇 [bold bright_red]{jogador['nome']}[/] pagou {PACTO_CUSTO} de vida "
                 f"({jogador['hp']}/{jogador['hp_max']}): próximo ataque ×{f'{PACTO_MULT:g}'.replace('.', ',')}!")
     if acao == "na_mira":
         jogador["na_mira"] = True
@@ -1264,7 +1266,7 @@ def inicio_de_turno(jogador, rodada=1):
     if extra_goblin:
         aviso += f"  [green]👺 +{extra_goblin} do Goblin[/]"
     if extra_itens:
-        aviso += f"  [yellow]🪙 +{extra_itens} dos itens[/]"
+        aviso += f"  [yellow]💰 +{extra_itens} dos itens[/]"
     cura = jogador["bonus"].get("cura_turno", 0)
     if cura and jogador["hp"] < jogador["hp_max"]:
         curou = shop.aplicar_cura(jogador, cura, "regeneração")
@@ -1299,7 +1301,7 @@ def inicio_de_turno(jogador, rodada=1):
 def texto_equipamentos(jogador):
     """Itens equipados por espaço (para os cabeçalhos do turno e do Comerciante)."""
     partes = []
-    for tipo, rotulo in (("arma", "🗡️ Armas"), ("armadura", "🛡️ Armadura"), ("joia", "💍 Joias"), ("ativo", "✨ Ativos")):
+    for tipo, rotulo in (("arma", "🔪 Armas"), ("armadura", "🥋 Armadura"), ("joia", "💍 Joias"), ("ativo", "✨ Ativos")):
         itens = shop.itens_do_slot(jogador, tipo)
         nomes = ", ".join(i["nome"] + (f" [yellow]🔨{i['forja']}[/]" if i.get("forja") else "") for i in itens)
         partes.append(f"[bold]{rotulo}:[/] {nomes or '[bright_black]—[/]'}")
@@ -1556,13 +1558,13 @@ def painel_item(item, jogador):
     corpo.add_row(f"  💰 Preço: [bold {cor_preco}]{item['preco']} moedas[/] [bright_black](você tem {jogador['ouro']})[/]")
     if jogador["raca"] == "Goblin" and jogador["pechinchar_pronto"]:
         corpo.add_row(
-            f"  🪙 [green]Pechinchar pronto: {round(shop.CHANCE_PECHINCHA * 100)}% de chance de "
+            f"  💰 [green]Pechinchar pronto: {round(shop.CHANCE_PECHINCHA * 100)}% de chance de "
             f"{round(shop.DESCONTO_PECHINCHA * 100)}% de desconto ao comprar[/]"
         )
     if item["tipo"] == "consumivel":
         corpo.add_row("  🎒 [bright_black]Vai para o inventário e é usado pelo menu de itens (ação livre ou gasta o turno, conforme o item).[/]")
         if jogador.get("usos_extra_consumivel"):
-            corpo.add_row(f"  ⚗️ [green]Bolsa de poções: você recebe +{jogador['usos_extra_consumivel']} uso.[/]")
+            corpo.add_row(f"  🔬 [green]Bolsa de poções: você recebe +{jogador['usos_extra_consumivel']} uso.[/]")
     else:
         usados = len(shop.itens_do_slot(jogador, item["tipo"]))
         limite = shop.limite_slot(jogador, item["tipo"])
@@ -1645,7 +1647,7 @@ def menu_mistura(jogador):
     opcoes = shop.misturaveis(jogador)
     if len(opcoes) < 2 and not (opcoes and opcoes[0].get("usos", 1) >= 2):
         return "[bold red]✖ Você precisa de 2 consumíveis (bombas não entram) para fazer uma Mistura.[/]"
-    tabela = Table(title="⚗️ MISTURA • junta 2 consumíveis num só, com os efeitos dos dois", box=box.ROUNDED,
+    tabela = Table(title="🔬 MISTURA • junta 2 consumíveis num só, com os efeitos dos dois", box=box.ROUNDED,
                    border_style="cyan", header_style="bold white")
     tabela.add_column("#", justify="center", style="bold")
     tabela.add_column("Consumível")
@@ -1673,7 +1675,7 @@ def extras_loja(jogador):
     if jogador["raca"] == "Alquimista" and not jogador["mistura_usada"]:
         opcoes = shop.misturaveis(jogador)
         if len(opcoes) >= 2 or (opcoes and opcoes[0].get("usos", 1) >= 2):
-            extras.append(("mistura", "⚗️ Fazer uma Mistura (junta 2 consumíveis)"))
+            extras.append(("mistura", "🔬 Fazer uma Mistura (junta 2 consumíveis)"))
     return extras
 
 
@@ -1855,7 +1857,7 @@ def jogar(jogadores):
             console.print()
             console.print(
                 Align.center(Panel(
-                    Text(f"☠️ MORTE SÚBITA! ☠️\nA partir de agora todas as curas rendem só {round(CURA_MORTE_SUBITA * 100)}%.",
+                    Text(f"💀 MORTE SÚBITA! 💀\nA partir de agora todas as curas rendem só {round(CURA_MORTE_SUBITA * 100)}%.",
                          justify="center", style="bold red"),
                     box=box.DOUBLE, border_style="red", padding=(1, 6),
                 ))
