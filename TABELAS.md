@@ -2,25 +2,31 @@
 
 Gerado automaticamente a partir do código (`main.py` e `shop.py`).
 
-## Raças
+## Personagens
 
-| Raça | Vida | Dano físico | Dano mágico | Defesa | Dano inicial total | Item inicial |
-|---|---|---|---|---|---|---|
-| 🪓 Bárbaro | 120 | 3 | 0 | 0 | 6 | 🔪 Espada Curta (+3 físico) |
-| 👺 Goblin | 115 | 3 | 0 | 0 | 6 | 🔪 Adaga cega (+3 físico) |
-| 🔮 Feiticeiro | 110 | 0 | 5 | 0 | 8 | 📖 Livro velho (+3 mágico) |
-| 🔨 Ferreiro | 110 | 3 | 0 | 0 | 6.3 | 🔨 Martelo desgastado (+3 físico) |
+| Personagem | Vida | Dano físico | Dano mágico | Defesa | Dano inicial total | Estilo | Item inicial |
+|---|---|---|---|---|---|---|---|
+| 🪓 Bárbaro | 120 | 3 | 0 | 0 | 6 | corpo a corpo, físico | 🔪 Espada Curta (+3 físico, corpo a corpo) |
+| 👺 Goblin | 115 | 3 | 0 | 0 | 6 | corpo a corpo, físico | 🔪 Adaga cega (+3 físico, corpo a corpo) |
+| 🔮 Feiticeiro | 110 | 0 | 5 | 0 | 8 | à distância, mágico | 📖 Livro velho (+3 mágico, à distância) |
+| 🔨 Ferreiro | 110 | 3 | 0 | 0 | 6.3 | corpo a corpo, físico | 🔨 Martelo desgastado (+3 físico, corpo a corpo) |
+| 🩸 Hemomante | 110 | 0 | 3 | 0 | 6 | à distância, mágico | 🩸 Frasco de sangue (+3 mágico, à distância) |
+| ⚗️ Alquimista | 110 | 2 | 2 | 0 | 6 | híbrido, híbrido | 🧤 Par de luvas (+2 mágico, corpo a corpo) |
+| 🎯 Mosqueteiro | 105 | 4 | 0 | 0 | 7 | à distância, físico | 🪨 Estilingue de madeira (+3 físico, à distância) |
 
-| Raça | Passiva | Habilidade | Postura defensiva |
+| Personagem | Passiva | Habilidade | Postura defensiva |
 |---|---|---|---|
-| 🪓 Bárbaro | Fúria: barra 4/4. Cada ataque enche 1/4. Cheia, o próximo ataque rola 2 D10 de ataque e soma o dano dos dois golpes; depois zera a barra e a desabilita por 1 rodada. | — | Postura: sem bônus racial (não enche a Fúria). |
-| 👺 Goblin | Ganancioso: ganha 50% a mais de ouro no turno (+3; +4 depois da rodada 10; +5 depois da rodada 20; +6 depois da rodada 30) e no Comerciante (+5). | Pechinchar: ao comprar do Comerciante, 35% de chance de 15% de desconto. Depois do desconto, fica desabilitada até a próxima visita. | Postura: sem bônus racial (não dá ouro). |
-| 🔮 Feiticeiro | Mana: barra 3/3. Cada ataque custa 1/3. Ao fim de toda rodada restaura 1/3 (+1/3 se não gastou mana). Seu dano é mágico: ignora 75% da Defesa do alvo. | Escudo de Mana: gasta 2/3 da mana e mitiga 50% do dano do próximo ataque recebido. Dura no máximo 3 rodadas (contando a rodada em que foi erguido). | Não usa a postura defensiva: no lugar dela tem o Escudo de Mana. |
+| 🪓 Bárbaro | Fúria: barra 4/4. Cada ataque enche 1/4. Cheia, o próximo ataque rola 2 D10 de ataque e soma o dano dos dois golpes; depois zera a barra e a desabilita por 1 rodada. | Fôlego de Batalha (ação livre, com a Fúria cheia): consome a Fúria e cura 15% da vida máxima. A barra zera e fica desabilitada por 1 rodada. | Postura: sem bônus especial (não enche a Fúria). |
+| 👺 Goblin | Ganancioso: ganha 50% a mais de ouro no turno (+3; +4 depois da rodada 10; +5 depois da rodada 20; +6 depois da rodada 30) e no Comerciante (+5). Crítico ladrão: cada crítico rouba 4 moedas do alvo (no lugar do bônus de moedas do crítico). | Pechinchar: ao comprar do Comerciante, 35% de chance de 15% de desconto. Depois do desconto, fica desabilitada até a próxima visita. | Postura: sem bônus especial (não dá ouro). |
+| 🔮 Feiticeiro | Mana: barra 3/3. Cada ataque custa 1/3. Ao fim de toda rodada restaura 1/3 (+1/3 se não gastou mana). Seu dano é mágico: ignora 75% da Defesa do alvo. | Escudo de Mana: gasta 2/3 da mana e mitiga 50% do dano do próximo ataque recebido. Dura no máximo 3 rodadas (contando a rodada em que foi erguido). | Não usa a postura defensiva: no lugar dela há o Escudo de Mana. |
 | 🔨 Ferreiro | Mestre do Metal: armas e armaduras são 10% mais eficientes nele. | A Forja: quando o Comerciante chega, melhora 1 item de combate físico em +10% e ainda +1 de Dano (arma) ou +1 de Defesa e +10 de Vida máxima (armadura) por nível (1 uso por visita, até 3 níveis por item). | Postura: bloqueia +10% a mais do dano. |
+| 🩸 Hemomante | Vampirismo: cura 20% do dano causado (soma com itens, até 50%). Em compensação, curas de consumíveis rendem só 50%. | Pacto de Sangue (ação livre, 1 vez por turno): paga 6 de vida para o próximo ataque causar ×1,5. Não pode matar a si mesmo e não acumula com outros bônus de dano (vale o maior). | Postura: sem bônus especial. |
+| ⚗️ Alquimista | Bolsa de poções: compra até 2 consumíveis por visita do Comerciante e cada consumível comprado vem com +1 uso. Híbrido: armas de qualquer tipo de dano e alcance rendem 100%. Fraqueza: só 1 espaço de arma. | Mistura (1 vez por visita do Comerciante): junta 2 consumíveis num só, com os efeitos dos dois (bombas não entram). | Postura: sem bônus especial. |
+| 🎯 Mosqueteiro | Recarregar: munição 2/2. Cada disparo gasta 1. Com a munição zerada, a postura defensiva recarrega a barra inteira (2/2). | Na mira (ação livre, recarga de 3 rodadas): o próximo disparo ignora a Defesa e a postura do alvo e causa +2 de dano + 50% do dano físico das armas à distância. | Postura: se a munição estiver zerada, recarrega a barra inteira. |
 
 ## Itens
 
-Fases do Comerciante: Early até a rodada 9, Mid a partir da 10, Late a partir da 20. Por visita: 1 equipamento e 1 consumível. Dano de item fora da afinidade da raça rende 50% (mágico em quem não é Feiticeiro; físico no Feiticeiro).
+Fases do Comerciante: Early até a rodada 9, Mid a partir da 10, Late a partir da 20. Por visita: 1 equipamento e 1 consumível (o Alquimista compra 2 consumíveis). Dano de item fora da afinidade do personagem rende 50%; arma de alcance diferente do personagem dá −1 no D10 de ataque.
 
 ### Poções fixas (sempre à venda)
 
@@ -29,23 +35,24 @@ Fases do Comerciante: Early até a rodada 9, Mid a partir da 10, Late a partir d
 | 🩹 Poção Simples | até a rodada 15 | 10 | 💚 Cura 15 de vida |
 | 🧴 Poção Reforçada | a partir da rodada 20 | 20 | 💚 Cura 30 de vida |
 
-### Armas (13)
+### Armas (14)
 
-| Item | Fase | Preço | Tipo de dano | Efeitos |
-|---|---|---|---|---|
-| 🔪 Espada de Aço | Early | 25 | físico | 🔪 +4 de Dano |
-| 🔮 Orbe Mágico | Early | 25 | mágico | 🌠 +4 de Dano |
-| 🪓 Machadinha | Early | 30 | físico | 🔪 +4 de Dano; 🎯 +1 na faixa de crítico |
-| 🥊 Manoplas do Saqueador | Early | 30 | físico | 🔪 +3 de Dano; 🪙 +2 moedas por ataque |
-| 🐍 Presa de Víbora | Mid | 46 | físico | 🔪 +3 de Dano; 🐍 Ataques envenenam (3/rodada por 3 rodadas) |
-| 🏹 Arco Longo | Mid | 50 | físico | 🔪 +5 de Dano; 🎯 +1 na faixa de crítico |
-| 🔨 Maça Estilhaçadora | Mid | 50 | físico | 🔪 +5 de Dano; ⚡ Ignora 30% da Defesa do alvo |
-| 🪓 Machado Sedento | Mid | 52 | físico | 🔪 +5 de Dano; 🩸 Cura 15% do dano causado |
-| 🌟 Cajado Arcano | Mid | 55 | mágico | 🌠 +5 de Dano; ⚡ Ignora 25% da Defesa do alvo |
-| 🔱 Lança Rúnica | Mid | 60 | físico | 🔪 +7 de Dano |
-| 🌙 Lâmina Lunar | Late | 90 | híbrido | 🔪🌠 +7 de Dano (metade físico, metade mágico); 🎯 +2 na faixa de crítico |
-| 📖 Grimório Sombrio | Late | 95 | mágico | 🌠 +7 de Dano; ⚡ Ignora 15% da Defesa do alvo; 🩸 Cura 15% do dano causado |
-| 🔫 Mosquete | Late | 100 | físico | 🔪 +9 de Dano; ⚡ Ignora 40% da Defesa do alvo |
+| Item | Fase | Preço | Alcance | Tipo de dano | Efeitos |
+|---|---|---|---|---|---|
+| 🔪 Espada de Aço | Early | 25 | corpo a corpo | físico | 🔪 +4 de Dano |
+| 🔮 Orbe Mágico | Early | 25 | à distância | mágico | 🌠 +4 de Dano |
+| 🏹 Besta Leve | Early | 28 | à distância | físico | 🔪 +4 de Dano |
+| 🪓 Machadinha | Early | 30 | corpo a corpo | físico | 🔪 +4 de Dano; 🎯 +1 na faixa de crítico |
+| 🥊 Manoplas do Saqueador | Early | 30 | corpo a corpo | físico | 🔪 +3 de Dano; 🪙 +2 moedas por ataque |
+| 🐍 Presa de Víbora | Mid | 46 | corpo a corpo | físico | 🔪 +3 de Dano; 🐍 Ataques envenenam (3/rodada por 3 rodadas) |
+| 🏹 Arco Longo | Mid | 50 | à distância | físico | 🔪 +5 de Dano; 🎯 +1 na faixa de crítico |
+| 🔨 Maça Estilhaçadora | Mid | 50 | corpo a corpo | físico | 🔪 +5 de Dano; ⚡ Ignora 30% da Defesa do alvo |
+| 🪓 Machado Sedento | Mid | 52 | corpo a corpo | físico | 🔪 +5 de Dano; 🩸 Cura 15% do dano causado |
+| 🌟 Cajado Arcano | Mid | 55 | à distância | mágico | 🌠 +5 de Dano; ⚡ Ignora 25% da Defesa do alvo |
+| 🔱 Lança Rúnica | Mid | 60 | corpo a corpo | físico | 🔪 +7 de Dano |
+| 🌙 Lâmina Lunar | Late | 90 | corpo a corpo | híbrido | 🔪🌠 +7 de Dano (metade físico, metade mágico); 🎯 +2 na faixa de crítico |
+| 📖 Grimório Sombrio | Late | 95 | à distância | mágico | 🌠 +7 de Dano; ⚡ Ignora 15% da Defesa do alvo; 🩸 Cura 15% do dano causado |
+| 🔫 Mosquete | Late | 100 | à distância | físico | 🔪 +9 de Dano; ⚡ Ignora 40% da Defesa do alvo |
 
 ### Armaduras (8)
 

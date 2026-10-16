@@ -82,7 +82,7 @@ def resultado_ataque(bonus_crit=0, bonus_rolagem=0):
     bonus_rolagem: soma ao resultado do dado (máx. 10)
     Devolve dict com rolagem, base, nome, emoji, fator e ouro."""
     base = rolar_d10()
-    rolagem = min(10, base + bonus_rolagem)
+    rolagem = max(1, min(10, base + bonus_rolagem))  # o resultado fica sempre entre 1 e 10 (bônus e penalidades)
     critico = FAIXAS_ATAQUE[2]
     minimo_critico = max(CRIT_MINIMO, critico["min"] - bonus_crit)
     if rolagem >= minimo_critico:

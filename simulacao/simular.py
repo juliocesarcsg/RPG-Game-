@@ -5,6 +5,9 @@ real é exercitado: menu de ações, voltar/confirmar, inventário, alvos, Comer
 Eles jogam com heurísticas simples de "jogador comum" e um pouco de aleatoriedade (às vezes desistem de
 um ataque, cancelam uma confirmação, poupam ouro...).
 
+Escolha de alvo (como pessoas costumam jogar): miram em quem tem mais vida (o mais forte) ou em quem causa mais
+dano; só preferem o de menos vida quando ele está quase eliminado (12% da vida ou menos).
+
 Uso (na pasta do projeto):
     python simulacao/simular.py teste        # 2 partidas com a interface renderizada em simulacao/partida_teste_*.txt
     python simulacao/simular.py massa [N] [sufixo]  # ~N partidas (padrão 5000) sem renderizar; gera simulacao/resultados[sufixo].json
@@ -68,6 +71,9 @@ class Coleta:
         self.exemplos_bug = {}
         self.erros = []
         self.posse_itens = collections.defaultdict(lambda: [0, 0])  # item -> [donos no fim, donos que venceram]
+        self.recebidos = collections.defaultdict(collections.Counter)  # raça -> ataques/dano recebidos
+        self.curas = collections.defaultdict(collections.Counter)  # raça -> fonte -> vida curada
+        self.habilidades = collections.defaultdict(collections.Counter)  # raça -> habilidade -> usos
         self.cenario = ""
 
     def bug(self, chave, exemplo=""):
@@ -116,6 +122,8 @@ class Robo:
         self.cancelar = False
         self.tentados = set()
         self.tentativas_loja = 0
+        self.usadas = set()  # habilidades livres já tentadas neste turno
+        self.par_mistura = None
 
     # --------------------------- despacho ---------------------------
     def responder(self, msg=""):
@@ -137,6 +145,8 @@ class Robo:
             return self.substituir()
         if "Item para forjar" in t:
             return self.forjar()
+        if "Primeiro consumível" in t or "Segundo consumível" in t:
+            return self.mistura("Primeiro" in t)
         m = re.search(r"Escolha \((\d+)-(\d+)\)", t)
         if m:
             lo, hi = int(m.group(1)), int(m.group(2))
@@ -157,43 +167,64 @@ class Robo:
         return "1"
 
     # --------------------------- turno ---------------------------
+    def acao(self, nome):
+        """Número da ação no menu do turno do jogador atual."""
+        return str(main.acoes_do_turno(X.jogador).index(nome) + 1)
+
     def decidir_acao(self, maximo):
         j, js, rng = X.jogador, X.jogadores, self.rng
+        raca = j["raca"]
         self.decisoes += 1
-        if self.decisoes > 12:
-            C.bug("robô: turno com decisões demais (possível loop de menu)", f"{j['raca']} rodada {X.rodada}")
-            return "4"
+        if self.decisoes > 14:
+            C.bug("robô: turno com decisões demais (possível loop de menu)", f"{raca} rodada {X.rodada}")
+            return self.acao("passar")
         alvos = main.alvos_disponiveis(j, js)
-        feiticeiro = j["raca"] == "Feiticeiro"
-        pode_atacar = bool(alvos) and (not feiticeiro or j["mana"] >= 1)
+        feiticeiro = raca == "Feiticeiro"
+        pode_atacar = (bool(alvos) and (not feiticeiro or j["mana"] >= 1)
+                       and (raca != "Mosqueteiro" or j["municao"] >= 1))
         # pessoa indecisa: abre o ataque e volta, ou cancela uma ação na confirmação
         r = rng.random()
         if self.decisoes == 1 and r < 0.03 and pode_atacar:
             self.voltar_ataque = True
-            return "1"
+            return self.acao("atacar")
         if self.decisoes == 1 and r < 0.05:
             self.cancelar = True
-            return "4" if feiticeiro else rng.choice(["2", "4"])
+            return self.acao("passar")
+        # habilidades de ação livre (antes de agir)
+        hp_pct = j["hp"] / j["hp_max"]
+        if raca == "Bárbaro" and "folego" not in self.usadas and j["furia"] >= main.FURIA_MAX and hp_pct < 0.45:
+            self.usadas.add("folego")
+            return self.acao("folego")
+        if (raca == "Hemomante" and "pacto" not in self.usadas and pode_atacar and hp_pct > 0.4
+                and main.bloqueio_habilidade(j, "pacto") is None):
+            self.usadas.add("pacto")
+            return self.acao("pacto")
+        if (raca == "Mosqueteiro" and "na_mira" not in self.usadas and pode_atacar
+                and main.bloqueio_habilidade(j, "na_mira") is None):
+            self.usadas.add("na_mira")
+            return self.acao("na_mira")
         plano = self.planejar_item(j, js, alvos, pode_atacar)
         if plano:
             self.plano_item = plano
-            return "3"
+            return self.acao("inventario")
         if feiticeiro:
-            # o Feiticeiro não tem postura: a opção 2 do menu dele é o Escudo de Mana
-            if not j["escudo_mana"] and j["mana"] >= 2 and j["hp"] < 0.5 * j["hp_max"] and rng.random() < 0.35:
-                return "2"
+            # o Feiticeiro não tem postura: no lugar dela, o Escudo de Mana
+            if not j["escudo_mana"] and j["mana"] >= 2 and hp_pct < 0.5 and rng.random() < 0.35:
+                return self.acao("escudo_mana")
             if not pode_atacar or rng.random() < 0.01:
-                return "4"
-            return "1"
+                return self.acao("passar")
+            return self.acao("atacar")
+        if raca == "Mosqueteiro" and j["municao"] == 0:
+            return self.acao("postura")  # recarrega
         if not pode_atacar:
-            return "2"
-        if j["hp"] < 0.3 * j["hp_max"] and not j["postura"] and rng.random() < 0.35:
-            return "2"
+            return self.acao("postura")
+        if hp_pct < 0.3 and not j["postura"] and rng.random() < 0.35:
+            return self.acao("postura")
         if not j["postura"] and rng.random() < 0.12:
-            return "2"
+            return self.acao("postura")
         if rng.random() < 0.01:
-            return "4"  # às vezes passa a vez
-        return "1"
+            return self.acao("passar")  # às vezes passa a vez
+        return self.acao("atacar")
 
     def planejar_item(self, j, js, alvos, pode_atacar):
         rng = self.rng
@@ -208,9 +239,11 @@ class Robo:
             if "bomba" in e or "raio" in e:
                 if alvos:
                     dano = e.get("bomba", e.get("raio"))
-                    menor = min(alvos, key=lambda a: a["hp"])
-                    if menor["hp"] <= dano or rng.random() < 0.5:
-                        alvo_item.append((item, menor))
+                    finalizaveis = [a for a in alvos if a["hp"] <= dano]
+                    if finalizaveis:
+                        alvo_item.append((item, min(finalizaveis, key=lambda a: a["hp"])))
+                    elif rng.random() < 0.5:
+                        alvo_item.append((item, self.alvo_preferido(alvos)))
             elif "roubo" in e:
                 afet = main.alvos_afetaveis(j, js)
                 if afet:
@@ -249,20 +282,23 @@ class Robo:
         if self.voltar_ataque:
             self.voltar_ataque = False
             return "0"
-        if self.alvo_desejado in alvos:
-            alvo = self.alvo_desejado
-        else:
-            r = rng.random()
-            sem_postura = [a for a in alvos if not a["postura"]]
-            pool = sem_postura if sem_postura and rng.random() < 0.5 else alvos
-            if r < 0.6:
-                alvo = min(pool, key=lambda a: a["hp"])
-            elif r < 0.85:
-                alvo = max(pool, key=lambda a: a["dano"])
-            else:
-                alvo = rng.choice(pool)
+        alvo = self.alvo_desejado if self.alvo_desejado in alvos else self.alvo_preferido(alvos)
         self.alvo_desejado = None
         return str(alvos.index(alvo) + 1)
+
+    def alvo_preferido(self, alvos):
+        """Como pessoas costumam escolher: elimina quem está quase morto (12% da vida ou menos); fora isso, mira em
+        quem tem mais vida (o mais forte) ou em quem causa mais dano, com um pouco de acaso."""
+        rng = self.rng
+        quase = [a for a in alvos if a["hp"] <= 0.12 * a["hp_max"]]
+        if quase:
+            return min(quase, key=lambda a: a["hp"])
+        r = rng.random()
+        if r < 0.45:
+            return max(alvos, key=lambda a: (a["hp"], rng.random()))
+        if r < 0.85:
+            return max(alvos, key=lambda a: (a["dano"], rng.random()))
+        return rng.choice(alvos)
 
     # --------------------------- Comerciante ---------------------------
     def forjaveis(self, j):
@@ -271,19 +307,29 @@ class Robo:
     def decidir_loja(self):
         j, estoque = X.jogador, X.estoque
         self.tentativas_loja += 1
-        ferreiro_forja = j["raca"] == "Ferreiro" and not j["forja_usada"] and self.forjaveis(j)
-        if self.tentativas_loja > 10:
+        if self.tentativas_loja > 12:
             C.bug("robô: loja com tentativas demais (possível loop de menu)", j["raca"])
             return "0"
-        if shop.compras_esgotadas(j):
-            return "1" if ferreiro_forja else "0"
-        if ferreiro_forja:
-            return str(len(estoque) + 1)
-        item = self.escolher_compra(j, estoque)
-        if item is None:
-            return "0"
-        self.item_escolhido = item
-        return str(estoque.index(item) + 1)
+        n_itens = 0 if shop.compras_esgotadas(j) else len(estoque)
+        extras = [chave for chave, _ in main.extras_loja(j)]
+        if "forja" in extras and self.forjaveis(j):
+            return str(n_itens + extras.index("forja") + 1)
+        if n_itens:
+            item = self.escolher_compra(j, estoque)
+            if item is not None:
+                self.item_escolhido = item
+                return str(estoque.index(item) + 1)
+        if "mistura" in extras:
+            return str(n_itens + extras.index("mistura") + 1)
+        return "0"
+
+    def mistura(self, primeiro):
+        """Alquimista: junta os 2 primeiros consumíveis que podem ser misturados (ou 2 usos do mesmo)."""
+        opcoes = shop.misturaveis(X.jogador)
+        if primeiro:
+            self.par_mistura = (1, 2) if len(opcoes) >= 2 else (1, 1)
+            return str(self.par_mistura[0])
+        return str(self.par_mistura[1])
 
     def valor(self, j, item):
         preco = item["preco"]
@@ -291,11 +337,17 @@ class Robo:
         raca = j["raca"]
         if item["tipo"] == "consumivel":
             consumiveis = [i for i in j["itens"] if i["tipo"] == "consumivel"]
-            if len(consumiveis) >= 3:
+            if len(consumiveis) >= 3 + (2 if raca == "Alquimista" else 0):
                 return 0.1 * preco
             if "cura" in e and not any("cura" in i["efeitos"] for i in consumiveis):
-                return 0.7 * preco
-            return 0.4 * preco
+                v = 0.7 * preco
+            else:
+                v = 0.4 * preco
+            if raca == "Alquimista":
+                v *= 1.8  # o personagem dos consumíveis
+            if raca == "Hemomante" and "cura" in e:
+                v *= 0.5  # curas rendem metade para ele
+            return v
         v = float(preco)
         if shop.slot_cheio(j, item["tipo"]):
             pior = shop.pior_item_do_slot(j, item["tipo"])
@@ -303,7 +355,11 @@ class Robo:
             if valor_pior >= preco:
                 return 0
             v = preco - 0.7 * valor_pior
-        if raca == "Feiticeiro" and (item.get("magico") or "mana_regen" in e):
+        if "dano" in e:
+            v *= shop.rendimento_dano(j, item.get("magico", False))  # dano fora da afinidade rende menos
+        if item["tipo"] == "arma" and shop.fora_do_alcance(j, item):
+            v *= 0.6  # arma de alcance diferente: −1 no D10
+        if raca == "Feiticeiro" and "mana_regen" in e:
             v *= 1.3
         if raca == "Bárbaro" and "furia_extra" in e:
             v *= 1.3
@@ -365,6 +421,9 @@ def instalar_wrappers():
         comprar=shop.comprar,
         atacar=main.atacar,
         fim_de_rodada=main.fim_de_rodada,
+        aplicar_cura=shop.aplicar_cura,
+        usar_habilidade=main.usar_habilidade,
+        misturar=shop.misturar,
     )
 
     def resultado_ataque(*a, **k):
@@ -383,6 +442,7 @@ def instalar_wrappers():
         hp0, esc0 = alvo["hp"], alvo["escudo_pv"]
         ouro_a0, ouro_d0 = atk["ouro"], alvo["ouro"]
         postura = alvo["postura"]
+        mira, penal = atk["na_mira"], atk["penalidade_mira"]
         if atk["postura"]:
             C.bug("atacante continua em postura defensiva enquanto ataca (postura de turno anterior não expira)",
                   "assumir_postura em um turno + atacar nos seguintes: a postura só some quando o jogador é atingido")
@@ -393,11 +453,12 @@ def instalar_wrappers():
         X.enfurecido = False
         bruto = round(poder * fator * buff)
         final = (hp0 - alvo["hp"]) + (esc0 - alvo["escudo_pv"])
-        C.ataques.append((C.cenario, atk["raca"], cat, bruto, final, fator, postura, X.rodada, buff > 1))
-        ouro_crit = sum(r["ouro"] for r in rolls)
-        C.ouro[atk["raca"]]["crítico"] += ouro_crit
-        C.ouro[atk["raca"]]["saque (Manoplas)"] += atk["ouro"] - ouro_a0 - ouro_crit
-        C.ouro[alvo["raca"]]["defesa perfeita"] += alvo["ouro"] - ouro_d0
+        C.ataques.append((C.cenario, atk["raca"], cat, bruto, final, fator, postura, X.rodada, buff > 1, mira, penal))
+        C.recebidos[alvo["raca"]]["ataques"] += 1
+        C.recebidos[alvo["raca"]]["dano"] += final
+        C.ouro[atk["raca"]]["ataques (crítico, saque, roubo)"] += atk["ouro"] - ouro_a0
+        delta_alvo = alvo["ouro"] - ouro_d0
+        C.ouro[alvo["raca"]]["defesa perfeita" if delta_alvo >= 0 else "roubado por crítico do Goblin"] += delta_alvo
         if hp0 > 0 and not alvo["vivo"]:
             eliminar(alvo, atk["raca"])
 
@@ -507,6 +568,21 @@ def instalar_wrappers():
         X.acao_turno = "ataque"
         return _orig["atacar"](jogador, alvo)
 
+    def aplicar_cura(jogador, valor, fonte=""):
+        curou = _orig["aplicar_cura"](jogador, valor, fonte)
+        C.curas[jogador["raca"]][fonte or "outros"] += curou
+        return curou
+
+    def usar_habilidade(jogador, acao):
+        C.habilidades[jogador["raca"]][acao] += 1
+        return _orig["usar_habilidade"](jogador, acao)
+
+    def misturar(jogador, a, b):
+        ok, msg = _orig["misturar"](jogador, a, b)
+        if ok:
+            C.habilidades[jogador["raca"]]["mistura"] += 1
+        return ok, msg
+
     def fim_de_rodada(jogadores):
         eventos = _orig["fim_de_rodada"](jogadores)
         checar_invariantes(jogadores, "fim de rodada")
@@ -539,6 +615,9 @@ def instalar_wrappers():
     main.atacar = atacar
     main.fim_de_rodada = fim_de_rodada
     main.fase_loja = fase_loja
+    shop.aplicar_cura = aplicar_cura
+    main.usar_habilidade = usar_habilidade
+    shop.misturar = misturar
 
 
 def checar_invariantes(jogadores, onde):
@@ -558,8 +637,10 @@ def checar_invariantes(jogadores, onde):
             C.bug("mana fora de 0..3", f"{r} mana={j['mana']} em {onde}")
         if not 0 <= j["furia"] <= main.FURIA_MAX:
             C.bug("fúria fora da barra", f"{r} fúria={j['furia']} em {onde}")
-        for tipo, limite in shop.LIMITE_SLOTS.items():
-            if len(shop.itens_do_slot(j, tipo)) > limite:
+        if not 0 <= j["municao"] <= main.MUNICAO_MAX:
+            C.bug("munição fora da barra", f"{r} munição={j['municao']} em {onde}")
+        for tipo in shop.LIMITE_SLOTS:
+            if len(shop.itens_do_slot(j, tipo)) > shop.limite_slot(j, tipo):
                 C.bug("mais itens equipados do que o espaço permite", f"{r} {tipo} em {onde}")
 
 
@@ -769,10 +850,32 @@ def analisar():
             fins[f["raca"]].append(f)
     R["ouro_parado_no_fim"] = {r: media([f["ouro"] for f in fs]) for r, fs in fins.items()}
 
+    R["ataques_recebidos_por_rodada_viva"] = {
+        r: {"ataques": round(C.recebidos[r]["ataques"] / rodadas_vivo[r], 2),
+            "dano": round(C.recebidos[r]["dano"] / rodadas_vivo[r], 2)} for r in RACAS if rodadas_vivo[r]}
+    R["curas_por_rodada_viva"] = {r: {f: round(v / rodadas_vivo[r], 2) for f, v in C.curas[r].most_common()}
+                                  for r in RACAS if rodadas_vivo[r]}
+    turnos = {r: sum(C.acoes[r].values()) for r in RACAS}
+    R["habilidades_por_turno"] = {r: {h: pct(n, turnos[r]) for h, n in C.habilidades[r].most_common()}
+                                  for r in RACAS if C.habilidades[r] and turnos[r]}
+    R["ataques_com_penalidade_de_mira"] = {r: pct(sum(1 for a in C.ataques if a[1] == r and a[10]),
+                                                  sum(1 for a in C.ataques if a[1] == r)) for r in RACAS}
+    mira = [a for a in C.ataques if a[9]]
+    R["na_mira"] = {"n": len(mira), "dano_final_medio": media([a[4] for a in mira]),
+                    "dano_final_medio_mosqueteiro_sem_mira": media([a[4] for a in C.ataques
+                                                                   if a[1] == "Mosqueteiro" and not a[9]])}
+    R["dano_por_turno"] = {r: round(sum(a[4] for a in C.ataques if a[1] == r) / turnos[r], 2) for r in RACAS if turnos[r]}
+    rod_elim = collections.defaultdict(list)
+    for p in C.partidas:
+        if p["cenario"] == CENARIO_4J:
+            for raca, rod, _ in p["eliminacoes"]:
+                rod_elim[raca].append(rod)
+    R["rodada_media_de_eliminacao_4j"] = {r: media(v) for r, v in rod_elim.items()}
+
     # ordem de eliminação
     primeiro = collections.Counter()
     for p in C.partidas:
-        if p["cenario"] == "4 jogadores (1 de cada)" and p["eliminacoes"]:
+        if p["cenario"] == CENARIO_4J and p["eliminacoes"]:
             primeiro[p["eliminacoes"][0][0]] += 1
     R["primeiro_eliminado_4j"] = {r: pct(n, sum(primeiro.values())) for r, n in primeiro.most_common()}
     R["bugs"] = {k: {"n": n, "exemplo": C.exemplos_bug.get(k)} for k, n in C.bugs.most_common()}
@@ -780,6 +883,8 @@ def analisar():
 
 
 TIERS_NOME = {1: "Early", 2: "Mid", 3: "Late"}
+CENARIO_4J = "4 jogadores (personagens sorteados, sem repetir)"
+CENARIO_56 = "5-6 jogadores (personagens sorteados, pode repetir)"
 
 
 def modo_massa(n_total, sufixo=""):
@@ -787,17 +892,17 @@ def modo_massa(n_total, sufixo=""):
     main.animar_dado = lambda *a, **k: None
     main.animar_roleta = lambda *a, **k: None
     instalar_wrappers()
-    n4 = int(n_total * 0.6)
-    nd = int(n_total * 0.24) // 6 * 6
-    n56 = n_total - n4 - nd
     pares = [(a, b) for i, a in enumerate(RACAS) for b in RACAS[i + 1:]]
+    n4 = int(n_total * 0.6)
+    nd = int(n_total * 0.24) // len(pares) * len(pares)
+    n56 = n_total - n4 - nd
     rng = random.Random(2026)
     inicio = time.time()
-    rodar("4 jogadores (1 de cada)", lambda k: rng.sample(RACAS, 4), n4, 100000)
+    rodar(CENARIO_4J, lambda k: rng.sample(RACAS, 4), n4, 100000)
     print(f"  4 jogadores: {n4} partidas ({time.time() - inicio:.0f}s)", flush=True)
-    rodar("duelos", lambda k: rng.sample(list(pares[k % 6]), 2), nd, 200000)
+    rodar("duelos", lambda k: rng.sample(list(pares[k % len(pares)]), 2), nd, 200000)
     print(f"  duelos: {nd} partidas ({time.time() - inicio:.0f}s)", flush=True)
-    rodar("5-6 jogadores (raças sorteadas)", lambda k: [rng.choice(RACAS) for _ in range(rng.randint(5, 6))], n56, 300000)
+    rodar(CENARIO_56, lambda k: [rng.choice(RACAS) for _ in range(rng.randint(5, 6))], n56, 300000)
     print(f"  5-6 jogadores: {n56} partidas ({time.time() - inicio:.0f}s)", flush=True)
     R = analisar()
     R["segundos"] = round(time.time() - inicio)
@@ -811,7 +916,7 @@ def modo_teste():
     import time as _t
     _t.sleep = lambda s: None
     instalar_wrappers()
-    for k, racas in enumerate((["Bárbaro", "Feiticeiro", "Goblin", "Ferreiro"], ["Goblin", "Bárbaro"]), start=1):
+    for k, racas in enumerate((["Hemomante", "Alquimista", "Mosqueteiro", "Bárbaro"], ["Mosqueteiro", "Goblin"]), start=1):
         caminho = os.path.join(AQUI, f"partida_teste_{k}.txt")
         with open(caminho, "w", encoding="utf-8") as f:
             main.console = Console(file=f, width=110, color_system=None, force_terminal=False, legacy_windows=False)
