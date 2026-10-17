@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arena de Combate · Protótipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pagina: #fde3b8;
+    --moldura: #6b4a00;
+    --moldura-escura: #4a3300;
+    --painel: #fdba5a;
+    --cartao: #fff3d6;
+    --cartao-hover: #fffaf0;
+    --texto: #1a1a1a;
+    --suave: #5c4a2a;
+    --trilho: #4a3500;
+    --vida-alta: #3fb950;
+    --vida-media: #e3a008;
+    --vida-baixa: #d1342b;
+    --perigo: #8a1c00;
+    --ok: #1e7a34;
+    --ouro: #8a5a00;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--pagina);
+    color: var(--texto);
+    font-family: "Open Sans", system-ui, sans-serif;
+    font-size: 15px;
+    padding: 12px 16px 24px;
+  }
+  button { font: inherit; color: inherit; }
+
+  /* ---------- barra do protótipo (não faz parte do jogo) ---------- */
+  .prototipo {
+    max-width: 1280px; margin: 0 auto 10px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 6px;
+    font-size: .8rem; color: var(--suave);
+  }
+  .prototipo b { margin-right: 4px; }
+  .prototipo button {
+    border: 1px solid var(--moldura); background: transparent; border-radius: 999px;
+    padding: 3px 12px; cursor: pointer;
+  }
+  .prototipo button.ativo { background: var(--moldura); color: var(--cartao); }
+
+  /* ---------- moldura com as 3 caixas ---------- */
+  .tela {
+    max-width: 1280px; margin: 0 auto;
+    min-height: calc(100vh - 70px);
+    background: var(--moldura);
+    padding: 14px; gap: 14px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    grid-template-rows: auto 1fr;
+    grid-template-areas: "topo topo" "principal lateral";
+  }
+  .painel { background: var(--painel); padding: 16px 18px; min-width: 0; }
+  .topo { grid-area: topo; }
+  .principal { grid-area: principal; display: flex; flex-direction: column; gap: 14px; }
+  .lateral { grid-area: lateral; font-size: .88rem; }
+
+  /* ---------- caixa de cima ---------- */
+  .topo h1 { margin: 0; text-align: center; font-size: 2rem; font-weight: 800; letter-spacing: .02em; }
+  .subtitulo { text-align: center; font-size: .85rem; color: var(--suave); margin-top: 2px; }
+  .ordem {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 4px 6px;
+    margin: 8px 0 14px; font-weight: 700; font-size: .92rem;
+  }
+  .ordem .seta { opacity: .6; }
+  .ordem .item { padding: 1px 8px; border-radius: 4px; }
+  .ordem .item.atual { background: var(--moldura); color: var(--cartao); }
+  .ordem .item.feito { opacity: .5; text-decoration: line-through; }
+  .ordem .item.fora { opacity: .4; text-decoration: line-through; }
+  /* uma coluna por jogador (até 6); em telas menores quebra em 3 ou 2 colunas */
+  .jogadores { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 1fr)); gap: 10px; }
+  .jogadores.muitos { gap: 8px; }
+  .jogadores.muitos .cj { padding: 6px 8px; font-size: .76rem; border-left-width: 6px; }
+  .jogadores.muitos .cj-emoji { font-size: 1.25rem; }
+  .jogadores.muitos .cj-nome b { font-size: .88rem; }
+  .cj {
+    background: var(--cartao); border: 2px solid var(--moldura); border-left: 8px solid var(--cor);
+    border-radius: 6px; padding: 8px 10px; font-size: .82rem;
+  }
+  .cj.ativo { box-shadow: 0 0 0 3px var(--cartao), 0 0 0 6px var(--moldura); }
+  .cj.morto { opacity: .5; filter: grayscale(1); }
+  .cj-cab { display: flex; align-items: center; gap: 8px; }
+  .cj-emoji { font-size: 1.5rem; line-height: 1; }
+  .cj-nome { flex: 1; min-width: 0; line-height: 1.15; }
+  .cj-nome b { display: block; font-size: .95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .cj-nome small { color: var(--suave); }
+  .cj-linha { display: flex; justify-content: space-between; margin-top: 2px; }
+  .cj-status { margin-top: 4px; color: var(--suave); min-height: 1.2em; }
+  .vaga { border-style: dashed; border-left-width: 2px; color: var(--suave); display: grid; place-items: center; min-height: 64px; }
+
+  .barra { height: 10px; background: var(--trilho); border-radius: 3px; overflow: hidden; margin: 6px 0 2px; }
+  .barra > div { height: 100%; transition: width .4s; }
+  .barra.grossa { height: 14px; }
+
+  /* ---------- caixa principal ---------- */
+  .cab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .cab h2 { margin: 0; font-size: 1.35rem; font-weight: 800; }
+  .etiqueta {
+    background: var(--cartao); border: 2px solid var(--moldura); border-radius: 999px;
+    padding: 1px 10px; font-size: .8rem; font-weight: 700; white-space: nowrap;
+  }
+  .registro {
+    list-style: none; margin: 0; padding: 8px 12px;
+    background: var(--cartao); border: 2px solid var(--moldura); border-radius: 6px;
+    font-size: .85rem; display: grid; gap: 3px;
+  }
+  .registro li { color: var(--suave); }
+  .registro li:first-child { color: var(--texto); font-weight: 600; }
+  .registro .vazio { font-style: italic; }
+  .secao { font-weight: 800; font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--suave); margin: 0; }
+
+  .acoes { display: grid; gap: 8px; }
+  .acao {
+    display: flex; align-items: center; gap: 12px; text-align: left; width: 100%;
+    background: var(--cartao); border: 2px solid var(--moldura); border-radius: 6px;
+    padding: 10px 12px; cursor: pointer; transition: transform .08s, background .15s;
+  }
+  .acao:hover:not(:disabled) { background: var(--cartao-hover); transform: translateX(3px); }
+  .acao:focus-visible { outline: 3px solid var(--moldura); outline-offset: 2px; }
+  .acao:disabled { opacity: .5; cursor: not-allowed; }
+  .acao.livre { border-style: dashed; }
+  .tecla {
+    flex: none; width: 28px; height: 28px; display: grid; place-items: center;
+    background: var(--moldura); color: var(--cartao); border-radius: 5px; font-weight: 800;
+  }
+  .acao-texto { display: flex; flex-direction: column; min-width: 0; }
+  .acao-texto strong { font-size: 1rem; }
+  .acao-texto small { font-size: .78rem; color: var(--suave); margin-top: 1px; }
+  .acao .motivo { color: var(--perigo); font-weight: 600; }
+  .pill-livre { font-size: .7rem; font-weight: 700; border: 1px dashed var(--moldura); border-radius: 999px; padding: 0 6px; margin-left: 6px; }
+
+  .botoes { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn {
+    border: 2px solid var(--moldura); background: var(--cartao); border-radius: 6px;
+    padding: 8px 16px; font-weight: 700; cursor: pointer;
+  }
+  .btn.forte { background: var(--moldura); color: var(--cartao); }
+  .btn:hover:not(:disabled) { filter: brightness(1.06); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+
+  /* dados e resultado */
+  .dados { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+  .dado {
+    width: 96px; height: 96px; border-radius: 14px; display: grid; place-items: center;
+    background: var(--cartao); border: 4px solid var(--cor, var(--moldura));
+    font-size: 2.6rem; font-weight: 800; box-shadow: 0 4px 0 var(--moldura-escura);
+  }
+  .dado.rolando { animation: chacoalha .12s infinite alternate; }
+  .dado.esperando { opacity: .35; }
+  @keyframes chacoalha { from { transform: rotate(-6deg); } to { transform: rotate(6deg); } }
+  .dado-legenda { text-align: center; font-size: .75rem; font-weight: 700; margin-top: 6px; color: var(--suave); }
+  .resultado {
+    background: var(--cartao); border: 2px solid var(--moldura); border-radius: 6px; padding: 12px 14px;
+    display: grid; gap: 4px; font-size: .9rem;
+  }
+  .resultado .grande { font-size: 1.1rem; font-weight: 800; }
+
+  /* alvos / itens em grade */
+  .grade { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  .opcao {
+    background: var(--cartao); border: 2px solid var(--moldura); border-radius: 6px;
+    padding: 10px 12px; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 3px;
+    transition: transform .08s, background .15s;
+  }
+  .opcao:hover:not(:disabled) { background: var(--cartao-hover); transform: translateY(-2px); }
+  .opcao.selecionada { box-shadow: 0 0 0 3px var(--cartao), 0 0 0 6px var(--moldura); }
+  .opcao:disabled { opacity: .5; cursor: not-allowed; }
+  .opcao .topo-opcao { display: flex; align-items: center; gap: 8px; }
+  .opcao .icone { font-size: 1.7rem; line-height: 1; }
+  .opcao b { font-size: .98rem; }
+  .opcao small { color: var(--suave); font-size: .78rem; }
+  .opcao .preco { margin-left: auto; font-weight: 800; color: var(--ouro); white-space: nowrap; }
+  .opcao .efeitos { font-size: .8rem; margin: 2px 0 0; padding-left: 0; list-style: none; }
+  .tipo { font-size: .68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; color: var(--tcor); }
+  .aviso { color: var(--perigo); font-weight: 600; font-size: .8rem; }
+  .vendido { text-decoration: line-through; }
+
+  .detalhe {
+    background: var(--cartao); border: 2px solid var(--moldura); border-radius: 6px; padding: 12px 14px;
+    display: grid; gap: 6px;
+  }
+  .detalhe h3 { margin: 0; font-size: 1.15rem; }
+  .detalhe p { margin: 0; }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { background: var(--cartao); border: 2px solid var(--moldura); border-radius: 999px; padding: 1px 10px; font-size: .8rem; font-weight: 700; }
+  .chip.esgotado { opacity: .55; text-decoration: line-through; }
+
+  .campo { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .campo input {
+    font: inherit; padding: 7px 10px; border: 2px solid var(--moldura); border-radius: 6px;
+    background: var(--cartao); min-width: 220px;
+  }
+  .campo input:focus { outline: 3px solid var(--moldura); outline-offset: 1px; }
+
+  /* ---------- caixa lateral ---------- */
+  .lateral h2 { margin: 0; text-align: center; font-size: 1.7rem; font-weight: 800; line-height: 1.1; }
+  .lateral .quem { text-align: center; color: var(--suave); font-weight: 700; margin-top: 2px; }
+  .retrato {
+    width: 120px; height: 120px; margin: 12px auto 8px; border: 3px solid var(--moldura); border-radius: 6px;
+    display: grid; place-items: center; font-size: 4rem;
+    background: linear-gradient(#9fd8f0, #d9efb0 68%, #79a83a);
+  }
+  .atributos { display: flex; justify-content: space-between; gap: 6px; font-weight: 700; margin: 8px 0 10px; flex-wrap: wrap; }
+  .lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .lista li { line-height: 1.35; }
+  .rotulo { font-weight: 700; }
+  .pips { letter-spacing: 1px; }
+  .bloco { margin-top: 10px; padding-top: 10px; border-top: 2px dashed var(--moldura); }
+  .bloco p { margin: 4px 0 0; }
+  .vencedor-tag { text-align: center; font-weight: 800; letter-spacing: .1em; color: var(--ouro); }
+
+  /* classificação final */
+  .ranking { display: grid; gap: 8px; }
+  .linha-rank {
+    display: grid; grid-template-columns: 44px 44px minmax(0, 1fr) auto; align-items: center; gap: 10px;
+    background: var(--cartao); border: 2px solid var(--moldura); border-left: 8px solid var(--cor); border-radius: 6px; padding: 8px 12px;
+  }
+  .linha-rank.primeiro { padding: 14px 12px; }
+  .linha-rank .pos { font-size: 1.4rem; font-weight: 800; text-align: center; }
+  .linha-rank .emo { font-size: 1.8rem; text-align: center; }
+  .linha-rank small { color: var(--suave); display: block; }
+  .linha-rank .sit { text-align: right; font-weight: 700; font-size: .85rem; }
+
+  .nota { font-size: .78rem; color: var(--suave); font-style: italic; }
+
+  @media (max-width: 1150px) { .jogadores.muitos { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 640px) { .jogadores, .jogadores.muitos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 900px) {
+    .tela { grid-template-columns: minmax(0, 1fr); grid-template-areas: "topo" "principal" "lateral"; min-height: 0; }
+    .topo h1 { font-size: 1.6rem; }
+    .linha-rank { grid-template-columns: 36px 36px minmax(0, 1fr); }
+    .linha-rank .sit { grid-column: 1 / -1; text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="prototipo" aria-label="Telas do protótipo">
+  <b>Protótipo · tela:</b>
+  <button data-tela="escolha">1. Escolha de personagens</button>
+  <button data-tela="turno">2. Turno</button>
+  <button data-tela="loja">3. Comerciante</button>
+  <button data-tela="final">4. Fim de jogo</button>
+  <b style="margin-left:10px">Jogadores:</b>
+  <button data-qtd="4">4</button>
+  <button data-qtd="6">6</button>
+  <span>· atalhos: números escolhem, 0 volta, Enter continua</span>
+</nav>
+
+<div class="tela">
+  <header class="painel topo" id="topo"></header>
+  <main class="painel principal" id="principal"></main>
+  <aside class="painel lateral" id="lateral"></aside>
+</div>
+
+<script>
+/* =====================================================================
+   DADOS (copiados do main.py e do shop.py atuais)
+   ===================================================================== */
+const PERSONAGENS = {
+  "Bárbaro": { emoji: "💪", vida: 120, fis: 6, mag: 0, alcance: "corpo a corpo", tipo: "físico",
+    desc: "Guerreiro selvagem. Cada golpe alimenta sua fúria.",
+    passiva: "Fúria 4/4: cada ataque enche 1/4. Cheia, o próximo ataque rola 2 D10 e soma o dano dos dois golpes; depois a barra zera e fica desabilitada por 1 rodada.",
+    habilidade: "Fôlego de Batalha (ação livre, com a Fúria cheia): consome a Fúria e cura 15% da vida máxima.",
+    postura: "Sem bônus especial (não enche a Fúria).", item: "🔪 Espada Curta (+3 físico)" },
+  "Goblin": { emoji: "👺", vida: 115, fis: 5, mag: 0, alcance: "corpo a corpo", tipo: "físico",
+    desc: "Pequeno, esperto e ganancioso. Vive de ouro e pechinchas.",
+    passiva: "Ganancioso: +50% de ouro no turno e no Comerciante. Crítico ladrão: cada crítico rouba 2 moedas do alvo.",
+    habilidade: "Pechinchar: no Comerciante, 35% de chance de 15% de desconto (depois fica desabilitado até a próxima visita).",
+    postura: "Sem bônus especial.", item: "🔪 Adaga cega (+3 físico)" },
+  "Feiticeiro": { emoji: "🔮", vida: 110, fis: 0, mag: 8, alcance: "à distância", tipo: "mágico",
+    desc: "Mestre da mana. Poderoso, mas precisa gerenciar sua energia.",
+    passiva: "Mana 3/3: cada ataque custa 1/3. Ao fim de toda rodada restaura 1/3 (+1/3 se não gastou mana). O dano mágico ignora 75% da Defesa do alvo.",
+    habilidade: "Escudo de Mana: gasta 2/3 da mana e mitiga 50% do próximo ataque recebido. Dura no máximo 3 rodadas.",
+    postura: "Não usa a postura defensiva: no lugar dela há o Escudo de Mana.", item: "📖 Livro velho (+3 mágico)" },
+  "Ferreiro": { emoji: "🔨", vida: 110, fis: 6.3, mag: 0, alcance: "corpo a corpo", tipo: "físico",
+    desc: "Artesão de guerra. Tira o máximo de armas e armaduras.",
+    passiva: "Mestre do Metal: armas e armaduras são 10% mais eficientes nele.",
+    habilidade: "A Forja: em cada visita do Comerciante melhora 1 arma (+10% e +1 de dano) ou armadura (+10%, +1 de Defesa e +10 de vida), até 3 níveis por item.",
+    postura: "Bloqueia +10% a mais do dano.", item: "🔨 Martelo desgastado (+3 físico)" },
+  "Hemomante": { emoji: "🦇", vida: 110, fis: 0, mag: 6, alcance: "à distância", tipo: "mágico",
+    desc: "Mago de sangue. Vive do dano que causa e paga feitiços com a própria vida.",
+    passiva: "Vampirismo: cura 30% do dano causado (até 50% com itens). Curas de consumíveis rendem só 75%.",
+    habilidade: "Pacto de Sangue (ação livre, 1 vez por turno): paga 4 de vida para o próximo ataque causar ×1,5.",
+    postura: "Sem bônus especial.", item: "🦇 Frasco de sangue (+3 mágico)" },
+  "Alquimista": { emoji: "🔬", vida: 110, fis: 2, mag: 4, alcance: "híbrido", tipo: "híbrido",
+    desc: "Mestre das poções. Tira o máximo dos consumíveis, mas só carrega uma arma.",
+    passiva: "Bolsa de poções: compra até 2 consumíveis por visita e cada um vem com +1 uso. Armas de qualquer tipo e alcance rendem 100%. Fraqueza: só 1 espaço de arma.",
+    habilidade: "Mistura (1 vez por visita do Comerciante): junta 2 consumíveis num só, com os efeitos dos dois (bombas não entram).",
+    postura: "Sem bônus especial.", item: "🧤 Par de luvas (+2)" },
+  "Mosqueteiro": { emoji: "🎯", vida: 105, fis: 7, mag: 0, alcance: "à distância", tipo: "físico",
+    desc: "Atirador paciente. Dispara forte, mas precisa parar para recarregar.",
+    passiva: "Recarregar: munição 3/3, cada disparo gasta 1. Com a munição zerada, a postura recarrega a barra inteira.",
+    habilidade: "Na mira (ação livre, recarga de 3 turnos seus): o próximo disparo ignora a Defesa e a postura do alvo e causa +2 de dano + 50% do dano físico das armas à distância.",
+    postura: "Com a munição zerada, recarrega a barra inteira.", item: "⚾ Estilingue de madeira (+3 físico)" },
+};
+const NOMES = Object.keys(PERSONAGENS);
+const CORES = ["#c0392b", "#1f8a9e", "#2e8b3a", "#b8860b", "#8e44ad", "#2c5fcc"];
+const BLOQUEIO = { 1: 0, 2: 0, 3: .1, 4: .2, 5: .3, 6: .4, 7: .5, 8: .6, 9: .7, 10: .95 };
+const TIPOS = {
+  arma: ["Arma", "#a3261b"], armadura: ["Armadura", "#1d5fa8"], joia: ["Joia", "#8e2f8e"],
+  ativo: ["Ativo", "#13788a"], consumivel: ["Consumível", "#2a7a2a"],
+};
+
+/* =====================================================================
+   ESTADO DE EXEMPLO
+   ===================================================================== */
+function novoJogador(nome, p, cor, extra) {
+  const d = PERSONAGENS[p];
+  return Object.assign({
+    nome, p, cor, vida: d.vida, max: d.vida, ouro: 0, fis: d.fis, mag: d.mag, def: 0,
+    armas: [d.item.split(" (")[0]], armadura: null, joias: [], ativos: [], consumiveis: [],
+    postura: false, escudo: 0, protegido: 0, buff: 1, livreUsado: false, vivo: true,
+    municao: 3, naMira: 0, naMiraAtiva: false, mana: 3, furia: 0, pactoUsado: false,
+  }, extra);
+}
+
+let QTD = 4;  // jogadores no exemplo (o jogo aceita de 2 a 6)
+
+function estadoInicial() {
+  const jogadores = [
+    novoJogador("Ana", "Bárbaro", CORES[0], { vida: 86, ouro: 21, furia: 3, postura: true }),
+    novoJogador("Rafa", "Feiticeiro", CORES[1], { vida: 88, ouro: 21, mana: 2, escudo: 2 }),
+    novoJogador("Lucas", "Mosqueteiro", CORES[2], { vida: 85, ouro: 18, municao: 0, naMira: 1,
+      consumiveis: [{ nome: "💊 Poção Simples", cura: 15, usos: 1 }] }),
+    novoJogador("Bia", "Hemomante", CORES[3], { vida: 84, ouro: 21 }),
+    novoJogador("Caio", "Goblin", CORES[4], { vida: 97, ouro: 30, protegido: 0 }),
+    novoJogador("Duda", "Alquimista", CORES[5], { vida: 70, ouro: 19,
+      consumiveis: [{ nome: "🧪 Poção de Cura", cura: 30, usos: 2 }] }),
+  ].slice(0, QTD);
+  return {
+    tela: "turno",
+    escolha: { total: QTD, confirmados: [{ nome: "Ana", p: "Bárbaro" }], selecionado: "Bárbaro", nome: "" },
+    turno: {
+      rodada: 4, ordem: QTD === 6 ? [2, 4, 3, 1, 5, 0] : [2, 3, 1, 0], vez: 0, modo: "acoes", resultado: null,
+      registro: ["💰 Lucas: +6 moedas pelo início do turno.", "🌙 Fim da rodada 3.", "🔰 Ana assumiu a postura defensiva."],
+    },
+    jogadores,
+    loja: null,
+  };
+}
+let E = estadoInicial();
+
+/* =====================================================================
+   UTILITÁRIOS
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const d10 = () => 1 + Math.floor(Math.random() * 10);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const num = x => (Math.round(x * 10) / 10).toString().replace(".", ",");
+const pips = (v, max, cheio = "▰", vazio = "▱") => `<span class="pips">${cheio.repeat(v)}${vazio.repeat(Math.max(0, max - v))}</span> ${v}/${max}`;
+
+function barraVida(v, max, grossa) {
+  const r = max ? v / max : 0;
+  const cor = r > .5 ? "var(--vida-alta)" : r > .25 ? "var(--vida-media)" : "var(--vida-baixa)";
+  return `<div class="barra ${grossa ? "grossa" : ""}"><div style="width:${Math.max(0, r * 100)}%;background:${cor}"></div></div>`;
+}
+const atual = () => E.jogadores[E.turno.ordem[E.turno.vez]];
+const moedasPorTurno = r => r > 30 ? 12 : r > 20 ? 10 : r > 10 ? 8 : 6;
+
+function statusDe(j) {
+  if (!j.vivo) return "💀 Eliminado";
+  const s = [];
+  if (j.protegido) s.push("💢 Protegido");
+  if (j.postura) s.push("🔰 Postura");
+  if (j.escudo) s.push(`🔮 Escudo (${j.escudo} rod.)`);
+  if (j.buff > 1) s.push(`💪 ×${num(j.buff)}`);
+  if (j.naMiraAtiva) s.push("🎯 Na mira");
+  return s.join(" · ") || "✔ Em pé";
+}
+
+function cartaoJogador(j, ativo) {
+  const d = PERSONAGENS[j.p];
+  return `<div class="cj ${ativo ? "ativo" : ""} ${j.vivo ? "" : "morto"}" style="--cor:${j.cor}">
+    <div class="cj-cab"><span class="cj-emoji">${d.emoji}</span>
+      <div class="cj-nome"><b>${esc(j.nome)}</b><small>${j.p}</small></div></div>
+    ${barraVida(j.vida, j.max)}
+    <div class="cj-linha"><span>💖 ${j.vida}/${j.max}</span><span>💰 ${j.ouro}</span></div>
+    <div class="cj-status">${statusDe(j)}</div>
+  </div>`;
+}
+
+// Caixa de cima: uma coluna por jogador (cartões mais compactos com 5 ou 6)
+function gradeJogadores(cartoes) {
+  return `<div class="jogadores ${cartoes.length > 4 ? "muitos" : ""}" style="--n:${cartoes.length}">${cartoes.join("")}</div>`;
+}
+
+function recursoDe(j) {
+  switch (j.p) {
+    case "Mosqueteiro":
+      return `🎯 Munição ${pips(j.municao, 3)} · Na mira: ${j.naMira ? `⏳ ${j.naMira} turno(s)` : "pronto"}`
+        + (j.municao === 0 ? `<br><span class="aviso">Sem munição: use a postura para recarregar.</span>` : "");
+    case "Feiticeiro": return `🔮 Mana ${pips(j.mana, 3)}` + (j.escudo ? ` · Escudo de Mana (${j.escudo} rod.)` : "");
+    case "Bárbaro": return `🔥 Fúria ${pips(j.furia, 4)}` + (j.furia >= 4 ? ` <b>ATIVA: o próximo ataque rola 2 D10!</b>` : "");
+    case "Hemomante": return `🩸 Pacto de Sangue: ${j.pactoUsado ? "já usado neste turno" : "pronto"}`;
+    case "Goblin": return "🪙 Pechinchar: pronto";
+    case "Ferreiro": return "🔨 A Forja: disponível com o Comerciante";
+    case "Alquimista": return "🔬 Mistura: disponível com o Comerciante";
+  }
+  return "";
+}
+
+function painelJogador(j, opcoes = {}) {
+  const d = PERSONAGENS[j.p];
+  const lista = (v) => v && v.length ? v.join(", ") : "—";
+  const consumiveis = j.consumiveis.map(c => c.nome + (c.usos > 1 ? ` ×${c.usos}` : "")).join(", ") || "—";
+  const limiteArmas = j.p === "Alquimista" ? 1 : 2;
+  const r = E.turno.rodada;
+  const proxLoja = Math.ceil(r / 5) * 5;
+  const faltam = proxLoja - r + 1;
+  return `
+    ${opcoes.tag ? `<div class="vencedor-tag">${opcoes.tag}</div>` : ""}
+    <h2>${esc(j.nome)}</h2>
+    <div class="quem">${d.emoji} ${j.p}</div>
+    <div class="retrato" title="Retrato do personagem (imagem)">${d.emoji}</div>
+    ${barraVida(j.vida, j.max, true)}
+    <div class="atributos">
+      <span>💖 ${j.vida}/${j.max}</span><span title="Dano físico">🔪 ${num(j.fis)}</span>
+      <span title="Dano mágico">🌠 ${num(j.mag)}</span><span title="Defesa">🔰 ${j.def}</span>
+    </div>
+    <ul class="lista">
+      <li>💰 <b>${j.ouro} moedas</b></li>
+      ${opcoes.semRecurso ? "" : `<li>${recursoDe(j)}</li>`}
+      <li><span class="rotulo">Armas (${j.armas.length}/${limiteArmas}):</span> ${lista(j.armas)}</li>
+      <li><span class="rotulo">Armadura:</span> ${j.armadura || "—"}</li>
+      <li><span class="rotulo">Joias (${j.joias.length}/2):</span> ${lista(j.joias)}</li>
+      <li><span class="rotulo">Ativos (${j.ativos.length}/2):</span> ${lista(j.ativos)}</li>
+      <li><span class="rotulo">Consumíveis:</span> ${consumiveis}</li>
+      ${opcoes.semRodada ? "" : `
+      <li>🧳 ${faltam === 1 ? "<b>O Comerciante chega ao fim desta rodada!</b>" : `Comerciante ao fim da rodada ${proxLoja} (em ${faltam})`}</li>
+      <li>🪙 Moedas por turno: ${moedasPorTurno(r)}</li>`}
+    </ul>`;
+}
+
+/* =====================================================================
+   TELA 1 — ESCOLHA DE PERSONAGENS
+   ===================================================================== */
+function renderEscolha() {
+  const s = E.escolha;
+  const n = s.confirmados.length + 1;
+  const terminou = s.confirmados.length >= s.total;
+  const vagas = [];
+  for (let i = 0; i < s.total; i++) {
+    const c = s.confirmados[i];
+    if (c) {
+      const d = PERSONAGENS[c.p];
+      vagas.push(`<div class="cj" style="--cor:${CORES[i]}"><div class="cj-cab"><span class="cj-emoji">${d.emoji}</span>
+        <div class="cj-nome"><b>${esc(c.nome)}</b><small>${c.p} · pronto ✔</small></div></div></div>`);
+    } else if (i === s.confirmados.length) {
+      vagas.push(`<div class="cj" style="--cor:${CORES[i]}"><div class="cj-cab"><span class="cj-emoji">❔</span>
+        <div class="cj-nome"><b>Jogador ${i + 1}</b><small>escolhendo...</small></div></div></div>`);
+    } else {
+      vagas.push(`<div class="cj vaga">Jogador ${i + 1}</div>`);
+    }
+  }
+  $("topo").innerHTML = `
+    <h1>⚔️ ARENA DE COMBATE</h1>
+    <div class="subtitulo">RPG PvP em turnos · ${s.total} jogadores no mesmo teclado</div>
+    <div class="ordem"><span class="item atual">${terminou ? "Todos prontos!" : `Jogador ${n} de ${s.total}: escolha o seu personagem`}</span></div>
+    ${gradeJogadores(vagas)}`;
+
+  if (terminou) {
+    $("principal").innerHTML = `
+      <div class="cab"><h2>Tudo pronto!</h2></div>
+      <p>Os ${s.total} jogadores escolheram. A roleta vai sortear quem começa.</p>
+      <div class="botoes"><button class="btn forte" id="comecar">🎲 Começar a partida (Enter)</button>
+      <button class="btn" id="refazer">Refazer escolhas</button></div>`;
+    $("comecar").onclick = () => irPara("turno");
+    $("refazer").onclick = () => { s.confirmados = []; renderEscolha(); };
+    $("lateral").innerHTML = `<h2>Jogadores</h2><ul class="lista" style="margin-top:12px">${
+      s.confirmados.map((c, i) => `<li><b style="color:${CORES[i]}">${esc(c.nome)}</b> · ${PERSONAGENS[c.p].emoji} ${c.p}</li>`).join("")}</ul>`;
+    return;
+  }
+
+  const usados = s.confirmados.map(c => c.nome.toLowerCase());
+  $("principal").innerHTML = `
+    <div class="cab"><h2>Jogador ${n}</h2><span class="etiqueta" style="border-color:${CORES[n - 1]}">cor ${n}</span></div>
+    <label class="campo"><b>📝 Nome:</b>
+      <input id="nome" maxlength="20" placeholder="Digite o seu nome" value="${esc(s.nome)}" autocomplete="off"></label>
+    <p class="secao">Personagens · clique para ver os detalhes</p>
+    <div class="grade">${NOMES.map((nome, i) => {
+      const d = PERSONAGENS[nome];
+      return `<button class="opcao ${s.selecionado === nome ? "selecionada" : ""}" data-p="${nome}">
+        <div class="topo-opcao"><span class="icone">${d.emoji}</span><b>${i + 1}. ${nome}</b></div>
+        <small>💖 ${d.vida} · ataque ${num(d.fis + d.mag)} · ${d.alcance}, ${d.tipo}</small>
+        <small>${d.desc}</small>
+      </button>`;
+    }).join("")}</div>
+    <div class="botoes">
+      <button class="btn forte" id="confirmar">✅ Confirmar ${s.selecionado} (Enter)</button>
+      <span class="aviso" id="erro-nome"></span>
+    </div>`;
+  const campo = $("nome");
+  campo.oninput = () => { s.nome = campo.value; };
+  document.querySelectorAll(".opcao[data-p]").forEach(b => b.onclick = () => { s.selecionado = b.dataset.p; renderEscolha(); });
+  $("confirmar").onclick = () => {
+    const nome = s.nome.trim();
+    const erro = !nome ? "O nome não pode ficar vazio." : usados.includes(nome.toLowerCase()) ? "Esse nome já está em uso." : "";
+    if (erro) { $("erro-nome").textContent = "✖ " + erro; campo.focus(); return; }
+    s.confirmados.push({ nome, p: s.selecionado });
+    s.nome = "";
+    renderEscolha();
+  };
+
+  const d = PERSONAGENS[s.selecionado];
+  const barra = (v, max, cor) => `<div class="barra"><div style="width:${v / max * 100}%;background:${cor}"></div></div>`;
+  $("lateral").innerHTML = `
+    <h2>${s.selecionado}</h2>
+    <div class="retrato">${d.emoji}</div>
+    <ul class="lista">
+      <li><b>💖 Vida ${d.vida}</b>${barra(d.vida, 150, "var(--vida-alta)")}</li>
+      <li><b>🔪 Físico ${num(d.fis)}</b>${barra(d.fis, 10, "#c0392b")}</li>
+      <li><b>🌠 Mágico ${num(d.mag)}</b>${barra(d.mag, 10, "#8e44ad")}</li>
+      <li>🏹 ${d.alcance} · ${d.tipo}</li>
+    </ul>
+    <div class="bloco"><span class="rotulo">✨ Passiva</span><p>${d.passiva}</p></div>
+    <div class="bloco"><span class="rotulo">🌟 Habilidade</span><p>${d.habilidade}</p></div>
+    <div class="bloco"><span class="rotulo">🔰 Postura</span><p>${d.postura}</p></div>
+    <div class="bloco"><span class="rotulo">🎒 Item inicial</span><p>${d.item}</p></div>`;
+}
+
+/* =====================================================================
+   TELA 2 — TURNO
+   ===================================================================== */
+function renderTurno() {
+  const t = E.turno, j = atual();
+  const ordem = t.ordem.map((idx, i) => {
+    const o = E.jogadores[idx];
+    return `<span class="item ${i === t.vez ? "atual" : ""} ${o.vivo ? "" : "fora"}">${i + 1}º ${esc(o.nome.toUpperCase())}</span>`;
+  }).join(`<span class="seta">➜</span>`);
+  $("topo").innerHTML = `
+    <h1>RODADA ${t.rodada}</h1>
+    <div class="ordem">${ordem}</div>
+    ${gradeJogadores(E.jogadores.map(o => cartaoJogador(o, o === j)))}`;
+  $("lateral").innerHTML = painelJogador(j);
+
+  const cab = `<div class="cab"><h2>Turno de <span style="color:${j.cor}">${esc(j.nome.toUpperCase())}</span></h2>
+    <span class="etiqueta">${PERSONAGENS[j.p].emoji} ${j.p}</span></div>
+    <ol class="registro">${t.registro.slice(0, 4).map(l => `<li>${l}</li>`).join("") || `<li class="vazio">Nada aconteceu ainda.</li>`}</ol>`;
+
+  if (t.modo === "acoes") {
+    const acoes = acoesDe(j);
+    $("principal").innerHTML = cab + `<p class="secao">Escolha sua ação</p><div class="acoes">${acoes.map((a, i) => `
+      <button class="acao ${a.livre ? "livre" : ""}" data-i="${i}" ${a.off ? "disabled" : ""}>
+        <span class="tecla">${i + 1}</span>
+        <span class="acao-texto"><strong>${a.nome}${a.livre ? `<span class="pill-livre">ação livre</span>` : ""}</strong>
+        <small>${a.off ? `<span class="motivo">${a.off}</span>` : a.desc}</small></span>
+      </button>`).join("")}</div>`;
+    document.querySelectorAll(".acao").forEach(b => b.onclick = () => acoes[+b.dataset.i].fn());
+  } else if (t.modo === "alvo") {
+    const alvos = E.jogadores.filter(o => o !== j && o.vivo);
+    $("principal").innerHTML = cab + `<p class="secao">🎯 Escolha o alvo</p><div class="grade">${alvos.map((o, i) => {
+      const motivo = o.protegido ? "💢 Protegido: foi atacado no turno anterior" : "";
+      return `<button class="opcao" data-i="${E.jogadores.indexOf(o)}" ${motivo ? "disabled" : ""} style="border-left:8px solid ${o.cor}">
+        <div class="topo-opcao"><span class="tecla">${i + 1}</span><span class="icone">${PERSONAGENS[o.p].emoji}</span><b>${esc(o.nome)}</b></div>
+        ${barraVida(o.vida, o.max)}<small>💖 ${o.vida}/${o.max} · 🔰 Defesa ${o.def}</small>
+        <small>${motivo ? `<span class="aviso">${motivo}</span>` : statusDe(o)}</small>
+      </button>`;
+    }).join("")}</div>
+    <div class="botoes"><button class="btn" id="voltar">🔙 Voltar (0)</button></div>`;
+    document.querySelectorAll(".opcao[data-i]").forEach(b => b.onclick = () => atacar(E.jogadores[+b.dataset.i]));
+    $("voltar").onclick = () => { t.modo = "acoes"; renderTurno(); };
+  } else if (t.modo === "inventario") {
+    const usaveis = j.consumiveis;
+    $("principal").innerHTML = cab + `<p class="secao">🎒 Inventário</p>
+      <div class="grade">${usaveis.map((c, i) => `
+        <button class="opcao" data-i="${i}" ${j.vida >= j.max ? "disabled" : ""}>
+          <div class="topo-opcao"><span class="tecla">${i + 1}</span><b>${c.nome}</b></div>
+          <span class="tipo" style="--tcor:${TIPOS.consumivel[1]}">Consumível · gasta o turno</span>
+          <small>💚 Cura ${c.cura} de vida · ${c.usos} uso(s)</small>
+          ${j.vida >= j.max ? `<small class="aviso">Vida cheia: não teria efeito agora.</small>` : ""}
+        </button>`).join("") || `<p class="nota">Nenhum consumível ou item ativo para usar.</p>`}
+      ${j.armas.map(a => `<div class="opcao" style="cursor:default"><b>${a}</b>
+        <span class="tipo" style="--tcor:${TIPOS.arma[1]}">Arma · equipada</span><small>O bônus já está valendo.</small></div>`).join("")}
+      </div>
+      <div class="botoes"><button class="btn" id="voltar">🔙 Voltar (0)</button></div>`;
+    document.querySelectorAll(".opcao[data-i]").forEach(b => b.onclick = () => usarConsumivel(+b.dataset.i));
+    $("voltar").onclick = () => { t.modo = "acoes"; renderTurno(); };
+  } else if (t.modo === "resultado") {
+    const r = t.resultado;
+    $("principal").innerHTML = cab + `
+      ${r.dados ? `<div class="dados">${r.dados.map((d, i) => `<div><div class="dado esperando" id="dado${i}" style="--cor:${d.cor}">?</div>
+        <div class="dado-legenda">${d.legenda}</div></div>`).join("")}</div>` : ""}
+      <div class="resultado" id="resultado" ${r.dados ? "hidden" : ""}>
+        <div class="grande">${r.titulo}</div>${r.linhas.map(l => `<div>${l}</div>`).join("")}
+      </div>
+      <div class="botoes" id="continuar-box" ${r.dados ? "hidden" : ""}>
+        <button class="btn forte" id="continuar">${r.botao || "Continuar ⏎"}</button></div>`;
+    $("continuar").onclick = r.depois || proximoTurno;
+    if (r.dados) animarDados(r.dados);
+  }
+}
+
+// Mesmo ritmo do animar_dado do terminal: 24 trocas de número que vão desacelerando, somando DURACAO_DADO.
+const DURACAO_DADO = 3000;
+const ATRASOS_DADO = Array.from({ length: 24 }, (_, i) => 0.05 * 1.08 ** i);
+const SOMA_ATRASOS = ATRASOS_DADO.reduce((s, a) => s + a, 0);
+const espera = ms => new Promise(r => setTimeout(r, ms));
+let animacao = 0;  // muda quando a tela troca, para uma animação antiga parar
+
+async function animarDados(dados) {
+  const minha = ++animacao;
+  for (let i = 0; i < dados.length; i++) {  // um dado de cada vez
+    const el = $("dado" + i);
+    if (!el || minha !== animacao) return;
+    el.classList.remove("esperando");
+    el.classList.add("rolando");
+    for (const a of ATRASOS_DADO) {
+      if (minha !== animacao) return;
+      el.textContent = d10();
+      await espera(a / SOMA_ATRASOS * DURACAO_DADO);
+    }
+    el.textContent = dados[i].valor;
+    el.classList.remove("rolando");
+  }
+  if (minha !== animacao) return;
+  const res = $("resultado"), box = $("continuar-box");
+  if (res) res.hidden = false;
+  if (box) { box.hidden = false; $("continuar").focus(); }
+}
+
+function acoesDe(j) {
+  const t = E.turno;
+  const temAlvo = E.jogadores.some(o => o !== j && o.vivo && !o.protegido);
+  let offAtaque = !temAlvo ? "Todos os oponentes estão protegidos (atacados no turno anterior)." : "";
+  if (!offAtaque && j.p === "Mosqueteiro" && j.municao === 0) offAtaque = "Sem munição: use a postura para recarregar.";
+  if (!offAtaque && j.p === "Feiticeiro" && j.mana < 1) offAtaque = "Sem mana para atacar.";
+  const acoes = [{
+    nome: "🔪 Atacar oponente", fn: () => { t.modo = "alvo"; renderTurno(); }, off: offAtaque,
+    desc: { Mosqueteiro: "gasta 1 de munição", Feiticeiro: "custa 1/3 de mana" }[j.p] || "o D10 define o dano: fraco ×0,5, normal ×1, crítico ×2",
+  }];
+  if (j.p === "Feiticeiro") {
+    acoes.push({ nome: "🔮 Escudo de Mana", desc: "custa 2/3 de mana · mitiga 50% do próximo ataque · dura até 3 rodadas",
+      off: j.escudo ? "O Escudo de Mana já está ativo." : j.mana < 2 ? "Precisa de 2/3 de mana." : "",
+      fn: () => { j.mana -= 2; j.escudo = 3; fimDeAcao("🔮 Escudo de Mana erguido!", [`${esc(j.nome)} vai mitigar 50% do próximo ataque (até 3 rodadas).`], `🔮 ${esc(j.nome)} ergueu um Escudo de Mana.`); } });
+  } else {
+    acoes.push({ nome: "🔰 Postura defensiva",
+      desc: "até a sua próxima vez, o D10 de defesa bloqueia de 0% a 95% do dano" + (j.p === "Mosqueteiro" ? " · com a munição zerada, recarrega" : ""),
+      fn: () => {
+        j.postura = true;
+        const linhas = ["Até a sua próxima vez, o D10 de defesa vai bloquear parte do dano."];
+        if (j.p === "Mosqueteiro" && j.municao === 0) { j.municao = 3; linhas.push("🎯 Munição recarregada: 3/3."); }
+        fimDeAcao("🔰 Postura defensiva!", linhas, `🔰 ${esc(j.nome)} assumiu a postura defensiva.`);
+      } });
+  }
+  acoes.push({ nome: "🎒 Inventário e itens", desc: `${j.consumiveis.length} consumível(is) · itens de ação livre não gastam o turno`,
+    fn: () => { t.modo = "inventario"; renderTurno(); } });
+  acoes.push({ nome: "⏩ Passar a vez", desc: "não faz nada neste turno",
+    fn: () => fimDeAcao("⏩ Passou a vez", [`${esc(j.nome)} não fez nada neste turno.`], `⏩ ${esc(j.nome)} passou a vez.`) });
+
+  const livre = (nome, desc, off, fn) => acoes.push({ nome, desc, off, fn, livre: true });
+  if (j.p === "Mosqueteiro") livre("🎯 Na mira", "o próximo disparo ignora Defesa e postura e causa dano extra · recarga de 3 turnos seus",
+    j.naMiraAtiva ? "Já está na mira." : j.naMira ? `Em recarga: ${j.naMira} turno(s).` : j.municao === 0 ? "Sem munição." : "",
+    () => { j.naMiraAtiva = true; j.naMira = 3; registrar(`🎯 ${esc(j.nome)} fez a mira.`); renderTurno(); });
+  if (j.p === "Hemomante") livre("🩸 Pacto de Sangue", "paga 4 de vida para o próximo ataque causar ×1,5",
+    j.pactoUsado ? "Já usado neste turno." : j.vida <= 4 ? "Vida insuficiente." : "",
+    () => { j.vida -= 4; j.buff = Math.max(j.buff, 1.5); j.pactoUsado = true; registrar(`🩸 ${esc(j.nome)} pagou 4 de vida: próximo ataque ×1,5.`); renderTurno(); });
+  if (j.p === "Bárbaro") livre("🌬️ Fôlego de Batalha", "com a Fúria cheia: consome a Fúria e cura 15% da vida máxima",
+    j.furia < 4 ? `Precisa da Fúria cheia (${j.furia}/4).` : "",
+    () => { const c = Math.min(j.max - j.vida, Math.round(j.max * .15)); j.vida += c; j.furia = 0; registrar(`🌬️ ${esc(j.nome)} recuperou ${c} de vida.`); renderTurno(); });
+  return acoes;
+}
+
+function registrar(linha) { E.turno.registro.unshift(linha); }
+
+function fimDeAcao(titulo, linhas, registro) {
+  registrar(registro);
+  E.turno.modo = "resultado";
+  E.turno.resultado = { titulo, linhas };
+  renderTurno();
+}
+
+function usarConsumivel(i) {
+  const j = atual(), c = j.consumiveis[i];
+  const cura = Math.min(c.cura, j.max - j.vida);
+  j.vida += cura;
+  if (--c.usos <= 0) j.consumiveis.splice(i, 1);
+  fimDeAcao(`${c.nome} usada!`, [`💚 +${cura} de vida (${j.vida}/${j.max}).`, "Este item gasta o turno."], `${c.nome}: ${esc(j.nome)} curou ${cura}.`);
+}
+
+function atacar(alvo) {
+  const t = E.turno, a = atual();
+  const enfurecido = a.p === "Bárbaro" && a.furia >= 4;
+  const rolagens = enfurecido ? [d10(), d10()] : [d10()];
+  const fatorDe = r => r <= 3 ? .5 : r <= 8 ? 1 : 2;
+  const nomeDe = r => r <= 3 ? "💨 Golpe Fraco (×0,5)" : r <= 8 ? "🔪 Golpe Normal (×1)" : "💥 GOLPE CRÍTICO (×2)";
+  const dados = rolagens.map((v, i) => ({ valor: v, cor: a.cor, legenda: `ATAQUE · ${esc(a.nome)}${rolagens.length > 1 ? ` (${i + 1}/2)` : ""}` }));
+  const linhas = rolagens.map(r => `🎲 D10 de ataque: <b>${r}</b> → ${nomeDe(r)}`);
+  if (enfurecido) linhas.unshift("🔥 <b>FÚRIA!</b> Dois D10 de ataque: o dano dos golpes se soma.");
+  let dano = Math.round((a.fis + a.mag) * rolagens.reduce((s, r) => s + fatorDe(r), 0) * a.buff);
+  if (a.buff > 1) linhas.push(`💪 Bônus de dano ×${num(a.buff)}`);
+  linhas.push(`Dano base ${num(a.fis + a.mag)} → <b>${dano}</b>`);
+  const criticos = rolagens.filter(r => r >= 9).length;
+  if (criticos) { a.ouro += 3 * criticos; linhas.push(`💰 +${3 * criticos} moedas pelo crítico`); }
+
+  const naMira = a.naMiraAtiva;
+  if (alvo.postura && !naMira) {
+    const rd = d10(), bloq = Math.round(dano * Math.min(.95, BLOQUEIO[rd]));
+    dano -= bloq;
+    dados.push({ valor: rd, cor: alvo.cor, legenda: `DEFESA · ${esc(alvo.nome)}` });
+    linhas.push(`🎲 D10 de defesa de ${esc(alvo.nome)}: <b>${rd}</b> → bloqueia ${Math.round(BLOQUEIO[rd] * 100)}% (−${bloq})`);
+    alvo.postura = false;
+  }
+  if (alvo.escudo) {
+    const m = Math.round(dano * .5); dano -= m; alvo.escudo = 0;
+    linhas.push(`🔮 O Escudo de Mana de ${esc(alvo.nome)} mitigou ${m}.`);
+  }
+  let final = Math.max(1, dano - (naMira ? 0 : alvo.def));
+  if (naMira) { final += 4; a.naMiraAtiva = false; linhas.push("🎯 Na mira: ignorou Defesa e postura, +4 de dano."); }
+  const antes = alvo.vida;
+  alvo.vida = Math.max(0, alvo.vida - final);
+  alvo.protegido = 2;
+  linhas.push(`💥 ${esc(alvo.nome)} sofreu <b>${final}</b> de dano. 💖 ${alvo.vida}/${alvo.max}`);
+  if (a.p === "Hemomante" && antes > alvo.vida) {
+    const c = Math.min(a.max - a.vida, Math.max(1, Math.round((antes - alvo.vida) * .3)));
+    a.vida += c; if (c) linhas.push(`🩸 ${esc(a.nome)} drenou ${c} de vida.`);
+  }
+  a.buff = 1;
+  if (a.p === "Mosqueteiro") a.municao--;
+  if (a.p === "Feiticeiro") a.mana--;
+  if (a.p === "Bárbaro") { a.furia = enfurecido ? 0 : Math.min(4, a.furia + 1); linhas.push(`🔥 Fúria ${a.furia}/4`); }
+
+  let depois = proximoTurno, botao;
+  if (alvo.vida === 0) {
+    alvo.vivo = false; alvo.rodadaMorte = t.rodada; linhas.push(`💀 <b>${esc(alvo.nome)} foi eliminado!</b>`);
+    if (E.jogadores.filter(o => o.vivo).length === 1) { depois = () => irPara("final", true); botao = "🏆 Ver o resultado final"; }
+  }
+  registrar(`🔪 ${esc(a.nome)} → ${esc(alvo.nome)}: 🎲 ${rolagens.join(" + ")}, −${final} 💖`);
+  t.modo = "resultado";
+  t.resultado = { titulo: `🔪 ${esc(a.nome)} ataca ${esc(alvo.nome)}!`, linhas, dados, depois, botao };
+  renderTurno();
+}
+
+function proximoTurno() {
+  const t = E.turno;
+  do { t.vez++; } while (t.vez < t.ordem.length && !E.jogadores[t.ordem[t.vez]].vivo);
+  if (t.vez >= t.ordem.length) {
+    // fim de rodada
+    E.jogadores.forEach(o => { o.protegido = 0; if (o.escudo) o.escudo--; if (o.p === "Feiticeiro") o.mana = Math.min(3, o.mana + 1); });
+    registrar(`🌙 Fim da rodada ${t.rodada}.`);
+    if (t.rodada % 5 === 0) { t.rodada++; t.vez = -1; irPara("loja"); return; }
+    t.rodada++;
+    novaOrdem();
+  }
+  inicioDeTurno();
+  renderTurno();
+}
+
+function novaOrdem() {
+  const t = E.turno;
+  t.ordem = E.jogadores.map((_, i) => i).filter(i => E.jogadores[i].vivo).sort(() => Math.random() - .5);
+  t.vez = 0;
+}
+
+function inicioDeTurno() {
+  const t = E.turno, j = atual();
+  E.jogadores.forEach(o => { if (o.protegido) o.protegido--; });
+  const m = moedasPorTurno(t.rodada);
+  j.ouro += m; j.pactoUsado = false;
+  if (j.naMira) j.naMira--;
+  const fimPostura = j.postura; j.postura = false;
+  t.modo = "acoes";
+  registrar(`💰 ${esc(j.nome)}: +${m} moedas pelo início do turno${fimPostura ? " · 🔰 a postura terminou" : ""}.`);
+}
+
+/* =====================================================================
+   TELA 3 — COMERCIANTE
+   ===================================================================== */
+const ESTOQUE_BASE = [
+  { emoji: "🏹", nome: "Besta Leve", tipo: "arma", preco: 28, alcance: "à distância", dano: { fis: 4 },
+    efeitos: ["🔪 +4 de Dano físico", "🏹 À distância"], desc: "Pequena e fácil de recarregar: a primeira arma de quem luta à distância." },
+  { emoji: "🔪", nome: "Espada de Aço", tipo: "arma", preco: 25, alcance: "corpo a corpo", dano: { fis: 4 },
+    efeitos: ["🔪 +4 de Dano físico", "⚔️ Corpo a corpo"], desc: "Lâmina bem forjada, equilibrada e afiada." },
+  { emoji: "🥋", nome: "Armadura de Couro", tipo: "armadura", preco: 30, vida: 35, def: 1,
+    efeitos: ["🔰 +1 de Defesa", "💖 +35 de Vida máxima"], desc: "Leve e flexível. Protege sem atrapalhar os movimentos." },
+  { emoji: "💍", nome: "Anel do Lucro", tipo: "joia", preco: 22, vida: 10,
+    efeitos: ["🪙 +2 moedas por turno", "💖 +10 de Vida máxima"], desc: "Atrai moedas como um ímã: ouro extra a cada turno." },
+  { emoji: "🔥", nome: "Poção de Fúria", tipo: "consumivel", preco: 20,
+    efeitos: ["💪 Próximo ataque causa ×2", "🆓 Ação livre"], desc: "Um gole e o sangue ferve: o seu próximo ataque causa o DOBRO de dano." },
+  { emoji: "💊", nome: "Poção Simples", tipo: "consumivel", preco: 10, fixa: true, cura: 15,
+    efeitos: ["💚 Cura 15 de vida"], desc: "Sempre à venda: um gole rápido para fechar arranhões." },
+];
+
+function abrirLoja() {
+  const vivos = E.jogadores.filter(o => o.vivo);
+  vivos.forEach(o => { o.ouro += 10; o.vida = Math.min(o.max, o.vida + Math.round(o.max * .1)); });
+  E.loja = {
+    rodada: Math.floor((E.turno.rodada - 1) / 5) * 5 || 5,
+    ordem: vivos.map(o => E.jogadores.indexOf(o)).sort(() => Math.random() - .5),
+    vez: 0, sel: null, aviso: "",
+  };
+  novoComprador();
+}
+function novoComprador() {
+  const L = E.loja;
+  L.estoque = ESTOQUE_BASE.map(i => Object.assign({}, i, { vendido: false }));
+  L.compras = { equipamento: 0, consumivel: 0 };
+  L.sel = null; L.aviso = "";
+}
+const comprador = () => E.jogadores[E.loja.ordem[E.loja.vez]];
+
+function avisosItem(j, item) {
+  const d = PERSONAGENS[j.p], av = [];
+  if (item.alcance && d.alcance !== "híbrido" && item.alcance !== d.alcance) av.push(`⚠️ Arma ${item.alcance}: você luta ${d.alcance}, então o D10 de ataque leva −1.`);
+  if (item.dano && d.tipo === "mágico") av.push("⚠️ Dano físico rende só 50% para você.");
+  if (item.tipo === "arma" && j.armas.length >= (j.p === "Alquimista" ? 1 : 2)) av.push("🔁 Espaço de armas cheio: você vai escolher qual substituir.");
+  return av;
+}
+
+function bloqueio(j, item) {
+  const L = E.loja, cat = item.tipo === "consumivel" ? "consumivel" : "equipamento";
+  const limite = cat === "consumivel" && j.p === "Alquimista" ? 2 : 1;
+  if (item.vendido) return "Você já comprou este item.";
+  if (L.compras[cat] >= limite) return `Você já comprou ${limite} ${cat === "consumivel" ? "consumível" : "equipamento"} nesta visita.`;
+  if (j.ouro < item.preco) return `Moedas insuficientes (faltam ${item.preco - j.ouro}).`;
+  return "";
+}
+
+function comprar(item) {
+  const j = comprador(), L = E.loja;
+  const b = bloqueio(j, item);
+  if (b) { L.aviso = "✖ " + b; renderLoja(); return; }
+  j.ouro -= item.preco; item.vendido = true;
+  L.compras[item.tipo === "consumivel" ? "consumivel" : "equipamento"]++;
+  const nome = `${item.emoji} ${item.nome}`;
+  const rende = PERSONAGENS[j.p].tipo === "mágico" ? .5 : 1;
+  if (item.tipo === "arma") { if (j.armas.length >= (j.p === "Alquimista" ? 1 : 2)) j.armas.shift(); j.armas.push(nome); j.fis += item.dano.fis * rende; }
+  if (item.tipo === "armadura") { j.armadura = nome; j.max += item.vida; j.def += item.def; }
+  if (item.tipo === "joia") { j.joias.push(nome); j.max += item.vida; }
+  if (item.tipo === "consumivel") j.consumiveis.push({ nome, cura: item.cura || 0, usos: j.p === "Alquimista" ? 2 : 1 });
+  L.aviso = `✅ ${nome} comprado${item.tipo === "consumivel" ? "! Está no seu inventário." : " e equipado!"}`;
+  L.sel = null;
+  renderLoja();
+}
+
+function sairDaLoja() {
+  const L = E.loja;
+  if (++L.vez < L.ordem.length) { novoComprador(); renderLoja(); return; }
+  E.loja = null;
+  E.turno.tela = "turno";
+  registrar("🧳 O Comerciante partiu. O combate será retomado!");
+  novaOrdem(); inicioDeTurno();
+  irPara("turno", true);
+}
+
+function renderLoja() {
+  const L = E.loja, j = comprador();
+  const ordem = L.ordem.map((idx, i) => `<span class="item ${i === L.vez ? "atual" : i < L.vez ? "feito" : ""}">${i + 1}º ${esc(E.jogadores[idx].nome.toUpperCase())}</span>`)
+    .join(`<span class="seta">➜</span>`);
+  $("topo").innerHTML = `
+    <h1>🧳 O COMERCIANTE</h1>
+    <div class="subtitulo">Fim da rodada ${L.rodada} · itens <b>Early</b> · todos receberam +10 moedas e recuperaram 10% da vida</div>
+    <div class="ordem">${ordem}</div>
+    ${gradeJogadores(E.jogadores.map(o => cartaoJogador(o, o === j)))}`;
+  $("lateral").innerHTML = painelJogador(j, { semRodada: true });
+
+  const limCons = j.p === "Alquimista" ? 2 : 1;
+  const prox = L.vez + 1 < L.ordem.length ? E.jogadores[L.ordem[L.vez + 1]].nome : null;
+  const sel = L.sel !== null ? L.estoque[L.sel] : null;
+  $("principal").innerHTML = `
+    <div class="cab"><h2>Estoque de <span style="color:${j.cor}">${esc(j.nome.toUpperCase())}</span></h2>
+      <div class="chips">
+        <span class="chip ${L.compras.equipamento >= 1 ? "esgotado" : ""}">🛡️ Equipamento ${L.compras.equipamento}/1</span>
+        <span class="chip ${L.compras.consumivel >= limCons ? "esgotado" : ""}">🧪 Consumível ${L.compras.consumivel}/${limCons}</span>
+      </div></div>
+    <p class="nota" style="margin:0">Estoque sorteado só para ${esc(j.nome)}. A ${ESTOQUE_BASE[5].emoji} Poção Simples está sempre à venda.</p>
+    ${L.aviso ? `<div class="resultado"><b>${L.aviso}</b></div>` : ""}
+    <div class="grade">${L.estoque.map((it, i) => {
+      const [rot, cor] = TIPOS[it.tipo];
+      const av = avisosItem(j, it).length;
+      return `<button class="opcao ${L.sel === i ? "selecionada" : ""}" data-i="${i}" ${it.vendido ? "disabled" : ""}>
+        <div class="topo-opcao"><span class="tecla">${i + 1}</span><span class="icone">${it.emoji}</span>
+          <span class="preco">${it.vendido ? "VENDIDO" : `💰 ${it.preco}`}</span></div>
+        <b class="${it.vendido ? "vendido" : ""}">${it.nome}</b>
+        <span class="tipo" style="--tcor:${cor}">${rot}${it.fixa ? " · sempre à venda" : " · Early"}</span>
+        <ul class="efeitos">${it.efeitos.map(e => `<li>${e}</li>`).join("")}</ul>
+        ${av ? `<small class="aviso">⚠️ ver aviso</small>` : ""}
+      </button>`;
+    }).join("")}</div>
+    ${sel ? (() => {
+      const b = bloqueio(j, sel), av = avisosItem(j, sel);
+      return `<div class="detalhe">
+        <h3>${sel.emoji} ${sel.nome} <span class="tipo" style="--tcor:${TIPOS[sel.tipo][1]}">${TIPOS[sel.tipo][0]}</span></h3>
+        <p><i>${sel.desc}</i></p>
+        <p>${sel.efeitos.join(" · ")}</p>
+        ${av.map(a => `<p class="aviso">${a}</p>`).join("")}
+        <p>💰 Preço: <b style="color:${j.ouro >= sel.preco ? "var(--ok)" : "var(--perigo)"}">${sel.preco} moedas</b> (você tem ${j.ouro})</p>
+        <div class="botoes"><button class="btn forte" id="comprar" ${b ? "disabled" : ""}>✅ Comprar (Enter)</button>
+          <button class="btn" id="voltar">🔙 Voltar (0)</button>
+          ${b ? `<span class="aviso" style="align-self:center">${b}</span>` : ""}</div>
+      </div>`;
+    })() : ""}
+    <div class="botoes"><button class="btn" id="sair">🚪 Sair do Comerciante${prox ? ` (próximo: ${esc(prox)})` : " (voltar ao combate)"}</button></div>`;
+
+  document.querySelectorAll(".opcao[data-i]").forEach(b => b.onclick = () => { L.sel = +b.dataset.i; L.aviso = ""; renderLoja(); });
+  if (sel) { $("comprar").onclick = () => comprar(sel); $("voltar").onclick = () => { L.sel = null; renderLoja(); }; }
+  $("sair").onclick = sairDaLoja;
+}
+
+/* =====================================================================
+   TELA 4 — FIM DE JOGO
+   ===================================================================== */
+function dadosFinais(dePartida) {
+  if (dePartida) {
+    const vivo = E.jogadores.find(o => o.vivo);
+    const mortos = E.jogadores.filter(o => !o.vivo).sort((a, b) => (b.rodadaMorte || 0) - (a.rodadaMorte || 0));
+    return { rodadas: E.turno.rodada, lista: [vivo, ...mortos] };
+  }
+  // exemplo de uma partida terminada
+  const ex = [
+    novoJogador("Ana", "Bárbaro", CORES[0], { vida: 34, max: 155, ouro: 57, def: 4, fis: 13,
+      armas: ["🔪 Espada Curta", "🔱 Lança Rúnica"], armadura: "🥋 Armadura de Couro", joias: ["💍 Anel da Fúria"], ativos: ["📯 Chifre de Guerra"] }),
+    novoJogador("Rafa", "Feiticeiro", CORES[1], { vivo: false, vida: 0, max: 140, ouro: 12, rodadaMorte: 38, mag: 17,
+      armas: ["📖 Livro velho", "🌟 Cajado Arcano"], joias: ["💍 Anel Arcano"], ativos: ["🧿 Olho Protetor"] }),
+    novoJogador("Lucas", "Mosqueteiro", CORES[2], { vivo: false, vida: 0, max: 150, ouro: 30, rodadaMorte: 31, fis: 15,
+      armas: ["⚾ Estilingue de madeira", "🔫 Mosquete"], armadura: "🔰 Armadura de Placas" }),
+    novoJogador("Bia", "Hemomante", CORES[3], { vivo: false, vida: 0, max: 120, ouro: 8, rodadaMorte: 22, mag: 10,
+      armas: ["🦇 Frasco de sangue", "🔮 Orbe Mágico"], joias: ["💍 Anel Sanguessuga"] }),
+    novoJogador("Caio", "Goblin", CORES[4], { vivo: false, vida: 0, max: 125, ouro: 64, rodadaMorte: 17, fis: 9,
+      armas: ["🔪 Adaga cega", "🥊 Manoplas do Saqueador"], joias: ["💍 Anel do Lucro"] }),
+    novoJogador("Duda", "Alquimista", CORES[5], { vivo: false, vida: 0, max: 145, ouro: 22, rodadaMorte: 35, mag: 9,
+      armas: ["🌙 Lâmina Lunar"], armadura: "🧥 Gibão Acolchoado" }),
+  ].slice(0, QTD);
+  const [venc, ...resto] = ex;
+  return { rodadas: 41, lista: [venc, ...resto.sort((a, b) => b.rodadaMorte - a.rodadaMorte)] };
+}
+
+function renderFinal(dePartida) {
+  const { rodadas, lista } = dadosFinais(dePartida);
+  const venc = lista[0];
+  const medalhas = ["🥇", "🥈", "🥉"];
+  $("topo").innerHTML = `
+    <h1>🏆 FIM DE JOGO</h1>
+    <div class="subtitulo">${rodadas} rodadas · vencedor: <b>${esc(venc.nome)}</b> (${PERSONAGENS[venc.p].emoji} ${venc.p})</div>
+    <div class="ordem"></div>
+    ${gradeJogadores(lista.map(o => cartaoJogador(o, o === venc)))}`;
+  $("principal").innerHTML = `
+    <div class="cab"><h2>📜 Resultado final</h2></div>
+    <div class="ranking">${lista.map((o, i) => {
+      const equip = [...o.armas, o.armadura, ...o.joias, ...o.ativos].filter(Boolean).join(", ");
+      return `<div class="linha-rank ${i === 0 ? "primeiro" : ""}" style="--cor:${o.cor}">
+        <span class="pos">${medalhas[i] || `${i + 1}º`}</span>
+        <span class="emo">${PERSONAGENS[o.p].emoji}</span>
+        <div><b>${esc(o.nome)}</b> · ${o.p}<small>${equip || "sem equipamentos"}</small></div>
+        <span class="sit">${i === 0 ? `🏆 Vencedor<br>💖 ${o.vida}/${o.max}` : `💀 Eliminado na rodada ${o.rodadaMorte}`}<br>💰 ${o.ouro}</span>
+      </div>`;
+    }).join("")}</div>
+    <div class="botoes"><button class="btn forte" id="denovo">🔁 Jogar de novo (Enter)</button></div>`;
+  $("denovo").onclick = () => { E = estadoInicial(); E.escolha.confirmados = []; irPara("escolha"); };
+  $("lateral").innerHTML = painelJogador(venc, { tag: "🏆 VENCEDOR", semRodada: true, semRecurso: true });
+}
+
+/* =====================================================================
+   NAVEGAÇÃO E TECLADO
+   ===================================================================== */
+function irPara(tela, dePartida) {
+  animacao++;  // para qualquer dado que ainda esteja rolando
+  E.tela = tela;
+  if (tela === "loja" && !E.loja) abrirLoja();
+  if (tela === "turno" && !dePartida && E.turno.modo === "resultado") E.turno.modo = "acoes";
+  document.querySelectorAll(".prototipo button").forEach(b =>
+    b.classList.toggle("ativo", b.dataset.tela ? b.dataset.tela === tela : +b.dataset.qtd === QTD));
+  if (tela === "escolha") renderEscolha();
+  if (tela === "turno") renderTurno();
+  if (tela === "loja") renderLoja();
+  if (tela === "final") renderFinal(dePartida);
+  window.scrollTo({ top: 0 });
+}
+
+document.querySelectorAll(".prototipo button[data-tela]").forEach(b => b.onclick = () => irPara(b.dataset.tela));
+document.querySelectorAll(".prototipo button[data-qtd]").forEach(b => b.onclick = () => {
+  QTD = +b.dataset.qtd;
+  const tela = E.tela;
+  E = estadoInicial();
+  irPara(tela);
+});
+
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT") {
+    if (e.key === "Enter") $("confirmar")?.click();
+    return;
+  }
+  const clicar = el => { if (el && !el.disabled) { e.preventDefault(); el.click(); } };
+  if (e.key === "Enter") {
+    clicar($("continuar") || $("comprar") || $("comecar") || $("confirmar") || $("denovo"));
+    return;
+  }
+  if (e.key === "0") { clicar($("voltar")); return; }
+  if (/^[1-9]$/.test(e.key)) {
+    const n = +e.key;
+    const alvos = [...document.querySelectorAll("#principal .acao, #principal .opcao[data-i], #principal .opcao[data-p]")];
+    clicar(alvos[n - 1]);
+  }
+});
+
+irPara("turno");
+</script>
+</body>
+</html>

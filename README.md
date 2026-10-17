@@ -6,6 +6,20 @@ RPG PvP de terminal, em turnos, escrito em Python. De 2 a 6 jogadores se revezam
 
 ## Como rodar
 
+**Janela do jogo (recomendado):** dê dois cliques em `dist\ArenaDeCombate.exe`. O jogo abre numa janela própria, com mouse e teclado (números escolhem, 0 volta, Enter continua). **F11** liga e desliga a tela cheia (também há um botão no canto da caixa de cima).
+
+O executável não fica no repositório. Para gerá-lo (ou gerar de novo depois de mudar o código):
+
+```bash
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+gerar_exe.bat
+```
+
+Sem gerar o executável, dá para abrir a mesma janela direto pelo Python: `.venv\Scripts\python.exe app.py`.
+
+**Versão de terminal (a original):** continua funcionando, com as mesmas regras.
+
 ```bash
 pip install rich
 python main.py
@@ -24,9 +38,14 @@ Use um terminal com suporte a emoji e cores (Windows Terminal, terminal do VS Co
 
 | Arquivo | Conteúdo |
 |---|---|
-| `main.py` | Telas, turnos, combate, personagens e interface do Comerciante. |
+| `main.py` | Personagens, combate e turnos, e a versão de terminal (telas com `rich`). As regras do ataque ficam em `resolver_ataque` e `resolver_dano_direto`, que não mostram nada: o terminal e a janela usam as mesmas funções. |
 | `shop.py` | Lógica sem interface: catálogo de itens por fase, estoque, compra, uso de itens e cálculo de status. |
 | `dice.py` | Faixas do D10 de ataque e de defesa. `resultado_ataque(bonus_crit, bonus_rolagem)` aplica os bônus de crítico (o crítico nunca começa abaixo de 6) e de rolagem (o resultado fica sempre entre 1 e 10). |
+| `partida.py` | Motor da janela: o fluxo da partida (escolha, rodadas, Comerciante, fim) sem `input()` nem `print()`. Recebe cada clique em `Partida.agir` e devolve o estado da tela em `Partida.estado`. |
+| `app.py` | Abre a janela (pywebview). Com `--navegador`, serve a mesma interface em `http://localhost:8765/?navegador` para testes. |
+| `interface/` | A tela do jogo (`index.html`, `estilo.css`, `jogo.js`): três caixas como nas mesas de RPG online, dados animados um de cada vez (3 s cada, como no terminal) e até 6 jogadores na caixa de cima. |
+| `gerar_exe.bat` | Gera `dist\ArenaDeCombate.exe` com o PyInstaller. |
+| `prototipo/telas.html` | Protótipo aprovado das telas (só visual, com dados de exemplo). |
 
 ## Regras atuais
 

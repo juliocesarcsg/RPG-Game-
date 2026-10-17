@@ -1,2 +1,7 @@
 __pycache__/
 .venv/
+
+# executável gerado pelo gerar_exe.bat (PyInstaller)
+build/
+dist/
+*.spec

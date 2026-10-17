@@ -624,6 +624,33 @@ def linha_buffs(j):
     return "   ".join(partes)
 
 
+def status_jogador(j):
+    """Estados visíveis de um jogador para os outros (protegido, postura, escudos, veneno...), um por linha."""
+    if not j["vivo"]:
+        return ["[red]💀 Eliminado[/]"]
+    partes = []
+    if j["protegido"]:
+        partes.append("[red]💢 Protegido neste turno (foi atacado no turno anterior)[/]")
+    if j["invisivel"]:
+        partes.append("[bright_black]👻 Invisível[/]")
+    if j["postura"]:
+        partes.append("[blue]🔰 Postura defensiva[/]")
+    if j["escudo_mana"]:
+        partes.append(f"[cyan]🔮 Escudo de Mana ({j['escudo_mana_rodadas']} rodada(s))[/]")
+    if j["escudo_pv"]:
+        partes.append(f"[cyan]🧿 Escudo {j['escudo_pv']}[/]")
+    if j["sentenca"]:
+        partes.append(f"[bold red]📜 Sentenciado (+{round(j['sentenca'] * 100)}% de dano recebido)[/]")
+    if j["acido"]:
+        partes.append(f"[red]🧪 Ácido: −{j['acido']['valor']} Defesa ({j['acido']['turnos']} turno(s))[/]")
+    if j["bonus"].get("ultima_provacao"):
+        partes.append("[yellow]🏰 Última Provação pronta[/]" if j["provacao_pronta"]
+                      else "[bright_black]🏰 Última Provação usada[/]")
+    if j["veneno"]:
+        partes.append(f"[green]🐍 Envenenado (−{j['veneno']['dano']} por turno)[/]")
+    return partes or ["[green]✔ Em pé[/]"]
+
+
 def tabela_arena(jogadores, ativo):
     tabela = Table(
         title="🏰 STATUS DA ARENA",
@@ -639,30 +666,7 @@ def tabela_arena(jogadores, ativo):
     for j in jogadores:
         r = RACAS[j["raca"]]
         marcador = "▶ " if j is ativo else "  "
-        if not j["vivo"]:
-            status = "[red]💀 Eliminado[/]"
-        else:
-            partes = []
-            if j["protegido"]:
-                partes.append("[red]💢 Protegido neste turno (foi atacado no turno anterior)[/]")
-            if j["invisivel"]:
-                partes.append("[bright_black]👻 Invisível[/]")
-            if j["postura"]:
-                partes.append("[blue]🔰 Postura defensiva[/]")
-            if j["escudo_mana"]:
-                partes.append(f"[cyan]🔮 Escudo de Mana ({j['escudo_mana_rodadas']} rodada(s))[/]")
-            if j["escudo_pv"]:
-                partes.append(f"[cyan]🧿 Escudo {j['escudo_pv']}[/]")
-            if j["sentenca"]:
-                partes.append(f"[bold red]📜 Sentenciado (+{round(j['sentenca'] * 100)}% de dano recebido)[/]")
-            if j["acido"]:
-                partes.append(f"[red]🧪 Ácido: −{j['acido']['valor']} Defesa ({j['acido']['turnos']} turno(s))[/]")
-            if j["bonus"].get("ultima_provacao"):
-                partes.append("[yellow]🏰 Última Provação pronta[/]" if j["provacao_pronta"]
-                              else "[bright_black]🏰 Última Provação usada[/]")
-            if j["veneno"]:
-                partes.append(f"[green]🐍 Envenenado (−{j['veneno']['dano']} por turno)[/]")
-            status = "\n".join(partes) or "[green]✔ Em pé[/]"
+        status = "\n".join(status_jogador(j))
         nome = f"[{j['cor']}]{marcador}{j['nome']}[/]"
         if not j["vivo"]:
             nome = f"[bright_black strike]{marcador}{j['nome']}[/]"
@@ -688,19 +692,34 @@ def acoes_do_turno(jogador):
     return acoes
 
 
-def tela_turno(rodada, jogador, jogadores, aviso=None):
-    console.clear()
-    r = RACAS[jogador["raca"]]
+def info_rodada(rodada):
+    """Linhas sobre a rodada para o cabeçalho do turno: próximo Comerciante, moedas por turno e morte súbita."""
     faltam = INTERVALO_LOJA - ((rodada - 1) % INTERVALO_LOJA)  # rodadas até o Comerciante, contando esta
     rodada_loja = rodada + faltam - 1
     fase_loja_nome = TIERS[shop.fase_da_rodada(rodada_loja)][0]
     if faltam == 1:
-        info_loja = f"🧳 [bold yellow]O Comerciante chega ao fim desta rodada![/] [bright_black](itens {fase_loja_nome})[/]"
+        linhas = [f"🧳 [bold yellow]O Comerciante chega ao fim desta rodada![/] [bright_black](itens {fase_loja_nome})[/]"]
     else:
-        info_loja = (
-            f"🧳 O Comerciante chega ao fim da rodada {rodada_loja} "
-            f"[bright_black](em {faltam} • itens {fase_loja_nome})[/]"
-        )
+        linhas = [f"🧳 O Comerciante chega ao fim da rodada {rodada_loja} "
+                  f"[bright_black](em {faltam} • itens {fase_loja_nome})[/]"]
+    proximo = proximo_aumento_ouro(rodada)
+    info_ouro = f"💰 Moedas por turno: [bold yellow]{ouro_base_do_turno(rodada)}[/] "
+    if proximo:
+        info_ouro += f"[bright_black](sobe para {proximo[1]} no fim da rodada {proximo[0]})[/]"
+    else:
+        info_ouro += "[bright_black](valor máximo)[/]"
+    linhas.append(info_ouro)
+    if shop.fator_cura_global < 1:
+        linhas.append(f"💀 [bold red]Morte súbita: todas as curas rendem {round(shop.fator_cura_global * 100)}%[/]")
+    elif rodada >= RODADA_MORTE_SUBITA - 5:
+        linhas.append(f"💀 [red]Morte súbita a partir da rodada {RODADA_MORTE_SUBITA}: as curas vão render "
+                      f"{round(CURA_MORTE_SUBITA * 100)}%[/]")
+    return linhas
+
+
+def tela_turno(rodada, jogador, jogadores, aviso=None):
+    console.clear()
+    r = RACAS[jogador["raca"]]
     defesa_txt = f"🔰 Defesa {jogador['defesa']}"
     if jogador["acido"]:
         defesa_txt += f" [red](−{jogador['acido']['valor']} ácido)[/]"
@@ -724,19 +743,8 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
     buffs = linha_buffs(jogador)
     if buffs:
         detalhes.add_row(buffs)
-    detalhes.add_row(info_loja)
-    proximo = proximo_aumento_ouro(rodada)
-    info_ouro = f"💰 Moedas por turno: [bold yellow]{ouro_base_do_turno(rodada)}[/] "
-    if proximo:
-        info_ouro += f"[bright_black](sobe para {proximo[1]} no fim da rodada {proximo[0]})[/]"
-    else:
-        info_ouro += "[bright_black](valor máximo)[/]"
-    detalhes.add_row(info_ouro)
-    if shop.fator_cura_global < 1:
-        detalhes.add_row(f"💀 [bold red]Morte súbita: todas as curas rendem {round(shop.fator_cura_global * 100)}%[/]")
-    elif rodada >= RODADA_MORTE_SUBITA - 5:
-        detalhes.add_row(f"💀 [red]Morte súbita a partir da rodada {RODADA_MORTE_SUBITA}: as curas vão render "
-                          f"{round(CURA_MORTE_SUBITA * 100)}%[/]")
+    for linha in info_rodada(rodada):
+        detalhes.add_row(linha)
     console.print(
         Panel(
             Group(cabecalho, detalhes),
@@ -870,10 +878,21 @@ def passar_protecao(jogadores):
 
 
 def executar_ataque(atacante, alvo):
+    """Resolve o ataque (resolver_ataque) e mostra no terminal: os D10 rolando, um de cada vez, e o painel do resultado."""
+    resultado = resolver_ataque(atacante, alvo)
+    for titulo, valor, cor in resultado["dados"]:
+        animar_dado(titulo, valor, cor)
+    console.print()
+    console.print(Panel("\n".join(resultado["linhas"]), title="💥 RESULTADO", box=box.HEAVY, border_style="red", padding=(1, 3)))
+
+
+def resolver_ataque(atacante, alvo):
     """Ataque infalível com D10. Fúria do Bárbaro, bônus de itens (crítico, penetração, veneno, vampirismo...),
-    postura do alvo (D10 de defesa), Escudo de Mana, escudos de item, espinhos e Defesa fixa."""
+    postura do alvo (D10 de defesa), Escudo de Mana, escudos de item, espinhos e Defesa fixa.
+    Não mostra nada: devolve {"linhas": textos do resultado, "dados": [(título, valor, cor) de cada D10, na ordem]}."""
     b = atacante["bonus"]
     linhas = [f"🔪 [bold {atacante['cor']}]{atacante['nome']}[/] ataca [bold {alvo['cor']}]{alvo['nome']}[/]!", ""]
+    dados = []
 
     bonus_rolagem = atacante["buff_rolagem"]
     atacante["buff_rolagem"] = 0
@@ -884,7 +903,7 @@ def executar_ataque(atacante, alvo):
     ataques = [dice.resultado_ataque(b.get("crit", 0), bonus_rolagem - penalidade_mira) for _ in range(n_dados)]
     for n, ataque in enumerate(ataques, start=1):
         titulo = f"D10 DE ATAQUE • {atacante['nome']}" + (f" ({n}/{n_dados})" if n_dados > 1 else "")
-        animar_dado(titulo, ataque["rolagem"], atacante["cor"])
+        dados.append((titulo, ataque["rolagem"], atacante["cor"]))
     critico, normal = dice.FAIXAS_ATAQUE[2], dice.FAIXAS_ATAQUE[1]
     if atacante["critico_garantido"]:  # Última Provação: o guerreiro volta da beira da morte com um crítico
         atacante["critico_garantido"] = False
@@ -958,7 +977,7 @@ def executar_ataque(atacante, alvo):
         linhas.append(f"🤺 A arma de {atacante['nome']} atravessa a postura de {alvo['nome']}.")
     elif alvo["postura"]:
         defesa = dice.resultado_defesa()
-        animar_dado(f"D10 DE DEFESA • {alvo['nome']}", defesa["rolagem"], alvo["cor"])
+        dados.append((f"D10 DE DEFESA • {alvo['nome']}", defesa["rolagem"], alvo["cor"]))
         fator_def = defesa["fator"] + (POSTURA_FERREIRO if alvo["raca"] == "Ferreiro" else 0)
         fator_def += alvo["bonus"].get("bloqueio_postura", 0)
         fator_def = min(0.95, fator_def)
@@ -1066,13 +1085,19 @@ def executar_ataque(atacante, alvo):
         atacante["furia"] = min(FURIA_MAX, atacante["furia"] + 1 + b.get("furia_extra", 0))
         linhas.append(f"🔥 Fúria {pips(atacante['furia'], 'red', FURIA_MAX)}")
 
+    return {"linhas": linhas, "dados": dados}
+
+
+def dano_direto(atacante, alvo, dano, item):
+    """Resolve o dano direto (resolver_dano_direto) e mostra o painel do resultado no terminal."""
+    linhas = resolver_dano_direto(atacante, alvo, dano, item)
     console.print()
     console.print(Panel("\n".join(linhas), title="💥 RESULTADO", box=box.HEAVY, border_style="red", padding=(1, 3)))
 
 
-def dano_direto(atacante, alvo, dano, item):
+def resolver_dano_direto(atacante, alvo, dano, item):
     """Dano fixo de bombas e raios: ignora Defesa, postura e Escudo de Mana, mas o escudo de item ainda absorve.
-    Conta como um ataque (o alvo fica protegido no turno seguinte)."""
+    Conta como um ataque (o alvo fica protegido no turno seguinte). Não mostra nada: devolve as linhas do resultado."""
     linhas = [
         f"{item['nome']} • [bold {atacante['cor']}]{atacante['nome']}[/] atinge [bold {alvo['cor']}]{alvo['nome']}[/]!",
         "",
@@ -1102,54 +1127,60 @@ def dano_direto(atacante, alvo, dano, item):
         alvo["escudo_mana"] = False
         alvo["veneno"] = None
         linhas.append(f"💀 [bold red]{alvo['nome']} foi eliminado![/]")
-    console.print()
-    console.print(Panel("\n".join(linhas), title="💥 RESULTADO", box=box.HEAVY, border_style="red", padding=(1, 3)))
+    return linhas
+
+
+def efeito_item_com_alvo(jogador, item, alvo):
+    """Aplica ácido, sentença ou roubo de um item que já foi gasto. Devolve (título, texto, cor da borda) para exibir,
+    ou None quando o item é de dano direto (bomba, raio), que fica com dano_direto / resolver_dano_direto."""
+    e = item["efeitos"]
+    if "acido" in e:
+        alvo["acido"] = {"valor": e["acido"], "turnos": shop.ACIDO_TURNOS}  # renova, não acumula
+        return ("🧪 ÁCIDO",
+                f"{item['nome']} • [bold {jogador['cor']}]{jogador['nome']}[/] arremessou ácido em [bold {alvo['cor']}]{alvo['nome']}[/]: "
+                f"a Defesa dele cai [bold red]{e['acido']}[/] por {shop.ACIDO_TURNOS} turnos dele "
+                f"(Defesa agora: {defesa_total(alvo)}).", "green")
+    if "sentenca" in e:
+        alvo["sentenca"] = e["sentenca"]
+        return ("📜 SENTENÇA DA PROVAÇÃO",
+                f"{item['nome']} • [bold {jogador['cor']}]{jogador['nome']}[/] sentenciou [bold {alvo['cor']}]{alvo['nome']}[/]: "
+                f"até o próximo turno dele, todos os ataques contra ele causam [bold red]+{round(e['sentenca'] * 100)}%[/] de dano.",
+                "yellow")
+    if "roubo" in e:
+        roubado = min(e["roubo"], alvo["ouro"])
+        alvo["ouro"] -= roubado
+        jogador["ouro"] += roubado
+        return ("🧤 FURTO",
+                f"{item['nome']} • [bold {jogador['cor']}]{jogador['nome']}[/] roubou [bold yellow]{roubado}[/] moedas "
+                f"de [bold {alvo['cor']}]{alvo['nome']}[/]!", "yellow")
+    return None
 
 
 def aplicar_item_com_alvo(jogador, item, alvo):
     """Usa um item que precisa de alvo (bomba, raio, roubo, ácido ou sentença) e gasta o item."""
     e = item["efeitos"]
     shop.gastar_item(jogador, item)
-    if "acido" in e:
-        alvo["acido"] = {"valor": e["acido"], "turnos": shop.ACIDO_TURNOS}  # renova, não acumula
+    painel = efeito_item_com_alvo(jogador, item, alvo)
+    if painel:
+        titulo, texto, cor = painel
         console.print()
-        console.print(Panel(
-            f"{item['nome']} • [bold {jogador['cor']}]{jogador['nome']}[/] arremessou ácido em [bold {alvo['cor']}]{alvo['nome']}[/]: "
-            f"a Defesa dele cai [bold red]{e['acido']}[/] por {shop.ACIDO_TURNOS} turnos dele "
-            f"(Defesa agora: {defesa_total(alvo)}).",
-            title="🧪 ÁCIDO", box=box.HEAVY, border_style="green", padding=(1, 3)))
-        return
-    if "sentenca" in e:
-        alvo["sentenca"] = e["sentenca"]
-        console.print()
-        console.print(Panel(
-            f"{item['nome']} • [bold {jogador['cor']}]{jogador['nome']}[/] sentenciou [bold {alvo['cor']}]{alvo['nome']}[/]: "
-            f"até o próximo turno dele, todos os ataques contra ele causam [bold red]+{round(e['sentenca'] * 100)}%[/] de dano.",
-            title="📜 SENTENÇA DA PROVAÇÃO", box=box.HEAVY, border_style="yellow", padding=(1, 3)))
-        return
-    if "roubo" in e:
-        roubado = min(e["roubo"], alvo["ouro"])
-        alvo["ouro"] -= roubado
-        jogador["ouro"] += roubado
-        console.print()
-        console.print(
-            Panel(
-                f"{item['nome']} • [bold {jogador['cor']}]{jogador['nome']}[/] roubou [bold yellow]{roubado}[/] moedas "
-                f"de [bold {alvo['cor']}]{alvo['nome']}[/]!",
-                title="🧤 FURTO", box=box.HEAVY, border_style="yellow", padding=(1, 3),
-            )
-        )
+        console.print(Panel(texto, title=titulo, box=box.HEAVY, border_style=cor, padding=(1, 3)))
         return
     dano_direto(jogador, alvo, e.get("bomba", e.get("raio", 0)), item)
 
 
-def atacar(jogador, alvo):
-    """Ação de ataque: o Feiticeiro paga 1/3 de mana, o Mosqueteiro gasta 1 de munição; depois o golpe é resolvido."""
+def pagar_ataque(jogador):
+    """Custo do ataque: o Feiticeiro paga 1/3 de mana e o Mosqueteiro gasta 1 de munição."""
     if jogador["raca"] == "Feiticeiro":
         jogador["mana"] -= 1
         jogador["mana_gasta"] = True
     if jogador["raca"] == "Mosqueteiro":
         jogador["municao"] -= 1
+
+
+def atacar(jogador, alvo):
+    """Ação de ataque: paga o custo (pagar_ataque) e depois o golpe é resolvido."""
+    pagar_ataque(jogador)
     executar_ataque(jogador, alvo)
 
 
@@ -1201,6 +1232,36 @@ def usar_habilidade(jogador, acao):
         jogador["na_mira_recarga"] = NA_MIRA_RECARGA
         return f"🎯 [bold yellow]{jogador['nome']}[/] está mirando: o próximo disparo ignora Defesa e postura!"
     return ""
+
+
+def bloqueio_escudo_mana(jogador):
+    """Motivo que impede o Feiticeiro de erguer o Escudo de Mana agora, ou None se pode."""
+    if jogador["mana"] < 2:
+        return "Mana insuficiente para o Escudo de Mana (precisa de 2/3)."
+    if jogador["escudo_mana"]:
+        return "O Escudo de Mana já está ativo."
+    return None
+
+
+def erguer_escudo_mana(jogador):
+    """Feiticeiro: gasta 2/3 de mana e ergue o Escudo de Mana. Devolve a mensagem para exibir."""
+    jogador["mana"] -= 2
+    jogador["mana_gasta"] = True
+    jogador["escudo_mana"] = True
+    jogador["escudo_mana_rodadas"] = ESCUDO_MANA_RODADAS
+    return (f"🔮 [bold magenta]{jogador['nome']}[/] ergueu um Escudo de Mana! "
+            f"[bright_black](dura até o próximo ataque recebido, no máximo {ESCUDO_MANA_RODADAS} rodadas)[/]")
+
+
+def bloqueio_ataque(jogador, jogadores):
+    """Motivo que impede o jogador de atacar agora (sem alvo, sem mana ou sem munição), ou None se pode."""
+    if not alvos_disponiveis(jogador, jogadores):
+        return "Todos os oponentes vivos estão protegidos (atacados no turno anterior) ou invisíveis!"
+    if jogador["raca"] == "Feiticeiro" and jogador["mana"] < 1:
+        return "Sem mana para atacar! Escolha outra ação."
+    if jogador["raca"] == "Mosqueteiro" and jogador["municao"] < 1:
+        return "Sem munição! Use a postura defensiva para recarregar."
+    return None
 
 
 def assumir_postura(jogador):
@@ -1402,21 +1463,15 @@ def mostrar_inventario(jogador, jogadores):
 def turno(rodada, jogador, jogadores):
     """Turno de um jogador. Ver inventário e usar itens de ação livre não encerram o turno."""
     aviso = inicio_de_turno(jogador, rodada)
-    feiticeiro = jogador["raca"] == "Feiticeiro"
     acoes = acoes_do_turno(jogador)
     while True:
         tela_turno(rodada, jogador, jogadores, aviso)
         aviso = None
         acao = acoes[ler_inteiro(f"[bold]👉 Escolha (1-{len(acoes)}):[/] ", 1, len(acoes)) - 1]
         if acao == "atacar":
-            if not alvos_disponiveis(jogador, jogadores):
-                aviso = "[bold red]✖ Todos os oponentes vivos estão protegidos (atacados no turno anterior) ou invisíveis![/]"
-                continue
-            if feiticeiro and jogador["mana"] < 1:
-                aviso = "[bold red]✖ Sem mana para atacar! Escolha outra ação.[/]"
-                continue
-            if jogador["raca"] == "Mosqueteiro" and jogador["municao"] < 1:
-                aviso = "[bold red]✖ Sem munição! Use a postura defensiva para recarregar.[/]"
+            bloqueio = bloqueio_ataque(jogador, jogadores)
+            if bloqueio:
+                aviso = f"[bold red]✖ {bloqueio}[/]"
                 continue
             if not confirmar("🔪 Atacar um oponente?"):
                 continue
@@ -1448,22 +1503,13 @@ def turno(rodada, jogador, jogadores):
             aviso = usar_habilidade(jogador, acao)
             continue
         if acao == "escudo_mana":  # só o Feiticeiro (no lugar da postura)
-            if jogador["mana"] < 2:
-                aviso = "[bold red]✖ Mana insuficiente para o Escudo de Mana (precisa de 2/3).[/]"
-                continue
-            if jogador["escudo_mana"]:
-                aviso = "[bold red]✖ O Escudo de Mana já está ativo.[/]"
+            bloqueio = bloqueio_escudo_mana(jogador)
+            if bloqueio:
+                aviso = f"[bold red]✖ {bloqueio}[/]"
                 continue
             if not confirmar("🔮 Erguer o Escudo de Mana (custa 2/3 de mana)?"):
                 continue
-            jogador["mana"] -= 2
-            jogador["mana_gasta"] = True
-            jogador["escudo_mana"] = True
-            jogador["escudo_mana_rodadas"] = ESCUDO_MANA_RODADAS
-            console.print(
-                f"\n  🔮 [bold magenta]{jogador['nome']}[/] ergueu um Escudo de Mana! "
-                f"[bright_black](dura até o próximo ataque recebido, no máximo {ESCUDO_MANA_RODADAS} rodadas)[/]"
-            )
+            console.print(f"\n  {erguer_escudo_mana(jogador)}")
             pausar()
             return
         if not confirmar("⏩ Passar a vez?"):
