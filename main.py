@@ -39,7 +39,7 @@ POSTURA_FERREIRO = 0.10  # bloqueio extra do Ferreiro em postura defensiva
 FOLEGO_CURA = 0.15  # Bárbaro, Fôlego de Batalha: fração da vida máxima curada ao consumir a Fúria cheia
 PACTO_CUSTO = 5  # Hemomante, Pacto de Sangue: vida paga pelo bônus (antes: 4)
 PACTO_MULT = 1.5  # Hemomante, Pacto de Sangue: multiplicador do próximo ataque
-VAMPIRISMO_HEMOMANTE = 0.30  # Hemomante: fração do dano causado que vira vida (antes: 0.20)
+VAMPIRISMO_HEMOMANTE = 0.35  # Hemomante: fração do dano causado que vira vida (antes: 0.30; itens de loja curam até 20%)
 CURA_CONSUMIVEL_HEMOMANTE = 0.75  # Hemomante: curas de consumíveis rendem menos (antes: 0.5)
 MUNICAO_MAX = 3  # Mosqueteiro: disparos por recarga (antes: 2)
 NA_MIRA_FIXO = 2  # Mosqueteiro, Na mira: dano fixo extra
@@ -266,12 +266,16 @@ def criar_jogador(nome, raca, cor):
         "buff_dano": 1.0,  # multiplicador do próximo ataque
         "buff_rolagem": 0,  # soma na rolagem do próximo ataque
         "arma_envenenada": 0,  # dano de veneno que o próximo ataque aplica
+        "arma_ferida": 0,  # Óleo Necrótico: turnos de Ferida que o próximo ataque aplica
+        "ferida": None,  # Ferida (Óleo Necrótico): {"turnos": restantes}; as curas rendem shop.FERIDA_CURA
         "defesa_temp": 0,
         "defesa_temp_rodadas": 0,
         "livre_usado": False,  # já usou um item de ação livre neste turno?
         # habilidades dos personagens
         "pacto_usado": False,  # Hemomante: já usou o Pacto de Sangue neste turno?
         "municao": 0,  # Mosqueteiro
+        "municao_max_base": MUNICAO_MAX,  # Mosqueteiro: disparos por recarga (a Bandoleira soma; ver municao_max)
+        "municao_max": MUNICAO_MAX,
         "na_mira": False,  # Mosqueteiro: o próximo disparo está na mira?
         "na_mira_recarga": 0,
         "posturas_seguidas": 0,  # turnos seguidos com postura (mecânica secreta: POSTURAS_ATE_FALHAR)
@@ -592,7 +596,7 @@ def linha_recurso(j):
             mira = f"[bright_black]⏳ {j['na_mira_recarga']} turno(s)[/]"
         else:
             mira = "[green]pronta[/]"
-        texto = f"🎯 Munição {pips(j['municao'], 'yellow', MUNICAO_MAX)}  •  Na mira: {mira}"
+        texto = f"🎯 Munição {pips(j['municao'], 'yellow', j['municao_max'])}  •  Na mira: {mira}"
         if j["municao"] == 0:
             texto += "  [bold red](sem munição: recarregue no lugar do ataque)[/]"
         return texto
@@ -615,6 +619,10 @@ def linha_buffs(j):
         partes.append(f"🎯 [yellow]−{j['penalidade_mira']} no D10 (arma de alcance diferente)[/]")
     if j["arma_envenenada"]:
         partes.append(f"🐍 arma envenenada ({j['arma_envenenada']} por turno do alvo)")
+    if j["arma_ferida"]:
+        partes.append("☠️ arma com Óleo Necrótico (próximo ataque abre Ferida)")
+    if j["ferida"]:
+        partes.append(f"☠️ [red]Ferida: curas rendem {round(shop.FERIDA_CURA * 100)}% ({j['ferida']['turnos']} turno(s))[/]")
     if j["defesa_temp"]:
         partes.append(f"🧱 +{j['defesa_temp']} Defesa ({j['defesa_temp_rodadas']} rodada(s))")
     if j["escudo_pv"]:
@@ -645,6 +653,8 @@ def status_jogador(j):
         partes.append(f"[bold red]📜 Sentenciado (+{round(j['sentenca'] * 100)}% de dano recebido)[/]")
     if j["acido"]:
         partes.append(f"[red]🧪 Ácido: −{j['acido']['valor']} Defesa ({j['acido']['turnos']} turno(s))[/]")
+    if j["ferida"]:
+        partes.append(f"[red]☠️ Ferida: curas rendem {round(shop.FERIDA_CURA * 100)}% ({j['ferida']['turnos']} turno(s))[/]")
     if j["bonus"].get("ultima_provacao"):
         partes.append("[yellow]🏰 Última Provação pronta[/]" if j["provacao_pronta"]
                       else "[bright_black]🏰 Última Provação usada[/]")
@@ -764,11 +774,11 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
                    + (" [bright_black](gasta 1 de munição)[/]" if jogador["raca"] == "Mosqueteiro" else "")),
         "postura": ("blue", "🔰 Adotar Postura Defensiva "
                     "[bright_black](até a sua próxima vez: o D10 de defesa bloqueia de 0% a 95% do dano)[/]"),
-        "recarregar": ("yellow", f"🔄 Recarregar a arma [bright_black](gasta o turno • munição {MUNICAO_MAX}/{MUNICAO_MAX} • "
+        "recarregar": ("yellow", f"🔄 Recarregar a arma [bright_black](gasta o turno • munição {jogador['municao_max']}/{jogador['municao_max']} • "
                                  "sem defesa: você fica exposto)[/]"),
         "folego": ("red", f"😤 Fôlego de Batalha [bright_black](ação livre • com a Fúria cheia, cura "
                           f"{round(FOLEGO_CURA * 100)}% da vida máxima)[/]"),
-        "pacto": ("bright_red", f"🦇 Pacto de Sangue [bright_black](ação livre • paga {PACTO_CUSTO} de vida: próximo ataque "
+        "pacto": ("bright_red", f"🦇 Pacto de Sangue [bright_black](ação livre • paga {custo_pacto(jogador)} de vida: próximo ataque "
                                 f"×{f'{PACTO_MULT:g}'.replace('.', ',')})[/]"),
         "na_mira": ("yellow", f"🎯 Na mira [bright_black](ação livre • próximo disparo ignora Defesa e postura • "
                               f"recarga de {NA_MIRA_RECARGA} turnos seus)[/]"),
@@ -855,10 +865,9 @@ def defesa_total(jogador):
 
 
 def ultima_provacao(alvo, dano):
-    """Armadura da Provação: se o dano mataria e o portador está com pelo menos PROVACAO_VIDA_MINIMA da vida (e a
-    Última Provação está carregada), ele fica com 1 de vida. Devolve (dano ajustado, salvou?)."""
-    if (dano < alvo["hp"] or not alvo["bonus"].get("ultima_provacao") or not alvo["provacao_pronta"]
-            or alvo["hp"] < shop.PROVACAO_VIDA_MINIMA * alvo["hp_max"]):
+    """Armadura da Provação: se o dano mataria e a Última Provação está carregada, o portador fica com 1 de vida
+    (com qualquer vida antes do golpe). Devolve (dano ajustado, salvou?)."""
+    if dano < alvo["hp"] or not alvo["bonus"].get("ultima_provacao") or not alvo["provacao_pronta"]:
         return dano, False
     alvo["provacao_pronta"] = False
     alvo["critico_garantido"] = True
@@ -913,6 +922,8 @@ def resolver_ataque(atacante, alvo):
         linhas.append("🏰 [bold yellow]Provação: crítico garantido![/]")
     buff_dano = atacante["buff_dano"]
     atacante["buff_dano"] = 1.0
+    ferida_arma = atacante["arma_ferida"]  # Óleo Necrótico: vale para este ataque, acertando ou não
+    atacante["arma_ferida"] = 0
     fisico, magico = atacante["dano_fisico"], atacante["dano_magico"]
     poder = fisico + magico
     fator = sum(a["fator"] for a in ataques)
@@ -963,6 +974,12 @@ def resolver_ataque(atacante, alvo):
         atacante["ouro"] += b["ouro_ataque"]
         linhas.append(f"💰 [yellow]+{b['ouro_ataque']} moedas saqueadas[/]")
 
+    execucao = b.get("execucao", 0)  # Lâmina do Filho da Puta
+    if execucao and alvo["hp"] <= shop.EXECUCAO_VIDA * alvo["hp_max"]:
+        extra = round(dano * execucao)
+        dano += extra
+        linhas.append(f"🗡️ [bold red]Execução![/] {alvo['nome']} está nas últimas: +{extra} de dano "
+                      f"(+{round(execucao * 100)}%)")
     if alvo["sentenca"]:  # Coroa da Provação
         extra = round(dano * alvo["sentenca"])
         dano += extra
@@ -1054,6 +1071,10 @@ def resolver_ataque(atacante, alvo):
         veneno = max(item_veneno["efeitos"]["veneno"] if item_veneno else 0, atacante["arma_envenenada"])
         usou_item = item_veneno is not None and item_veneno["efeitos"]["veneno"] >= atacante["arma_envenenada"]
         atacante["arma_envenenada"] = 0
+        if ferida_arma and perdido > 0:
+            shop.aplicar_ferida(alvo, ferida_arma)
+            linhas.append(f"☠️ {alvo['nome']} ficou com uma [bold]Ferida[/]: as curas dele rendem "
+                          f"{round(shop.FERIDA_CURA * 100)}% por {alvo['ferida']['turnos']} turnos dele")
         if veneno and perdido > 0:
             shop.aplicar_veneno(alvo, veneno)
             if usou_item and "recarga" in item_veneno["efeitos"]:
@@ -1126,6 +1147,49 @@ def resolver_dano_direto(atacante, alvo, dano, item):
     return linhas
 
 
+def dano_area(atacante, jogadores, dano, item):
+    """Resolve o dano em área (resolver_dano_area) e mostra o painel do resultado no terminal."""
+    linhas = resolver_dano_area(atacante, jogadores, dano, item)
+    console.print()
+    console.print(Panel("\n".join(linhas), title="💥 RESULTADO", box=box.HEAVY, border_style="red", padding=(1, 3)))
+
+
+def resolver_dano_area(atacante, jogadores, dano, item):
+    """Dano fixo em todos os oponentes vivos (Barril de Pólvora): ignora Defesa, postura e Escudo de Mana e atinge até
+    protegidos e invisíveis; o escudo de item absorve, a Sentença soma e a Última Provação vale. Não conta como ataque:
+    ninguém fica protegido por causa dele. Não mostra nada: devolve as linhas do resultado."""
+    linhas = [f"{item['nome']} • [bold {atacante['cor']}]{atacante['nome']}[/] explode a arena: {dano} de dano em todos!", ""]
+    for alvo in vivos(jogadores):
+        if alvo is atacante:
+            continue
+        golpe, notas = dano, []
+        if alvo["sentenca"]:  # Coroa da Provação
+            extra = round(golpe * alvo["sentenca"])
+            golpe += extra
+            notas.append(f"📜 +{extra} sentenciado")
+        if alvo["escudo_pv"] > 0:
+            absorve = min(alvo["escudo_pv"], golpe)
+            alvo["escudo_pv"] -= absorve
+            golpe -= absorve
+            notas.append(f"🧿 escudo absorveu {absorve}")
+        golpe, salvou = ultima_provacao(alvo, golpe)
+        if salvou:
+            notas.append("🏰 Última Provação: ficou com 1 de vida e o próximo ataque dele é crítico")
+        alvo["hp"] = max(0, alvo["hp"] - golpe)
+        linha = f"💥 [bold {alvo['cor']}]{alvo['nome']}[/] sofreu [bold red]{golpe}[/] de dano. 💖 {alvo['hp']}/{alvo['hp_max']}"
+        if notas:
+            linha += f" [bright_black]({' • '.join(notas)})[/]"
+        if alvo["hp"] == 0:
+            alvo["vivo"] = False
+            registrar_eliminacao(alvo)
+            alvo["postura"] = False
+            alvo["escudo_mana"] = False
+            alvo["veneno"] = None
+            linha += f"  💀 [bold red]{alvo['nome']} foi eliminado![/]"
+        linhas.append(linha)
+    return linhas
+
+
 def efeito_item_com_alvo(jogador, item, alvo):
     """Aplica ácido, sentença ou roubo de um item que já foi gasto. Devolve (título, texto, cor da borda) para exibir,
     ou None quando o item é de dano direto (bomba, raio), que fica com dano_direto / resolver_dano_direto."""
@@ -1182,9 +1246,14 @@ def atacar(jogador, alvo):
 
 PERGUNTAS_HABILIDADE = {
     "folego": "😤 Consumir a Fúria para curar?",
-    "pacto": f"🦇 Pagar {PACTO_CUSTO} de vida pelo Pacto de Sangue?",
+    "pacto": "🦇 Pagar vida pelo Pacto de Sangue?",
     "na_mira": "🎯 Colocar o próximo disparo na mira?",
 }
+
+
+def custo_pacto(jogador):
+    """Vida que o Pacto de Sangue custa agora (o Relicário de Sangue dá desconto; nunca menos de 1)."""
+    return max(1, PACTO_CUSTO - jogador["bonus"].get("pacto_desconto", 0))
 
 
 def bloqueio_habilidade(jogador, acao):
@@ -1197,7 +1266,7 @@ def bloqueio_habilidade(jogador, acao):
     if acao == "pacto":
         if jogador["pacto_usado"]:
             return "Você já usou o Pacto de Sangue neste turno."
-        if jogador["hp"] <= PACTO_CUSTO:
+        if jogador["hp"] <= custo_pacto(jogador):
             return "Vida insuficiente: o Pacto de Sangue não pode matar você."
         if jogador["buff_dano"] >= PACTO_MULT:
             return "Você já tem um bônus de dano igual ou maior no próximo ataque."
@@ -1218,10 +1287,11 @@ def usar_habilidade(jogador, acao):
         return (f"😤 [bold red]{jogador['nome']}[/] consumiu a Fúria: [bold green]+{curou} de vida[/] "
                 f"({jogador['hp']}/{jogador['hp_max']}). A Fúria fica desabilitada por 1 rodada.")
     if acao == "pacto":
-        jogador["hp"] -= PACTO_CUSTO
+        custo = custo_pacto(jogador)
+        jogador["hp"] -= custo
         jogador["buff_dano"] = PACTO_MULT
         jogador["pacto_usado"] = True
-        return (f"🦇 [bold bright_red]{jogador['nome']}[/] pagou {PACTO_CUSTO} de vida "
+        return (f"🦇 [bold bright_red]{jogador['nome']}[/] pagou {custo} de vida "
                 f"({jogador['hp']}/{jogador['hp_max']}): próximo ataque ×{f'{PACTO_MULT:g}'.replace('.', ',')}!")
     if acao == "na_mira":
         jogador["na_mira"] = True
@@ -1278,8 +1348,8 @@ def assumir_postura(jogador):
 
 def recarregar(jogador):
     """Mosqueteiro sem munição: gasta o turno recarregando, sem postura (fica exposto). Devolve a mensagem para exibir."""
-    jogador["municao"] = MUNICAO_MAX
-    return (f"🔄 [bold yellow]{jogador['nome']}[/] recarregou a arma ({MUNICAO_MAX}/{MUNICAO_MAX}), "
+    jogador["municao"] = jogador["municao_max"]
+    return (f"🔄 [bold yellow]{jogador['nome']}[/] recarregou a arma ({jogador['municao']}/{jogador['municao_max']}), "
             "mas baixou a guarda: [red]fica exposto até a próxima vez[/].")
 
 
@@ -1359,6 +1429,12 @@ def inicio_de_turno(jogador, rodada=1):
         if jogador["acido"]["turnos"] <= 0:
             jogador["acido"] = None
             aviso += "  [green]🧪 o ácido saiu: Defesa normal de novo[/]"
+    # Ferida (Óleo Necrótico): as curas voltam ao normal depois de FERIDA_TURNOS turnos do ferido
+    if jogador["ferida"]:
+        jogador["ferida"]["turnos"] -= 1
+        if jogador["ferida"]["turnos"] <= 0:
+            jogador["ferida"] = None
+            aviso += "  [green]☠️ a Ferida fechou: curas normais de novo[/]"
     # recargas que contam em turnos do próprio jogador
     shop.avancar_recargas(jogador)
     if jogador["na_mira_recarga"] > 0:
@@ -1454,6 +1530,12 @@ def mostrar_inventario(jogador, jogadores):
             pausar()
             if item["efeitos"].get("livre"):  # ação livre com alvo (Luvas do Ladrão, Coroa): o turno continua
                 return False, f"✅ {item['nome']} usado em {alvo['nome']}! (ação livre: o turno continua)"
+            return True, None
+
+        if shop.em_area(item):  # Barril de Pólvora: atinge todos os oponentes, sem escolher alvo
+            shop.gastar_item(jogador, item)
+            dano_area(jogador, jogadores, item["efeitos"]["bomba_area"], item)
+            pausar()
             return True, None
 
         usou, mensagem = shop.usar_item(jogador, item)

@@ -1,0 +1,4116 @@
+{
+ "partidas": 2697,
+ "erros": [
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Mosqueteiro",
+    "Ferreiro",
+    "Alquimista",
+    "Goblin"
+   ],
+   "semente": 100023,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Hemomante",
+    "Ferreiro",
+    "Alquimista",
+    "Bárbaro"
+   ],
+   "semente": 100028,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Alquimista",
+    "Mosqueteiro",
+    "Feiticeiro",
+    "Goblin"
+   ],
+   "semente": 100038,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Hemomante",
+    "Mosqueteiro",
+    "Goblin",
+    "Alquimista"
+   ],
+   "semente": 100050,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Alquimista",
+    "Mosqueteiro",
+    "Bárbaro",
+    "Ferreiro"
+   ],
+   "semente": 100053,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Bárbaro",
+    "Goblin",
+    "Alquimista",
+    "Mosqueteiro"
+   ],
+   "semente": 100054,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Alquimista",
+    "Hemomante",
+    "Bárbaro",
+    "Ferreiro"
+   ],
+   "semente": 100055,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Mosqueteiro",
+    "Alquimista",
+    "Goblin",
+    "Ferreiro"
+   ],
+   "semente": 100056,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Alquimista",
+    "Bárbaro",
+    "Feiticeiro",
+    "Ferreiro"
+   ],
+   "semente": 100089,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Goblin",
+    "Hemomante",
+    "Bárbaro",
+    "Alquimista"
+   ],
+   "semente": 100091,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Goblin",
+    "Hemomante",
+    "Bárbaro",
+    "Alquimista"
+   ],
+   "semente": 100092,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Hemomante",
+    "Alquimista",
+    "Feiticeiro",
+    "Bárbaro"
+   ],
+   "semente": 100094,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Alquimista",
+    "Ferreiro",
+    "Feiticeiro",
+    "Goblin"
+   ],
+   "semente": 100107,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Alquimista",
+    "Ferreiro",
+    "Hemomante",
+    "Feiticeiro"
+   ],
+   "semente": 100137,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Bárbaro",
+    "Mosqueteiro",
+    "Alquimista",
+    "Ferreiro"
+   ],
+   "semente": 100138,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Mosqueteiro",
+    "Feiticeiro",
+    "Alquimista",
+    "Goblin"
+   ],
+   "semente": 100139,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Ferreiro",
+    "Feiticeiro",
+    "Alquimista",
+    "Bárbaro"
+   ],
+   "semente": 100154,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Ferreiro",
+    "Alquimista",
+    "Goblin",
+    "Bárbaro"
+   ],
+   "semente": 100155,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Bárbaro",
+    "Goblin",
+    "Feiticeiro",
+    "Alquimista"
+   ],
+   "semente": 100164,
+   "erro": "passou de 150 rodadas"
+  },
+  {
+   "cenario": "4 jogadores (personagens sorteados, sem repetir)",
+   "racas": [
+    "Alquimista",
+    "Bárbaro",
+    "Hemomante",
+    "Goblin"
+   ],
+   "semente": 100183,
+   "erro": "passou de 150 rodadas"
+  }
+ ],
+ "n_erros": 303,
+ "vitorias": {
+  "4 jogadores (personagens sorteados, sem repetir)": {
+   "n": 1607,
+   "racas": {
+    "Bárbaro": {
+     "jogos": 926,
+     "vitorias": 353,
+     "pct_vitoria": 22.0,
+     "pct_das_partidas_em_que_jogou": 38.1,
+     "vitorias_por_esperado": 1.52,
+     "ic95": 2.0
+    },
+    "Goblin": {
+     "jogos": 888,
+     "vitorias": 251,
+     "pct_vitoria": 15.6,
+     "pct_das_partidas_em_que_jogou": 28.3,
+     "vitorias_por_esperado": 1.13,
+     "ic95": 1.8
+    },
+    "Feiticeiro": {
+     "jogos": 955,
+     "vitorias": 245,
+     "pct_vitoria": 15.2,
+     "pct_das_partidas_em_que_jogou": 25.7,
+     "vitorias_por_esperado": 1.03,
+     "ic95": 1.8
+    },
+    "Ferreiro": {
+     "jogos": 972,
+     "vitorias": 217,
+     "pct_vitoria": 13.5,
+     "pct_das_partidas_em_que_jogou": 22.3,
+     "vitorias_por_esperado": 0.89,
+     "ic95": 1.7
+    },
+    "Hemomante": {
+     "jogos": 933,
+     "vitorias": 169,
+     "pct_vitoria": 10.5,
+     "pct_das_partidas_em_que_jogou": 18.1,
+     "vitorias_por_esperado": 0.72,
+     "ic95": 1.5
+    },
+    "Alquimista": {
+     "jogos": 832,
+     "vitorias": 237,
+     "pct_vitoria": 14.7,
+     "pct_das_partidas_em_que_jogou": 28.5,
+     "vitorias_por_esperado": 1.14,
+     "ic95": 1.7
+    },
+    "Mosqueteiro": {
+     "jogos": 922,
+     "vitorias": 135,
+     "pct_vitoria": 8.4,
+     "pct_das_partidas_em_que_jogou": 14.6,
+     "vitorias_por_esperado": 0.59,
+     "ic95": 1.4
+    }
+   },
+   "rodadas_media": 61.77,
+   "rodadas_mediana": 56,
+   "rodadas_p10": 34.0,
+   "rodadas_p90": 99.0,
+   "pct_mais_de_30": 92.3,
+   "pct_venc_vida_baixa": 12.6
+  },
+  "5-6 jogadores (personagens sorteados, pode repetir)": {
+   "n": 400,
+   "racas": {
+    "Bárbaro": {
+     "jogos": 244,
+     "vitorias": 92,
+     "pct_vitoria": 23.0,
+     "pct_das_partidas_em_que_jogou": 37.7,
+     "vitorias_por_esperado": 1.5,
+     "ic95": 4.1
+    },
+    "Goblin": {
+     "jogos": 234,
+     "vitorias": 83,
+     "pct_vitoria": 20.8,
+     "pct_das_partidas_em_que_jogou": 35.5,
+     "vitorias_por_esperado": 1.44,
+     "ic95": 4.0
+    },
+    "Feiticeiro": {
+     "jogos": 227,
+     "vitorias": 54,
+     "pct_vitoria": 13.5,
+     "pct_das_partidas_em_que_jogou": 23.8,
+     "vitorias_por_esperado": 0.97,
+     "ic95": 3.3
+    },
+    "Ferreiro": {
+     "jogos": 232,
+     "vitorias": 28,
+     "pct_vitoria": 7.0,
+     "pct_das_partidas_em_que_jogou": 12.1,
+     "vitorias_por_esperado": 0.47,
+     "ic95": 2.5
+    },
+    "Hemomante": {
+     "jogos": 239,
+     "vitorias": 49,
+     "pct_vitoria": 12.2,
+     "pct_das_partidas_em_que_jogou": 20.5,
+     "vitorias_por_esperado": 0.85,
+     "ic95": 3.2
+    },
+    "Alquimista": {
+     "jogos": 189,
+     "vitorias": 53,
+     "pct_vitoria": 13.2,
+     "pct_das_partidas_em_que_jogou": 28.0,
+     "vitorias_por_esperado": 1.26,
+     "ic95": 3.3
+    },
+    "Mosqueteiro": {
+     "jogos": 246,
+     "vitorias": 41,
+     "pct_vitoria": 10.2,
+     "pct_das_partidas_em_que_jogou": 16.7,
+     "vitorias_por_esperado": 0.62,
+     "ic95": 3.0
+    }
+   },
+   "rodadas_media": 69.89,
+   "rodadas_mediana": 65.0,
+   "rodadas_p10": 40.0,
+   "rodadas_p90": 109.0,
+   "pct_mais_de_30": 97.8,
+   "pct_venc_vida_baixa": 12.8
+  },
+  "duelos": {
+   "n": 690,
+   "racas": {
+    "Bárbaro": {
+     "jogos": 200,
+     "vitorias": 129,
+     "pct_vitoria": 18.7,
+     "pct_das_partidas_em_que_jogou": 64.5,
+     "vitorias_por_esperado": 1.29,
+     "ic95": 2.9
+    },
+    "Goblin": {
+     "jogos": 198,
+     "vitorias": 98,
+     "pct_vitoria": 14.2,
+     "pct_das_partidas_em_que_jogou": 49.5,
+     "vitorias_por_esperado": 0.99,
+     "ic95": 2.6
+    },
+    "Feiticeiro": {
+     "jogos": 200,
+     "vitorias": 135,
+     "pct_vitoria": 19.6,
+     "pct_das_partidas_em_que_jogou": 67.5,
+     "vitorias_por_esperado": 1.35,
+     "ic95": 3.0
+    },
+    "Ferreiro": {
+     "jogos": 203,
+     "vitorias": 148,
+     "pct_vitoria": 21.4,
+     "pct_das_partidas_em_que_jogou": 72.9,
+     "vitorias_por_esperado": 1.46,
+     "ic95": 3.1
+    },
+    "Hemomante": {
+     "jogos": 200,
+     "vitorias": 51,
+     "pct_vitoria": 7.4,
+     "pct_das_partidas_em_que_jogou": 25.5,
+     "vitorias_por_esperado": 0.51,
+     "ic95": 2.0
+    },
+    "Alquimista": {
+     "jogos": 180,
+     "vitorias": 64,
+     "pct_vitoria": 9.3,
+     "pct_das_partidas_em_que_jogou": 35.6,
+     "vitorias_por_esperado": 0.71,
+     "ic95": 2.2
+    },
+    "Mosqueteiro": {
+     "jogos": 199,
+     "vitorias": 65,
+     "pct_vitoria": 9.4,
+     "pct_das_partidas_em_que_jogou": 32.7,
+     "vitorias_por_esperado": 0.65,
+     "ic95": 2.2
+    }
+   },
+   "rodadas_media": 35.8,
+   "rodadas_mediana": 30.0,
+   "rodadas_p10": 15.0,
+   "rodadas_p90": 63.0,
+   "pct_mais_de_30": 48.4,
+   "pct_venc_vida_baixa": 13.9
+  }
+ },
+ "duelos": {
+  "Bárbaro x Goblin": {
+   "Bárbaro": 16,
+   "Goblin": 18,
+   "% Bárbaro": 47.1
+  },
+  "Bárbaro x Feiticeiro": {
+   "Bárbaro": 16,
+   "Feiticeiro": 18,
+   "% Bárbaro": 47.1
+  },
+  "Bárbaro x Ferreiro": {
+   "Bárbaro": 15,
+   "Ferreiro": 19,
+   "% Bárbaro": 44.1
+  },
+  "Bárbaro x Hemomante": {
+   "Bárbaro": 30,
+   "Hemomante": 4,
+   "% Bárbaro": 88.2
+  },
+  "Alquimista x Bárbaro": {
+   "Alquimista": 6,
+   "Bárbaro": 24,
+   "% Alquimista": 20.0
+  },
+  "Bárbaro x Mosqueteiro": {
+   "Bárbaro": 28,
+   "Mosqueteiro": 6,
+   "% Bárbaro": 82.4
+  },
+  "Feiticeiro x Goblin": {
+   "Feiticeiro": 20,
+   "Goblin": 14,
+   "% Feiticeiro": 58.8
+  },
+  "Ferreiro x Goblin": {
+   "Ferreiro": 24,
+   "Goblin": 10,
+   "% Ferreiro": 70.6
+  },
+  "Goblin x Hemomante": {
+   "Goblin": 21,
+   "Hemomante": 13,
+   "% Goblin": 61.8
+  },
+  "Alquimista x Goblin": {
+   "Alquimista": 9,
+   "Goblin": 19,
+   "% Alquimista": 32.1
+  },
+  "Goblin x Mosqueteiro": {
+   "Goblin": 16,
+   "Mosqueteiro": 18,
+   "% Goblin": 47.1
+  },
+  "Feiticeiro x Ferreiro": {
+   "Feiticeiro": 17,
+   "Ferreiro": 17,
+   "% Feiticeiro": 50.0
+  },
+  "Feiticeiro x Hemomante": {
+   "Feiticeiro": 27,
+   "Hemomante": 7,
+   "% Feiticeiro": 79.4
+  },
+  "Alquimista x Feiticeiro": {
+   "Alquimista": 7,
+   "Feiticeiro": 23,
+   "% Alquimista": 23.3
+  },
+  "Feiticeiro x Mosqueteiro": {
+   "Feiticeiro": 30,
+   "Mosqueteiro": 4,
+   "% Feiticeiro": 88.2
+  },
+  "Ferreiro x Hemomante": {
+   "Ferreiro": 29,
+   "Hemomante": 5,
+   "% Ferreiro": 85.3
+  },
+  "Alquimista x Ferreiro": {
+   "Alquimista": 4,
+   "Ferreiro": 29,
+   "% Alquimista": 12.1
+  },
+  "Ferreiro x Mosqueteiro": {
+   "Ferreiro": 30,
+   "Mosqueteiro": 4,
+   "% Ferreiro": 88.2
+  },
+  "Alquimista x Hemomante": {
+   "Alquimista": 21,
+   "Hemomante": 9,
+   "% Alquimista": 70.0
+  },
+  "Hemomante x Mosqueteiro": {
+   "Hemomante": 13,
+   "Mosqueteiro": 21,
+   "% Hemomante": 38.2
+  },
+  "Alquimista x Mosqueteiro": {
+   "Alquimista": 17,
+   "Mosqueteiro": 12,
+   "% Alquimista": 58.6
+  }
+ },
+ "ataques": {
+  "Fúria": {
+   "n": 6584,
+   "pct": 1.7,
+   "bruto_medio": 27.1,
+   "final_medio": 24.7,
+   "fator_medio": 2.18,
+   "bruto_max": 144
+  },
+  "GOLPE CRÍTICO": {
+   "n": 93288,
+   "pct": 24.3,
+   "bruto_medio": 26.42,
+   "final_medio": 24.51,
+   "fator_medio": 2.0,
+   "bruto_max": 116
+  },
+  "Golpe Fraco": {
+   "n": 117073,
+   "pct": 30.5,
+   "bruto_medio": 6.32,
+   "final_medio": 5.42,
+   "fator_medio": 0.5,
+   "bruto_max": 31
+  },
+  "Golpe Normal": {
+   "n": 166587,
+   "pct": 43.4,
+   "bruto_medio": 11.99,
+   "final_medio": 10.92,
+   "fator_medio": 1.0,
+   "bruto_max": 62
+  }
+ },
+ "ataques_por_raca": {
+  "Bárbaro": {
+   "n": 62261,
+   "final_medio": 13.49,
+   "bruto_medio": 15.39,
+   "por_categoria": {
+    "Fúria": {
+     "n": 6584,
+     "final_medio": 24.7,
+     "bruto_medio": 27.1
+    },
+    "GOLPE CRÍTICO": {
+     "n": 14065,
+     "final_medio": 23.98,
+     "bruto_medio": 26.62
+    },
+    "Golpe Fraco": {
+     "n": 17370,
+     "final_medio": 4.97,
+     "bruto_medio": 6.44
+    },
+    "Golpe Normal": {
+     "n": 24242,
+     "final_medio": 10.46,
+     "bruto_medio": 12.11
+    }
+   }
+  },
+  "Goblin": {
+   "n": 57314,
+   "final_medio": 12.98,
+   "bruto_medio": 14.33,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 15728,
+     "final_medio": 26.01,
+     "bruto_medio": 27.81
+    },
+    "Golpe Fraco": {
+     "n": 18117,
+     "final_medio": 5.15,
+     "bruto_medio": 6.31
+    },
+    "Golpe Normal": {
+     "n": 23469,
+     "final_medio": 10.29,
+     "bruto_medio": 11.48
+    }
+   }
+  },
+  "Feiticeiro": {
+   "n": 58975,
+   "final_medio": 12.79,
+   "bruto_medio": 13.42,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 13472,
+     "final_medio": 24.49,
+     "bruto_medio": 25.79
+    },
+    "Golpe Fraco": {
+     "n": 18255,
+     "final_medio": 5.95,
+     "bruto_medio": 6.28
+    },
+    "Golpe Normal": {
+     "n": 27248,
+     "final_medio": 11.58,
+     "bruto_medio": 12.09
+    }
+   }
+  },
+  "Ferreiro": {
+   "n": 36998,
+   "final_medio": 13.83,
+   "bruto_medio": 15.71,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 8586,
+     "final_medio": 27.49,
+     "bruto_medio": 30.76
+    },
+    "Golpe Fraco": {
+     "n": 11367,
+     "final_medio": 5.94,
+     "bruto_medio": 7.24
+    },
+    "Golpe Normal": {
+     "n": 17045,
+     "final_medio": 12.2,
+     "bruto_medio": 13.77
+    }
+   }
+  },
+  "Hemomante": {
+   "n": 55569,
+   "final_medio": 11.86,
+   "bruto_medio": 13.59,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 12823,
+     "final_medio": 23.65,
+     "bruto_medio": 26.24
+    },
+    "Golpe Fraco": {
+     "n": 17392,
+     "final_medio": 4.89,
+     "bruto_medio": 6.23
+    },
+    "Golpe Normal": {
+     "n": 25354,
+     "final_medio": 10.69,
+     "bruto_medio": 12.25
+    }
+   }
+  },
+  "Alquimista": {
+   "n": 72233,
+   "final_medio": 11.25,
+   "bruto_medio": 13.2,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 19291,
+     "final_medio": 22.05,
+     "bruto_medio": 24.54
+    },
+    "Golpe Fraco": {
+     "n": 21491,
+     "final_medio": 4.12,
+     "bruto_medio": 5.78
+    },
+    "Golpe Normal": {
+     "n": 31451,
+     "final_medio": 9.5,
+     "bruto_medio": 11.33
+    }
+   }
+  },
+  "Mosqueteiro": {
+   "n": 40182,
+   "final_medio": 14.47,
+   "bruto_medio": 12.91,
+   "por_categoria": {
+    "GOLPE CRÍTICO": {
+     "n": 9323,
+     "final_medio": 26.33,
+     "bruto_medio": 24.8
+    },
+    "Golpe Fraco": {
+     "n": 13081,
+     "final_medio": 8.05,
+     "bruto_medio": 6.39
+    },
+    "Golpe Normal": {
+     "n": 17778,
+     "final_medio": 12.96,
+     "bruto_medio": 11.47
+    }
+   }
+  }
+ },
+ "furia_fatores": {
+  "4.0": 505,
+  "2.0": 1354,
+  "3.0": 1260,
+  "2.5": 1014,
+  "1.5": 1780,
+  "1.0": 671
+ },
+ "barbaro_fator_medio_sem_furia": 1.1,
+ "barbaro_pct_ataques_com_furia": 10.6,
+ "ataques_contra_postura": {
+  "n": 39143,
+  "final_medio": 10.37,
+  "final_medio_sem_postura": 13.06
+ },
+ "dano_final_por_periodo": {
+  "rodada 31+": 18.13,
+  "rodadas 1-10": 7.46,
+  "rodadas 11-20": 9.33,
+  "rodadas 21-30": 11.85
+ },
+ "picos": [
+  [
+   "4 jogadores (personagens sorteados, sem repetir)",
+   "Ferreiro",
+   "GOLPE CRÍTICO",
+   104,
+   150,
+   2.0,
+   false,
+   104,
+   true,
+   false,
+   1
+  ],
+  [
+   "4 jogadores (personagens sorteados, sem repetir)",
+   "Bárbaro",
+   "Fúria",
+   102,
+   143,
+   4.0,
+   false,
+   97,
+   true,
+   false,
+   0
+  ],
+  [
+   "5-6 jogadores (personagens sorteados, pode repetir)",
+   "Bárbaro",
+   "Fúria",
+   99,
+   141,
+   3.0,
+   false,
+   104,
+   true,
+   false,
+   1
+  ],
+  [
+   "4 jogadores (personagens sorteados, sem repetir)",
+   "Bárbaro",
+   "Fúria",
+   94,
+   134,
+   3.0,
+   false,
+   106,
+   true,
+   false,
+   1
+  ],
+  [
+   "4 jogadores (personagens sorteados, sem repetir)",
+   "Bárbaro",
+   "Fúria",
+   102,
+   134,
+   3.0,
+   false,
+   36,
+   true,
+   false,
+   0
+  ]
+ ],
+ "diretos": {
+  "⚡ Cajado Relâmpago": {
+   "n": 27730,
+   "dano_medio": 15.47
+  },
+  "💣 Bomba de Pólvora": {
+   "n": 2267,
+   "dano_medio": 13.5
+  },
+  "🧨 Bombinha": {
+   "n": 330,
+   "dano_medio": 9.88
+  }
+ },
+ "acoes": {
+  "Hemomante": {
+   "ataque": 53.8,
+   "item livre (não encerra)": 23.6,
+   "postura": 14.3,
+   "item (com alvo)": 4.0,
+   "item (gasta o turno)": 3.8,
+   "passar": 0.6
+  },
+  "Mosqueteiro": {
+   "ataque": 43.3,
+   "item livre (não encerra)": 20.4,
+   "recarregar": 13.6,
+   "postura": 11.4,
+   "item (gasta o turno)": 7.0,
+   "item (com alvo)": 3.8,
+   "passar": 0.5
+  },
+  "Feiticeiro": {
+   "ataque": 56.2,
+   "item livre (não encerra)": 22.1,
+   "Escudo de Mana": 7.9,
+   "item (gasta o turno)": 7.0,
+   "item (com alvo)": 4.0,
+   "passar": 2.8
+  },
+  "Bárbaro": {
+   "ataque": 54.4,
+   "item livre (não encerra)": 21.0,
+   "postura": 12.9,
+   "item (gasta o turno)": 6.7,
+   "item (com alvo)": 4.5,
+   "passar": 0.5
+  },
+  "Ferreiro": {
+   "ataque": 59.8,
+   "postura": 15.9,
+   "item livre (não encerra)": 15.6,
+   "item (gasta o turno)": 5.6,
+   "item (com alvo)": 2.5,
+   "passar": 0.6
+  },
+  "Goblin": {
+   "ataque": 50.3,
+   "item livre (não encerra)": 21.5,
+   "postura": 13.1,
+   "item (gasta o turno)": 8.7,
+   "item (com alvo)": 5.9,
+   "passar": 0.5
+  },
+  "Alquimista": {
+   "ataque": 46.4,
+   "item livre (não encerra)": 22.6,
+   "item (gasta o turno)": 12.2,
+   "postura": 10.9,
+   "item (com alvo)": 7.4,
+   "passar": 0.5
+  }
+ },
+ "ouro_por_partida": {
+  "Hemomante": {
+   "gasto no Comerciante": 559.1,
+   "turno (base)": 476.8,
+   "Comerciante (base)": 92.6,
+   "itens (ouro por turno)": 27.5,
+   "ataques (crítico, saque, roubo)": 24.1,
+   "roubo (Luvas)": 23.1,
+   "roubado de mim": -14.7,
+   "roubado por crítico do Goblin": -2.2,
+   "defesa perfeita": 1.9,
+   "Goblin (turno)": 0.0,
+   "economia Pechinchar": 0.0,
+   "Goblin (postura)": 0.0
+  },
+  "Feiticeiro": {
+   "gasto no Comerciante": 568.5,
+   "turno (base)": 487.6,
+   "Comerciante (base)": 93.5,
+   "itens (ouro por turno)": 25.6,
+   "ataques (crítico, saque, roubo)": 24.8,
+   "roubo (Luvas)": 18.2,
+   "roubado de mim": -12.3,
+   "roubado por crítico do Goblin": -2.8,
+   "defesa perfeita": 0.0,
+   "Goblin (turno)": 0.0,
+   "economia Pechinchar": 0.0
+  },
+  "Mosqueteiro": {
+   "gasto no Comerciante": 505.4,
+   "turno (base)": 435.4,
+   "Comerciante (base)": 84.6,
+   "itens (ouro por turno)": 26.1,
+   "ataques (crítico, saque, roubo)": 17.6,
+   "roubo (Luvas)": 13.1,
+   "roubado de mim": -10.5,
+   "roubado por crítico do Goblin": -2.4,
+   "defesa perfeita": 1.6,
+   "Goblin (turno)": 0.0,
+   "Goblin (postura)": 0.0,
+   "economia Pechinchar": 0.0
+  },
+  "Bárbaro": {
+   "gasto no Comerciante": 653.0,
+   "turno (base)": 549.5,
+   "Comerciante (base)": 104.3,
+   "ataques (crítico, saque, roubo)": 41.7,
+   "itens (ouro por turno)": 29.7,
+   "roubo (Luvas)": 13.3,
+   "roubado de mim": -12.6,
+   "roubado por crítico do Goblin": -3.6,
+   "defesa perfeita": 2.1,
+   "Goblin (turno)": 0.0,
+   "economia Pechinchar": 0.0,
+   "Goblin (postura)": 0.0
+  },
+  "Ferreiro": {
+   "gasto no Comerciante": 313.2,
+   "turno (base)": 279.8,
+   "Comerciante (base)": 57.4,
+   "ataques (crítico, saque, roubo)": 21.6,
+   "itens (ouro por turno)": 9.4,
+   "roubado de mim": -7.2,
+   "roubo (Luvas)": 5.5,
+   "roubado por crítico do Goblin": -2.0,
+   "defesa perfeita": 1.8,
+   "Goblin (turno)": 0.0,
+   "economia Pechinchar": 0.0,
+   "Goblin (postura)": 0.0
+  },
+  "Alquimista": {
+   "gasto no Comerciante": 959.4,
+   "turno (base)": 791.3,
+   "Comerciante (base)": 146.2,
+   "ataques (crítico, saque, roubo)": 44.6,
+   "itens (ouro por turno)": 42.9,
+   "roubo (Luvas)": 16.1,
+   "roubado de mim": -13.7,
+   "roubado por crítico do Goblin": -5.4,
+   "defesa perfeita": 2.4,
+   "Goblin (turno)": 0.0,
+   "Goblin (postura)": 0.0,
+   "economia Pechinchar": 0.0
+  },
+  "Goblin": {
+   "gasto no Comerciante": 847.3,
+   "turno (base)": 565.0,
+   "Goblin (turno)": 282.5,
+   "Comerciante (base)": 106.8,
+   "Goblin (Comerciante)": 53.4,
+   "economia Pechinchar": 42.3,
+   "itens (ouro por turno)": 41.0,
+   "ataques (crítico, saque, roubo)": 28.2,
+   "roubado de mim": -27.8,
+   "roubo (Luvas)": 9.1,
+   "defesa perfeita": 2.5,
+   "roubado por crítico do Goblin": -0.8,
+   "Goblin (postura)": 0.0
+  }
+ },
+ "comerciante": {
+  "Bárbaro": {
+   "visitas": 17043,
+   "ouro_medio_na_chegada": 87.3,
+   "pct_comprou": 99.2,
+   "pct_duas_compras": 24.8,
+   "compras_por_visita": 1.24,
+   "pct_nada_acessivel": 0.0,
+   "preco_medio_pago": 50.46,
+   "gasto_medio_por_visita": 62.61,
+   "ouro_medio_saida": 24.7,
+   "pct_compras_por_tipo": {
+    "consumivel": 34.9,
+    "arma": 18.8,
+    "joia": 18.0,
+    "ativo": 16.0,
+    "armadura": 12.3
+   },
+   "pct_compras_por_fase": {
+    "Mid": 48.8,
+    "Late": 40.2,
+    "Early": 11.1
+   },
+   "pechinchas": 0
+  },
+  "Goblin": {
+   "visitas": 16860,
+   "ouro_medio_na_chegada": 186.18,
+   "pct_comprou": 98.9,
+   "pct_duas_compras": 59.9,
+   "compras_por_visita": 1.59,
+   "pct_nada_acessivel": 0.0,
+   "preco_medio_pago": 49.95,
+   "gasto_medio_por_visita": 79.3,
+   "ouro_medio_saida": 106.88,
+   "pct_compras_por_tipo": {
+    "consumivel": 47.3,
+    "arma": 16.4,
+    "joia": 13.4,
+    "ativo": 12.1,
+    "armadura": 10.8
+   },
+   "pct_compras_por_fase": {
+    "Late": 47.4,
+    "Mid": 41.2,
+    "Early": 11.4
+   },
+   "pechinchas": 8024
+  },
+  "Feiticeiro": {
+   "visitas": 15304,
+   "ouro_medio_na_chegada": 84.04,
+   "pct_comprou": 99.4,
+   "pct_duas_compras": 24.3,
+   "compras_por_visita": 1.24,
+   "pct_nada_acessivel": 0.0,
+   "preco_medio_pago": 49.18,
+   "gasto_medio_por_visita": 60.81,
+   "ouro_medio_saida": 23.22,
+   "pct_compras_por_tipo": {
+    "consumivel": 34.9,
+    "joia": 20.8,
+    "ativo": 17.7,
+    "armadura": 15.5,
+    "arma": 11.1
+   },
+   "pct_compras_por_fase": {
+    "Mid": 46.2,
+    "Late": 39.8,
+    "Early": 14.0
+   },
+   "pechinchas": 0
+  },
+  "Ferreiro": {
+   "visitas": 9388,
+   "ouro_medio_na_chegada": 72.39,
+   "pct_comprou": 99.8,
+   "pct_duas_compras": 19.8,
+   "compras_por_visita": 1.2,
+   "pct_nada_acessivel": 0.0,
+   "preco_medio_pago": 45.64,
+   "gasto_medio_por_visita": 54.58,
+   "ouro_medio_saida": 17.82,
+   "pct_compras_por_tipo": {
+    "consumivel": 25.5,
+    "arma": 23.7,
+    "armadura": 18.5,
+    "ativo": 16.3,
+    "joia": 16.1
+   },
+   "pct_compras_por_fase": {
+    "Mid": 53.2,
+    "Late": 25.1,
+    "Early": 21.7
+   },
+   "pechinchas": 0
+  },
+  "Hemomante": {
+   "visitas": 14822,
+   "ouro_medio_na_chegada": 85.47,
+   "pct_comprou": 97.7,
+   "pct_duas_compras": 9.9,
+   "compras_por_visita": 1.08,
+   "pct_nada_acessivel": 0.0,
+   "preco_medio_pago": 56.12,
+   "gasto_medio_por_visita": 60.39,
+   "ouro_medio_saida": 25.08,
+   "pct_compras_por_tipo": {
+    "joia": 25.3,
+    "ativo": 23.4,
+    "consumivel": 19.0,
+    "armadura": 18.4,
+    "arma": 13.9
+   },
+   "pct_compras_por_fase": {
+    "Late": 48.5,
+    "Mid": 36.1,
+    "Early": 15.4
+   },
+   "pechinchas": 0
+  },
+  "Alquimista": {
+   "visitas": 23248,
+   "ouro_medio_na_chegada": 85.03,
+   "pct_comprou": 99.7,
+   "pct_duas_compras": 53.9,
+   "compras_por_visita": 1.55,
+   "pct_nada_acessivel": 0.0,
+   "preco_medio_pago": 42.33,
+   "gasto_medio_por_visita": 65.62,
+   "ouro_medio_saida": 19.41,
+   "pct_compras_por_tipo": {
+    "consumivel": 59.4,
+    "joia": 13.4,
+    "ativo": 10.8,
+    "arma": 9.0,
+    "armadura": 7.4
+   },
+   "pct_compras_por_fase": {
+    "Mid": 47.0,
+    "Late": 38.8,
+    "Early": 14.3
+   },
+   "pechinchas": 0
+  },
+  "Mosqueteiro": {
+   "visitas": 13758,
+   "ouro_medio_na_chegada": 81.37,
+   "pct_comprou": 99.5,
+   "pct_duas_compras": 22.5,
+   "compras_por_visita": 1.22,
+   "pct_nada_acessivel": 0.0,
+   "preco_medio_pago": 48.93,
+   "gasto_medio_por_visita": 59.73,
+   "ouro_medio_saida": 21.65,
+   "pct_compras_por_tipo": {
+    "consumivel": 31.7,
+    "joia": 20.4,
+    "ativo": 18.7,
+    "armadura": 14.8,
+    "arma": 14.4
+   },
+   "pct_compras_por_fase": {
+    "Mid": 50.2,
+    "Late": 36.4,
+    "Early": 13.5
+   },
+   "pechinchas": 0
+  }
+ },
+ "visitas_por_fase": {
+  "Early": 22517,
+  "Mid": 19868,
+  "Late": 68038
+ },
+ "partidas_que_viram_fase": {
+  "Mid": 97.3,
+  "Late": 86.8
+ },
+ "partidas_que_viram_fase_por_cenario": {
+  "4 jogadores (personagens sorteados, sem repetir)": {
+   "Mid": 100.0,
+   "Late": 96.2
+  },
+  "5-6 jogadores (personagens sorteados, pode repetir)": {
+   "Mid": 100.0,
+   "Late": 98.8
+  },
+  "duelos": {
+   "Mid": 89.6,
+   "Late": 58.0
+  }
+ },
+ "fases_do_comerciante": "Early até a rodada 14, Mid a partir da 15, Late a partir da 25",
+ "ouro_ganho_por_partida": {
+  "Hemomante": 643.8,
+  "Feiticeiro": 646.9,
+  "Mosqueteiro": 576.0,
+  "Bárbaro": 737.0,
+  "Ferreiro": 373.5,
+  "Alquimista": 1038.1,
+  "Goblin": 1087.7
+ },
+ "ouro_ganho_por_rodada_vivo": {
+  "Bárbaro": 16.56,
+  "Goblin": 24.02,
+  "Feiticeiro": 16.04,
+  "Ferreiro": 12.87,
+  "Hemomante": 15.11,
+  "Alquimista": 22.75,
+  "Mosqueteiro": 14.92
+ },
+ "ferreiro_niveis_forja_no_fim": 3.71,
+ "mais_comprados": [
+  [
+   "Poção Reforçada",
+   25856
+  ],
+  [
+   "Elixir Dourado",
+   9238
+  ],
+  [
+   "Essência de Escorpião",
+   6324
+  ],
+  [
+   "Frasco de Ácido",
+   5723
+  ],
+  [
+   "Armadura de Couro",
+   5190
+  ],
+  [
+   "Amuleto do Vampiro",
+   4000
+  ],
+  [
+   "Amuleto da Fortuna",
+   3947
+  ],
+  [
+   "Coroa da Provação",
+   3944
+  ],
+  [
+   "Cajado Relâmpago",
+   3795
+  ],
+  [
+   "Anel Venenoso",
+   3749
+  ],
+  [
+   "Capa da Invisibilidade",
+   3636
+  ],
+  [
+   "Gibão Acolchoado",
+   3460
+  ],
+  [
+   "Chifre de Guerra",
+   3439
+  ],
+  [
+   "Olho Protetor",
+   3249
+  ],
+  [
+   "Elixir Maior",
+   3189
+  ]
+ ],
+ "menos_comprados": [
+  [
+   "Poção de Fúria",
+   76
+  ],
+  [
+   "Antídoto",
+   259
+  ],
+  [
+   "Bombinha",
+   279
+  ],
+  [
+   "Anel do Vigor",
+   333
+  ],
+  [
+   "Anel de Ferro",
+   345
+  ],
+  [
+   "Trevo da Sorte",
+   352
+  ],
+  [
+   "Frasco de Veneno",
+   499
+  ],
+  [
+   "Orbe Mágico",
+   559
+  ],
+  [
+   "Espada de Aço",
+   563
+  ],
+  [
+   "Besta Leve",
+   604
+  ]
+ ],
+ "nunca_comprados": [],
+ "itens_usados": [
+  [
+   "🧿 Olho Protetor",
+   39532
+  ],
+  [
+   "👻 Capa da Invisibilidade",
+   36437
+  ],
+  [
+   "👑 Coroa da Provação",
+   30917
+  ],
+  [
+   "📯 Chifre de Guerra",
+   27744
+  ],
+  [
+   "⚡ Cajado Relâmpago",
+   27730
+  ],
+  [
+   "🧴 Poção Reforçada",
+   20647
+  ],
+  [
+   "🏺 Cálice Vital",
+   15934
+  ],
+  [
+   "🧤 Luvas do Ladrão",
+   15922
+  ],
+  [
+   "🍶 Elixir Dourado",
+   7606
+  ],
+  [
+   "🧪 Frasco de Ácido",
+   6478
+  ],
+  [
+   "🦂 Essência de Escorpião",
+   6426
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada)",
+   2831
+  ],
+  [
+   "🍷 Elixir Maior",
+   2634
+  ],
+  [
+   "💣 Bomba de Pólvora",
+   2267
+  ],
+  [
+   "🔬 Mistura (💊 Poção Simples + 💊 Poção Simples)",
+   1990
+  ],
+  [
+   "🧱 Pele de Pedra",
+   1781
+  ],
+  [
+   "🧪 Poção de Cura",
+   1195
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)",
+   732
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado)",
+   619
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)",
+   519
+  ],
+  [
+   "🐍 Frasco de Veneno",
+   477
+  ],
+  [
+   "🍀 Trevo da Sorte",
+   347
+  ],
+  [
+   "🧨 Bombinha",
+   330
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior)",
+   319
+  ],
+  [
+   "🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura)",
+   245
+  ],
+  [
+   "🔬 Mistura (🌿 Antídoto + 🌿 Antídoto)",
+   236
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   206
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)",
+   165
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🦂 Essência de Escorpião)",
+   110
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   107
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião)",
+   74
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte)",
+   71
+  ],
+  [
+   "🔬 Mistura (🍀 Trevo da Sorte + 🍀 Trevo da Sorte)",
+   63
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))",
+   58
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   57
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))",
+   48
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   47
+  ],
+  [
+   "🔬 Mistura (🔥 Poção de Fúria + 🔥 Poção de Fúria)",
+   43
+  ],
+  [
+   "💊 Poção Simples",
+   36
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra)",
+   35
+  ],
+  [
+   "🔥 Poção de Fúria",
+   33
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   32
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🧱 Pele de Pedra)",
+   32
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   28
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra)",
+   27
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   24
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   23
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   23
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🔥 Poção de Fúria)",
+   21
+  ],
+  [
+   "🔬 Mistura (🐍 Frasco de Veneno + 🐍 Frasco de Veneno)",
+   20
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🍀 Trevo da Sorte)",
+   18
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada)",
+   18
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   17
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado)",
+   16
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🦂 Essência de Escorpião)",
+   15
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   15
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   15
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   15
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🐍 Frasco de Veneno)",
+   13
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)))",
+   13
+  ],
+  [
+   "🔬 Mistura (💊 Poção Simples + 🍀 Trevo da Sorte)",
+   13
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍷 Elixir Maior)",
+   13
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada)",
+   12
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍀 Trevo da Sorte)",
+   12
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))",
+   11
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧱 Pele de Pedra)",
+   11
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada)",
+   11
+  ],
+  [
+   "🔬 Mistura (🍀 Trevo da Sorte + 💊 Poção Simples)",
+   11
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   11
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   11
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   10
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   10
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 💊 Poção Simples)",
+   9
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   9
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))",
+   9
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior)",
+   9
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte))",
+   9
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)))",
+   8
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🌿 Antídoto + 🌿 Antídoto) + 🍀 Trevo da Sorte)",
+   8
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião))",
+   7
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🧱 Pele de Pedra)",
+   7
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧴 Poção Reforçada))",
+   7
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   7
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   7
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   6
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   6
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))",
+   6
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧪 Poção de Cura)",
+   6
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   6
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada))",
+   6
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura) + 🔥 Poção de Fúria)",
+   6
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   6
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🦂 Essência de Escorpião)",
+   6
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)))",
+   5
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))",
+   5
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura) + 🧱 Pele de Pedra)",
+   5
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))))",
+   5
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   5
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura) + 🐍 Frasco de Veneno)",
+   5
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada))",
+   5
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   5
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))))",
+   4
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧱 Pele de Pedra)",
+   4
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   4
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)))",
+   4
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🍶 Elixir Dourado)",
+   4
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   4
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião)",
+   4
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado))",
+   4
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)))",
+   4
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior))",
+   4
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   4
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   4
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🍶 Elixir Dourado)",
+   4
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada)",
+   4
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🌿 Antídoto + 🌿 Antídoto) + 🔥 Poção de Fúria)",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   3
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🍶 Elixir Dourado)",
+   3
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🌿 Antídoto + 🌿 Antídoto) + 🧪 Poção de Cura)",
+   3
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   3
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   3
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))))",
+   3
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🌿 Antídoto + 🌿 Antídoto) + 🍷 Elixir Maior)",
+   3
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🍶 Elixir Dourado)",
+   3
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))",
+   3
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍷 Elixir Maior + 🦂 Essência de Escorpião))",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🧱 Pele de Pedra)",
+   3
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🍷 Elixir Maior)",
+   3
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   3
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada)",
+   3
+  ],
+  [
+   "🔬 Mistura (🍀 Trevo da Sorte + 🍶 Elixir Dourado)",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   3
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍶 Elixir Dourado)",
+   2
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍶 Elixir Dourado))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧱 Pele de Pedra)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião)))",
+   2
+  ],
+  [
+   "🔬 Mistura (🧪 Poção de Cura + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧪 Poção de Cura))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🌿 Antídoto + 🌿 Antídoto) + 🧱 Pele de Pedra)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado))",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião))",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   2
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧱 Pele de Pedra)",
+   2
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada)))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍀 Trevo da Sorte)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)))",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada))))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado))) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada)))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍷 Elixir Maior)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura) + 🧪 Poção de Cura)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🍀 Trevo da Sorte)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍷 Elixir Maior)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura) + 🍀 Trevo da Sorte)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra))",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)))))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))) + 🦂 Essência de Escorpião)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   2
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🍀 Trevo da Sorte)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra)))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra) + 🦂 Essência de Escorpião)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra)))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧱 Pele de Pedra)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🧱 Pele de Pedra) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião))",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   2
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra))",
+   2
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🧱 Pele de Pedra)",
+   2
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🧱 Pele de Pedra) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)))) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🍷 Elixir Maior) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🍶 Elixir Dourado))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧱 Pele de Pedra) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍀 Trevo da Sorte) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍀 Trevo da Sorte + 💊 Poção Simples) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))))) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍷 Elixir Maior)) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🍶 Elixir Dourado))) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))) + 🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 🍀 Trevo da Sorte) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍷 Elixir Maior)) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧱 Pele de Pedra) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍀 Trevo da Sorte) + 🍀 Trevo da Sorte) + 🍷 Elixir Maior) + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🍷 Elixir Maior) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🌿 Antídoto + 🌿 Antídoto) + 🐍 Frasco de Veneno)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍷 Elixir Maior))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))))) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🍷 Elixir Maior)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🍶 Elixir Dourado) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte)) + 🍶 Elixir Dourado) + 🧱 Pele de Pedra) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🌿 Antídoto + 🌿 Antídoto) + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 💊 Poção Simples) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🍷 Elixir Maior))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (💊 Poção Simples + 🔬 Mistura (🧱 Pele de Pedra + 💊 Poção Simples)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra) + 🦂 Essência de Escorpião))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🍷 Elixir Maior))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)))) + 🍷 Elixir Maior)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🍶 Elixir Dourado) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍷 Elixir Maior))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))))) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior) + 🦂 Essência de Escorpião)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧱 Pele de Pedra) + 🍶 Elixir Dourado) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍷 Elixir Maior))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)))) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍷 Elixir Maior))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🍀 Trevo da Sorte) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍷 Elixir Maior) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍷 Elixir Maior)))))) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado)) + 🦂 Essência de Escorpião) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍀 Trevo da Sorte + 🔬 Mistura (🍶 Elixir Dourado + 🍀 Trevo da Sorte)) + 🍷 Elixir Maior) + 🦂 Essência de Escorpião)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)))) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍷 Elixir Maior)))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🦂 Essência de Escorpião) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))))))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍷 Elixir Maior) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍀 Trevo da Sorte) + 🍶 Elixir Dourado)) + 🦂 Essência de Escorpião)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))))) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra) + 🍀 Trevo da Sorte) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte)) + 🍷 Elixir Maior))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔥 Poção de Fúria + 💊 Poção Simples)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)) + 🍶 Elixir Dourado))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado)) + 🧱 Pele de Pedra) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))) + 🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧱 Pele de Pedra) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍀 Trevo da Sorte + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado)) + 🦂 Essência de Escorpião))) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🦂 Essência de Escorpião)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🧱 Pele de Pedra) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍀 Trevo da Sorte + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte)) + 🧴 Poção Reforçada)) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🍷 Elixir Maior + 🧱 Pele de Pedra))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🔥 Poção de Fúria) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧪 Poção de Cura + 🔬 Mistura (🧪 Poção de Cura + 🔥 Poção de Fúria))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte)))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍷 Elixir Maior + 🧱 Pele de Pedra))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra)))) + 🦂 Essência de Escorpião) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧱 Pele de Pedra)) + 🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🍷 Elixir Maior + 🦂 Essência de Escorpião))) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍷 Elixir Maior) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍀 Trevo da Sorte + 🧴 Poção Reforçada) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))))) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🦂 Essência de Escorpião) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra) + 🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍷 Elixir Maior) + 🍷 Elixir Maior) + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 💊 Poção Simples) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍷 Elixir Maior) + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra) + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🍷 Elixir Maior)))) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🍀 Trevo da Sorte)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍀 Trevo da Sorte) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍷 Elixir Maior)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura) + 🍷 Elixir Maior) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🦂 Essência de Escorpião) + 🧱 Pele de Pedra)) + 🍶 Elixir Dourado)) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🦂 Essência de Escorpião + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🍷 Elixir Maior) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍶 Elixir Dourado))) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)))) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🌿 Antídoto + 🔬 Mistura (🌿 Antídoto + 🍀 Trevo da Sorte))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra) + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada)) + 🍷 Elixir Maior) + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (💊 Poção Simples + 🔬 Mistura (💊 Poção Simples + 🍀 Trevo da Sorte))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada)))) + 🍶 Elixir Dourado) + 🍷 Elixir Maior))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🍷 Elixir Maior) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado)))) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))) + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍀 Trevo da Sorte) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍷 Elixir Maior)) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🍷 Elixir Maior) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧪 Poção de Cura) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🍷 Elixir Maior))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧱 Pele de Pedra))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🦂 Essência de Escorpião) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🍶 Elixir Dourado)) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra))) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte) + 🍷 Elixir Maior)))",
+   1
+  ],
+  [
+   "🔬 Mistura (💊 Poção Simples + 🔬 Mistura (🧱 Pele de Pedra + 💊 Poção Simples))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))) + 🍷 Elixir Maior)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado) + 🍷 Elixir Maior))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🐍 Frasco de Veneno)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧱 Pele de Pedra) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🔬 Mistura (🧴 Poção Reforçada + 🍷 Elixir Maior))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🍷 Elixir Maior)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🔬 Mistura (🔬 Mistura (🌿 Antídoto + 🌿 Antídoto) + 🧪 Poção de Cura)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍀 Trevo da Sorte + 🍶 Elixir Dourado)) + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🧱 Pele de Pedra))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra) + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))))) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🍷 Elixir Maior) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))))) + 🍶 Elixir Dourado) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧱 Pele de Pedra + 🧱 Pele de Pedra) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍷 Elixir Maior) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião))) + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada) + 🧱 Pele de Pedra) + 🦂 Essência de Escorpião))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧱 Pele de Pedra) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada))) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior) + 🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior)) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra) + 🦂 Essência de Escorpião)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍀 Trevo da Sorte)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))) + 🍶 Elixir Dourado)))) + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧱 Pele de Pedra))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura) + 🍀 Trevo da Sorte) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)))))) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🦂 Essência de Escorpião + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)))) + 🍶 Elixir Dourado) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧱 Pele de Pedra) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))) + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🍷 Elixir Maior)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🍶 Elixir Dourado))) + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🍶 Elixir Dourado)) + 🦂 Essência de Escorpião))) + 🍶 Elixir Dourado)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)))))) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado)))) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)))) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (💊 Poção Simples + 💊 Poção Simples) + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)) + 🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🍶 Elixir Dourado) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🍶 Elixir Dourado + 🧱 Pele de Pedra)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🍶 Elixir Dourado))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧱 Pele de Pedra + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍶 Elixir Dourado) + 🧴 Poção Reforçada)))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧱 Pele de Pedra) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🍷 Elixir Maior) + 🧴 Poção Reforçada) + 🍀 Trevo da Sorte)",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada) + 🧴 Poção Reforçada)) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍷 Elixir Maior + 🧴 Poção Reforçada))))) + 🍶 Elixir Dourado) + 🍶 Elixir Dourado)) + 🧱 Pele de Pedra) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🍶 Elixir Dourado))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🧴 Poção Reforçada))",
+   1
+  ],
+  [
+   "🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🍶 Elixir Dourado)) + 🦂 Essência de Escorpião)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🍶 Elixir Dourado + 🍀 Trevo da Sorte) + 🍶 Elixir Dourado)",
+   1
+  ],
+  [
+   "🔬 Mistura (🍶 Elixir Dourado + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🧴 Poção Reforçada) + 🦂 Essência de Escorpião)))))",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧪 Poção de Cura + 🧪 Poção de Cura) + 🍷 Elixir Maior)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🧴 Poção Reforçada) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada))) + 🧴 Poção Reforçada))) + 🧱 Pele de Pedra)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🧱 Pele de Pedra + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🍷 Elixir Maior)) + 🧴 Poção Reforçada)",
+   1
+  ],
+  [
+   "🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🔬 Mistura (🧴 Poção Reforçada + 🔬 Mistura (🍶 Elixir Dourado + 🧴 Poção Reforçada)) + 🦂 Essência de Escorpião)) + 🧴 Poção Reforçada)",
+   1
+  ]
+ ],
+ "posse_itens": {
+  "🍶 Elixir Dourado": {
+   "donos": 215,
+   "pct_vitoria_do_dono": 86.0
+  },
+  "🧴 Poção Reforçada": {
+   "donos": 445,
+   "pct_vitoria_do_dono": 77.5
+  },
+  "👻 Capa da Invisibilidade": {
+   "donos": 2756,
+   "pct_vitoria_do_dono": 47.5
+  },
+  "🤺 Espada da Provação": {
+   "donos": 1002,
+   "pct_vitoria_do_dono": 47.4
+  },
+  "🏰 Armadura da Provação": {
+   "donos": 1327,
+   "pct_vitoria_do_dono": 44.9
+  },
+  "📿 Amuleto Arcano": {
+   "donos": 1699,
+   "pct_vitoria_do_dono": 39.4
+  },
+  "🔫 Mosquete": {
+   "donos": 1084,
+   "pct_vitoria_do_dono": 38.6
+  },
+  "📖 Grimório Sombrio": {
+   "donos": 898,
+   "pct_vitoria_do_dono": 38.2
+  },
+  "🌙 Lâmina Lunar": {
+   "donos": 1075,
+   "pct_vitoria_do_dono": 37.4
+  },
+  "📿 Amuleto do Vampiro": {
+   "donos": 2132,
+   "pct_vitoria_do_dono": 35.2
+  },
+  "🧪 Frasco de Ácido": {
+   "donos": 654,
+   "pct_vitoria_do_dono": 35.2
+  },
+  "💎 Armadura de Mithril": {
+   "donos": 1499,
+   "pct_vitoria_do_dono": 34.6
+  },
+  "📿 Amuleto da Fortuna": {
+   "donos": 2278,
+   "pct_vitoria_do_dono": 34.5
+  },
+  "🔪 Espada Curta": {
+   "donos": 387,
+   "pct_vitoria_do_dono": 34.1
+  },
+  "👑 Coroa da Provação": {
+   "donos": 3099,
+   "pct_vitoria_do_dono": 33.8
+  },
+  "🧿 Olho Protetor": {
+   "donos": 1457,
+   "pct_vitoria_do_dono": 33.1
+  },
+  "📯 Chifre de Guerra": {
+   "donos": 2406,
+   "pct_vitoria_do_dono": 30.9
+  },
+  "🧛 Machado Sedento": {
+   "donos": 1035,
+   "pct_vitoria_do_dono": 30.1
+  },
+  "💍 Anel Venenoso": {
+   "donos": 2067,
+   "pct_vitoria_do_dono": 29.9
+  },
+  "🐍 Presa de Víbora": {
+   "donos": 704,
+   "pct_vitoria_do_dono": 28.7
+  },
+  "💍 Anel da Fúria": {
+   "donos": 550,
+   "pct_vitoria_do_dono": 28.7
+  },
+  "🔱 Lança Rúnica": {
+   "donos": 1233,
+   "pct_vitoria_do_dono": 28.2
+  },
+  "🎽 Cota de Malha": {
+   "donos": 379,
+   "pct_vitoria_do_dono": 27.7
+  },
+  "💍 Anel Regenerador": {
+   "donos": 601,
+   "pct_vitoria_do_dono": 27.0
+  },
+  "💍 Anel Sanguessuga": {
+   "donos": 696,
+   "pct_vitoria_do_dono": 26.0
+  },
+  "🌟 Cajado Arcano": {
+   "donos": 1001,
+   "pct_vitoria_do_dono": 25.9
+  },
+  "🔨 Maça Estilhaçadora": {
+   "donos": 950,
+   "pct_vitoria_do_dono": 25.6
+  },
+  "🧙 Manto Arcano": {
+   "donos": 910,
+   "pct_vitoria_do_dono": 24.6
+  },
+  "🌵 Couraça de Espinhos": {
+   "donos": 1038,
+   "pct_vitoria_do_dono": 24.6
+  },
+  "🔰 Armadura de Placas": {
+   "donos": 662,
+   "pct_vitoria_do_dono": 24.6
+  },
+  "🧥 Gibão Acolchoado": {
+   "donos": 1361,
+   "pct_vitoria_do_dono": 24.2
+  },
+  "📖 Livro velho": {
+   "donos": 1015,
+   "pct_vitoria_do_dono": 24.0
+  },
+  "💍 Anel de Espinhos": {
+   "donos": 381,
+   "pct_vitoria_do_dono": 23.9
+  },
+  "💍 Anel da Sorte": {
+   "donos": 368,
+   "pct_vitoria_do_dono": 23.6
+  },
+  "⚡ Cajado Relâmpago": {
+   "donos": 2987,
+   "pct_vitoria_do_dono": 23.3
+  },
+  "🥊 Manoplas do Saqueador": {
+   "donos": 630,
+   "pct_vitoria_do_dono": 23.2
+  },
+  "🔪 Machadinha": {
+   "donos": 785,
+   "pct_vitoria_do_dono": 22.9
+  },
+  "💍 Anel do Bruto": {
+   "donos": 452,
+   "pct_vitoria_do_dono": 22.3
+  },
+  "💍 Anel do Mago": {
+   "donos": 351,
+   "pct_vitoria_do_dono": 21.9
+  },
+  "💍 Anel Perfurante": {
+   "donos": 611,
+   "pct_vitoria_do_dono": 21.6
+  },
+  "🏺 Cálice Vital": {
+   "donos": 857,
+   "pct_vitoria_do_dono": 21.1
+  },
+  "🏹 Arco Longo": {
+   "donos": 877,
+   "pct_vitoria_do_dono": 20.9
+  },
+  "🔮 Orbe Mágico": {
+   "donos": 385,
+   "pct_vitoria_do_dono": 20.0
+  },
+  "🥋 Armadura de Couro": {
+   "donos": 2280,
+   "pct_vitoria_do_dono": 18.1
+  },
+  "🧤 Luvas do Ladrão": {
+   "donos": 673,
+   "pct_vitoria_do_dono": 17.7
+  },
+  "💍 Anel de Ferro": {
+   "donos": 113,
+   "pct_vitoria_do_dono": 17.7
+  },
+  "🔨 Martelo desgastado": {
+   "donos": 732,
+   "pct_vitoria_do_dono": 17.2
+  },
+  "🔪 Espada de Aço": {
+   "donos": 317,
+   "pct_vitoria_do_dono": 16.1
+  },
+  "💍 Anel do Vigor": {
+   "donos": 106,
+   "pct_vitoria_do_dono": 16.0
+  },
+  "💍 Anel do Lucro": {
+   "donos": 275,
+   "pct_vitoria_do_dono": 14.5
+  },
+  "💍 Anel Arcano": {
+   "donos": 483,
+   "pct_vitoria_do_dono": 14.5
+  },
+  "🏹 Besta Leve": {
+   "donos": 368,
+   "pct_vitoria_do_dono": 14.4
+  },
+  "🔪 Adaga cega": {
+   "donos": 267,
+   "pct_vitoria_do_dono": 14.2
+  },
+  "🦇 Frasco de sangue": {
+   "donos": 900,
+   "pct_vitoria_do_dono": 13.3
+  },
+  "⚾ Estilingue de madeira": {
+   "donos": 915,
+   "pct_vitoria_do_dono": 11.6
+  }
+ },
+ "ouro_parado_no_fim": {
+  "Bárbaro": 64.62,
+  "Feiticeiro": 60.16,
+  "Hemomante": 66.55,
+  "Mosqueteiro": 56.44,
+  "Goblin": 158.85,
+  "Alquimista": 59.21,
+  "Ferreiro": 52.07
+ },
+ "ataques_recebidos_por_rodada_viva": {
+  "Bárbaro": {
+   "ataques": 0.84,
+   "dano": 10.72
+  },
+  "Goblin": {
+   "ataques": 0.83,
+   "dano": 10.55
+  },
+  "Feiticeiro": {
+   "ataques": 0.82,
+   "dano": 9.71
+  },
+  "Ferreiro": {
+   "ataques": 0.89,
+   "dano": 8.62
+  },
+  "Hemomante": {
+   "ataques": 0.62,
+   "dano": 7.36
+  },
+  "Alquimista": {
+   "ataques": 1.06,
+   "dano": 17.24
+  },
+  "Mosqueteiro": {
+   "ataques": 0.76,
+   "dano": 9.03
+  }
+ },
+ "curas_por_rodada_viva": {
+  "Bárbaro": {
+   "Comerciante": 4.05,
+   "poções e itens": 3.3,
+   "Fôlego de Batalha": 1.65,
+   "vampirismo": 1.32,
+   "regeneração": 0.39
+  },
+  "Goblin": {
+   "poções e itens": 4.76,
+   "Comerciante": 4.25,
+   "vampirismo": 1.44,
+   "regeneração": 0.24
+  },
+  "Feiticeiro": {
+   "Comerciante": 3.84,
+   "poções e itens": 3.44,
+   "vampirismo": 1.2,
+   "regeneração": 0.52
+  },
+  "Ferreiro": {
+   "Comerciante": 3.04,
+   "poções e itens": 2.14,
+   "vampirismo": 0.78,
+   "regeneração": 0.37
+  },
+  "Hemomante": {
+   "Comerciante": 3.59,
+   "vampirismo": 3.37,
+   "poções e itens": 1.4,
+   "regeneração": 0.46
+  },
+  "Alquimista": {
+   "poções e itens": 11.79,
+   "Comerciante": 5.28,
+   "vampirismo": 1.02,
+   "regeneração": 0.49
+  },
+  "Mosqueteiro": {
+   "Comerciante": 3.35,
+   "poções e itens": 3.13,
+   "vampirismo": 0.8,
+   "regeneração": 0.48
+  }
+ },
+ "habilidades_por_turno": {
+  "Bárbaro": {
+   "folego": 3.9
+  },
+  "Hemomante": {
+   "pacto": 34.9
+  },
+  "Alquimista": {
+   "mistura": 10.3
+  },
+  "Mosqueteiro": {
+   "na_mira": 23.5
+  }
+ },
+ "ataques_com_penalidade_de_mira": {
+  "Bárbaro": 13.6,
+  "Goblin": 15.1,
+  "Feiticeiro": 10.6,
+  "Ferreiro": 7.0,
+  "Hemomante": 11.2,
+  "Alquimista": 0.0,
+  "Mosqueteiro": 22.3
+ },
+ "na_mira": {
+  "n": 21476,
+  "dano_final_medio": 18.46,
+  "dano_final_medio_mosqueteiro_sem_mira": 9.88
+ },
+ "dano_por_turno": {
+  "Bárbaro": 7.34,
+  "Goblin": 6.52,
+  "Feiticeiro": 7.18,
+  "Ferreiro": 8.27,
+  "Hemomante": 6.38,
+  "Alquimista": 5.22,
+  "Mosqueteiro": 6.27
+ },
+ "rodada_media_de_eliminacao_4j": {
+  "Bárbaro": 46.18,
+  "Feiticeiro": 43.04,
+  "Mosqueteiro": 39.76,
+  "Ferreiro": 27.09,
+  "Hemomante": 47.34,
+  "Goblin": 48.35,
+  "Alquimista": 55.29
+ },
+ "primeiro_eliminado_4j": {
+  "Ferreiro": 32.1,
+  "Mosqueteiro": 17.6,
+  "Feiticeiro": 13.7,
+  "Goblin": 12.1,
+  "Bárbaro": 10.9,
+  "Hemomante": 7.5,
+  "Alquimista": 6.0
+ },
+ "bugs": {
+  "bomba/raio atinge alvo em postura ou com Escudo de Mana sem consumir a defesa": {
+   "n": 4174,
+   "exemplo": "dano_direto ignora a postura e o Escudo de Mana, mas eles continuam ativos para o próximo ataque"
+  }
+ },
+ "segundos": 226
+}

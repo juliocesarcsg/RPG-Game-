@@ -89,6 +89,8 @@ def status_curto(j):
         partes.append("📜 Sentenciado")
     if j["acido"]:
         partes.append(f"🧪 Ácido −{j['acido']['valor']}")
+    if j["ferida"]:
+        partes.append(f"☠️ Ferida ({j['ferida']['turnos']})")
     if j["bonus"].get("ultima_provacao") and j["provacao_pronta"]:
         partes.append("🏰 Provação")
     if j["veneno"]:
@@ -113,7 +115,7 @@ def texto_acao(acao, jogador):
         "postura": ("🔰 Postura defensiva",
                     "até a sua próxima vez, o D10 de defesa bloqueia de 0% a 95% do dano"),
         "recarregar": ("🔄 Recarregar a arma",
-                       f"gasta o turno • munição {main.MUNICAO_MAX}/{main.MUNICAO_MAX} • sem defesa: você fica exposto"),
+                       f"gasta o turno • munição {jogador['municao_max']}/{jogador['municao_max']} • sem defesa: você fica exposto"),
         "escudo_mana": ("🔮 Escudo de Mana",
                         f"custa 2/3 de mana • mitiga {round(main.ESCUDO_MANA * 100)}% do próximo ataque • "
                         f"dura até {main.ESCUDO_MANA_RODADAS} rodadas"),
@@ -121,7 +123,7 @@ def texto_acao(acao, jogador):
         "passar": ("⏩ Passar a vez", "não faz nada neste turno"),
         "folego": ("😤 Fôlego de Batalha", f"com a Fúria cheia, cura {round(main.FOLEGO_CURA * 100)}% da vida máxima"),
         "pacto": ("🦇 Pacto de Sangue",
-                  f"paga {main.PACTO_CUSTO} de vida: próximo ataque ×{f'{main.PACTO_MULT:g}'.replace('.', ',')}"),
+                  f"paga {main.custo_pacto(jogador)} de vida: próximo ataque ×{f'{main.PACTO_MULT:g}'.replace('.', ',')}"),
         "na_mira": ("🎯 Na mira", f"próximo disparo ignora Defesa e postura • recarga de {main.NA_MIRA_RECARGA} turnos seus"),
     }
     return textos[acao]
@@ -455,6 +457,14 @@ class Partida:
                                  "ou invisíveis).")
             self.modo = "alvo"
             return
+        if shop.em_area(item):  # Barril de Pólvora: atinge todos os oponentes, sem escolher alvo
+            shop.gastar_item(j, item)
+            vivos_antes = [o for o in main.vivos(self.jogadores) if o is not j]
+            linhas = main.resolver_dano_area(j, self.jogadores, item["efeitos"]["bomba_area"], item)
+            eliminados = [o["nome"] for o in vivos_antes if not o["vivo"]]
+            resumo = f"{item['nome']}: [bold {j['cor']}]{j['nome']}[/] explodiu a arena" + (
+                f" • 💀 {', '.join(eliminados)}" if eliminados else "")
+            return self.acao_encerra_turno("💥 Barril de Pólvora", linhas, registro=resumo)
         usou, msg = shop.usar_item(j, item)
         if not usou:
             return self.erro(msg)

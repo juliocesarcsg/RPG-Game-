@@ -25,7 +25,9 @@ ROTULO_CATEGORIA_PLURAL = {"equipamento": "equipamentos", "consumivel": "consum�
 VENENO_TURNOS = 3           # duração do veneno, em turnos de quem está envenenado (nunca elimina: deixa no mínimo 1 de vida)
 DEFESA_TEMP_RODADAS = 2     # duração da Defesa temporária das poções
 ACIDO_TURNOS = 3            # Frasco de Ácido: turnos do alvo com a Defesa reduzida
-PROVACAO_VIDA_MINIMA = 0.05 # Armadura da Provação: só salva quem está com pelo menos 5% da vida
+FERIDA_TURNOS = 3           # Óleo Necrótico: turnos do alvo com a Ferida (curas rendem menos)
+FERIDA_CURA = 0.5           # Ferida: fração que as curas do ferido rendem
+EXECUCAO_VIDA = 0.20        # Lâmina do Filho da Puta: Execução vale contra quem está com esta fração da vida ou menos (antes: 25%)
 
 # Fases do jogo: o Comerciante oferece principalmente itens da fase em que a partida está (ver composicao_estoque)
 TIERS = {1: "Early", 2: "Mid", 3: "Late"}
@@ -50,9 +52,10 @@ CATEGORIAS_GARANTIDAS = ("consumivel", "arma", "armadura", "joia", "ativo")  # o
 
 # Bônus passivos dos itens equipados que se somam em jogador["bonus"] (e seus tetos)
 SOMADOS = ("crit", "penetracao", "vampirismo", "espinhos", "ouro_turno", "ouro_ataque",
-           "cura_turno", "bloqueio_postura", "furia_extra", "mana_regen")
+           "cura_turno", "bloqueio_postura", "furia_extra", "mana_regen", "execucao", "municao_extra",
+           "pacto_desconto")
 TETOS_BONUS = {"crit": 3, "penetracao": 0.9, "vampirismo": 0.5, "bloqueio_postura": 0.3,
-               "furia_extra": 2, "mana_regen": 2}
+               "furia_extra": 2, "mana_regen": 2, "execucao": 0.5, "municao_extra": 1, "pacto_desconto": 2}
 ESCALAVEIS = ("dano", "defesa", "hp_max")  # só estes valores crescem com Mestre do Metal e A Forja
 
 
@@ -110,6 +113,13 @@ CATALOGO = [
           usos=1),
     _item("Elixir Dourado", "🍶", "consumivel", 3, 55, {"cura": 55, "antidoto": True},  # antes: cura 70
           "A cura dos reis: restaura vida e remove venenos.", usos=1),
+    _item("Óleo Necrótico", "☠️", "consumivel", 3, 40, {"ferida_arma": FERIDA_TURNOS, "livre": True},
+          "Óleo escuro passado na lâmina: o próximo ataque que ferir abre uma Ferida, e as curas do alvo rendem "
+          "só a metade por 3 turnos dele.", usos=1),
+    _item("Barril de Pólvora", "🛢️", "consumivel", 3, 45, {"bomba_area": 8},
+          "Rola o barril para o meio da arena: 8 de dano fixo em todos os oponentes, até nos protegidos e "
+          "invisíveis (ignora Defesa e postura). Não conta como ataque: ninguém fica protegido por causa dele.",
+          usos=1),
 
     # --------------------------------- ARMAS ---------------------------------
     # alcance: "melee" (corpo a corpo) ou "ranged" (à distância). Arma de alcance diferente do personagem: −1 no D10.
@@ -129,7 +139,7 @@ CATALOGO = [
           "Mira precisa: pontos vitais ficam mais fáceis de acertar.", alcance="ranged"),
     _item("Maça Estilhaçadora", "🔨", "arma", 2, 50, {"dano": 5, "penetracao": 0.30},
           "Pesada o bastante para amassar armaduras: ignora parte da Defesa.", alcance="melee"),
-    _item("Machado Sedento", "🧛", "arma", 2, 52, {"dano": 5, "vampirismo": 0.15},
+    _item("Machado Sedento", "🧛", "arma", 2, 52, {"dano": 5, "vampirismo": 0.10},  # antes: 15%
           "Bebe o sangue do inimigo: devolve parte do dano causado como vida.", alcance="melee"),
     _item("Presa de Víbora", "🐍", "arma", 2, 46, {"dano": 3, "veneno": 3},
           "Os ferimentos infeccionam: seus ataques envenenam o alvo.", alcance="melee"),
@@ -138,11 +148,14 @@ CATALOGO = [
     _item("Lâmina Lunar", "🌙", "arma", 3, 90, {"dano": 7, "crit": 2},
           "Forjada sob a lua cheia: aço e magia em um só golpe, com críticos muito mais comuns.", magico=DANO_HIBRIDO,
           alcance="melee"),
-    _item("Espada da Provação", "🤺", "arma", 3, 120, {"dano": 9, "crit": 1, "ignora_postura": True},
+    _item("Espada da Provação", "🤺", "arma", 3, 135, {"dano": 9, "crit": 1, "ignora_postura": True},  # antes: 120
           "Lâmina de quem passou pela provação: atravessa qualquer guarda.", alcance="melee"),
+    _item("Lâmina do Filho da Puta", "🗡️", "arma", 3, 110, {"dano": 7, "execucao": 0.5},
+          "Sem honra e sem pena: quanto pior o estado do alvo, mais ela gosta. Execução: +50% de dano em quem está "
+          "com 20% da vida ou menos.", alcance="melee"),
     _item("Mosquete", "🔫", "arma", 3, 100, {"dano": 9, "penetracao": 0.40},
           "Estampido devastador que atravessa couraças.", alcance="ranged"),
-    _item("Grimório Sombrio", "📖", "arma", 3, 95, {"dano": 7, "vampirismo": 0.15, "penetracao": 0.15},
+    _item("Grimório Sombrio", "📖", "arma", 3, 95, {"dano": 7, "vampirismo": 0.10, "penetracao": 0.15},  # antes: 15%
           "Páginas famintas: drena a vida de quem as magias tocam.", magico=True, alcance="ranged"),
 
     # -------------------------------- ARMADURAS --------------------------------
@@ -158,7 +171,7 @@ CATALOGO = [
           "Quem ousa te atacar sai com as mãos sangrando."),
     _item("Manto Arcano", "🧙", "armadura", 2, 52, {"hp_max": 40, "defesa": 1, "mana_regen": 1, "cura_turno": 1},
           "Tecido encantado que revigora corpo e mana."),
-    _item("Armadura de Mithril", "💎", "armadura", 3, 100, {"hp_max": 70, "defesa": 5},
+    _item("Armadura de Mithril", "💎", "armadura", 3, 95, {"hp_max": 70, "defesa": 5},  # antes: 100
           "Leve como seda e dura como diamante."),
     _item("Armadura da Provação", "🏰", "armadura", 3, 125,
           {"hp_max": 65, "defesa": 4, "ultima_provacao": True},
@@ -180,7 +193,7 @@ CATALOGO = [
           "Força bruta condensada em um aro de bronze."),
     _item("Anel Perfurante", "💍", "joia", 2, 40, {"penetracao": 0.50, "dano": 2},
           "Seus golpes encontram as frestas das armaduras."),
-    _item("Anel Sanguessuga", "💍", "joia", 2, 42, {"vampirismo": 0.25, "hp_max": 10},
+    _item("Anel Sanguessuga", "💍", "joia", 2, 42, {"vampirismo": 0.20, "hp_max": 10},  # antes: 25%
           "Parte do dano que você causa volta como vida."),
     _item("Anel Regenerador", "💍", "joia", 2, 40, {"cura_turno": 2},
           "As feridas se fecham sozinhas no início de cada turno."),
@@ -195,10 +208,16 @@ CATALOGO = [
           "Depois de envenenar, o anel recarrega por 3 turnos seus."),
     _item("Amuleto Arcano", "📿", "joia", 3, 80, {"dano": 6, "hp_max": 20},
           "Pulsa com magia pura: mais poder mágico e vitalidade.", magico=True),
-    _item("Amuleto do Vampiro", "📿", "joia", 3, 85, {"vampirismo": 0.20, "hp_max": 40},
+    _item("Amuleto do Vampiro", "📿", "joia", 3, 85, {"vampirismo": 0.15, "hp_max": 40},  # antes: 20%
           "Relíquia sombria que transforma sangue alheio em vigor."),
     _item("Amuleto da Fortuna", "📿", "joia", 3, 75, {"ouro_turno": 3, "crit": 2, "hp_max": 20},
           "A sorte (e o ouro) sorriem para o portador."),
+    _item("Bandoleira do Atirador", "🎒", "joia", 3, 70, {"dano": 2, "municao_extra": 1},
+          "Cartucheira de couro com balas sobrando: mais dano e, no Mosqueteiro, 1 disparo a mais por recarga "
+          "(ideal para Mosqueteiros)."),
+    _item("Relicário de Sangue", "🩸", "joia", 3, 75, {"dano": 3, "pacto_desconto": 2, "cura_plena": True},
+          "Um frasco de sangue antigo pendurado no pescoço. No Hemomante, o Pacto de Sangue custa 2 de vida a menos "
+          "e as curas de consumíveis voltam a render 100% (ideal para Hemomantes).", magico=True),
 
     # -------------------------- ATIVOS (usados no Inventário) --------------------------
     _item("Cálice Vital", "🏺", "ativo", 2, 45, {"cura": 20, "recarga": 4},
@@ -213,7 +232,7 @@ CATALOGO = [
           "Ninguém pode te escolher como alvo até o seu próximo turno, e a emboscada causa +50% no próximo ataque."),
     _item("Coroa da Provação", "👑", "ativo", 3, 80, {"sentenca": 0.45, "livre": True, "recarga": 4},
           "Sentença: marque um oponente; até o próximo turno dele, todos os ataques que ele receber causam +45% de dano."),
-    _item("Cajado Relâmpago", "⚡", "ativo", 3, 75, {"raio": 16, "recarga": 3},
+    _item("Cajado Relâmpago", "⚡", "ativo", 3, 75, {"raio": 20, "recarga": 3},  # antes: raio 16
           "Um raio que ignora Defesa e postura. Atinge um oponente que não esteja protegido."),
 ]
 
@@ -347,9 +366,8 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
     if "bloqueio_postura" in e:
         linhas.append(f"🔰 +{pct(e['bloqueio_postura'])}% de bloqueio na postura")
     if e.get("ultima_provacao"):
-        linhas.append(f"🏰 Última Provação: um golpe que mataria deixa você com 1 de vida (se estiver com pelo menos "
-                      f"{pct(PROVACAO_VIDA_MINIMA)}% da vida) e o seu próximo ataque é crítico garantido; "
-                      "recarrega a cada visita do Comerciante")
+        linhas.append("🏰 Última Provação: um golpe que mataria deixa você com 1 de vida e o seu próximo ataque é "
+                      "crítico garantido; recarrega a cada visita do Comerciante")
     if e.get("ignora_postura"):
         linhas.append("🤺 Ignora a postura defensiva do alvo")
     if "ouro_turno" in e:
@@ -372,6 +390,20 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
         linhas.append(f"🧱 +{e['defesa_temp']} de Defesa por {DEFESA_TEMP_RODADAS} rodadas")
     if "bomba" in e:
         linhas.append(f"💣 {e['bomba']} de dano fixo (ignora Defesa e postura)")
+    if "bomba_area" in e:
+        linhas.append(f"🛢️ {e['bomba_area']} de dano fixo em TODOS os oponentes (ignora Defesa e postura; não deixa "
+                      "ninguém protegido)")
+    if "ferida_arma" in e:
+        linhas.append(f"☠️ Próximo ataque causa Ferida: as curas do alvo rendem {pct(FERIDA_CURA)}% por "
+                      f"{e['ferida_arma']} turnos dele")
+    if "execucao" in e:
+        linhas.append(f"🗡️ Execução: +{pct(e['execucao'])}% de dano em alvo com {pct(EXECUCAO_VIDA)}% da vida ou menos")
+    if "municao_extra" in e:
+        linhas.append(f"🎯 +{e['municao_extra']} de munição por recarga (Mosqueteiro)")
+    if "pacto_desconto" in e:
+        linhas.append(f"🦇 Pacto de Sangue custa {e['pacto_desconto']} de vida a menos (Hemomante)")
+    if e.get("cura_plena"):
+        linhas.append("💚 Curas de consumíveis rendem 100% (Hemomante)")
     if "raio" in e:
         linhas.append(f"⚡ Raio de {e['raio']} de dano fixo (ignora Defesa e postura)")
     if "roubo" in e:
@@ -424,9 +456,16 @@ def efeitos_efetivos(jogador, item):
     if item["tipo"] == "arma" and fora_do_alcance(jogador, item):
         efeitos["mira_penalidade"] = PENALIDADE_MIRA
         efeitos["alcance_arma"] = item["alcance"]
-    if item["tipo"] == "consumivel" and "cura" in efeitos and jogador.get("mult_cura_consumivel", 1.0) < 1:
-        efeitos["cura_rende"] = round(jogador["mult_cura_consumivel"] * 100)
+    if item["tipo"] == "consumivel" and "cura" in efeitos and mult_cura_consumivel(jogador) < 1:
+        efeitos["cura_rende"] = round(mult_cura_consumivel(jogador) * 100)
     return efeitos
+
+
+def mult_cura_consumivel(jogador):
+    """Quanto rendem as curas de consumíveis para o jogador (Hemomante: menos, a não ser com o Relicário de Sangue)."""
+    if jogador.get("bonus", {}).get("cura_plena"):
+        return 1.0
+    return jogador.get("mult_cura_consumivel", 1.0)
 
 
 def fora_do_alcance(jogador, item):
@@ -476,7 +515,7 @@ def recalcular_status(jogador):
         for chave in SOMADOS:
             if chave in item["efeitos"]:
                 bonus[chave] = bonus.get(chave, 0) + item["efeitos"][chave]
-        for chave in ("ultima_provacao", "ignora_postura"):  # efeitos de liga/desliga
+        for chave in ("ultima_provacao", "ignora_postura", "cura_plena"):  # efeitos de liga/desliga
             if item["efeitos"].get(chave):
                 bonus[chave] = True
     if jogador.get("vampirismo_base"):  # Hemomante: vampirismo do personagem (soma com os itens, dentro do teto)
@@ -487,6 +526,9 @@ def recalcular_status(jogador):
         if chave in bonus:
             bonus[chave] = min(bonus[chave], teto)
     jogador["bonus"] = bonus
+    if "municao_max_base" in jogador:  # Mosqueteiro: a Bandoleira dá disparos a mais por recarga
+        jogador["municao_max"] = jogador["municao_max_base"] + bonus.get("municao_extra", 0)
+        jogador["municao"] = min(jogador["municao"], jogador["municao_max"])
     jogador["dano_fisico"] = num(fisico)
     jogador["dano_magico"] = num(magico)
     jogador["dano"] = num(fisico + magico)  # poder de ataque total (físico + mágico)
@@ -657,6 +699,11 @@ def exige_alvo(item):
     return any(chave in item["efeitos"] for chave in ACOES_COM_ALVO)
 
 
+def em_area(item):
+    """Item que atinge todos os oponentes de uma vez (Barril de Pólvora): não escolhe alvo."""
+    return "bomba_area" in item["efeitos"]
+
+
 def _efeitos_uteis(jogador, e):
     """Efeitos do item que ainda fariam diferença agora (o que já está ativo não conta)."""
     uteis = []
@@ -670,6 +717,8 @@ def _efeitos_uteis(jogador, e):
         uteis.append("buff_rolagem")
     if "veneno_arma" in e and jogador["arma_envenenada"] <= 0:
         uteis.append("veneno_arma")
+    if "ferida_arma" in e and jogador["arma_ferida"] <= 0:
+        uteis.append("ferida_arma")
     if "defesa_temp" in e and jogador["defesa_temp"] <= 0:
         uteis.append("defesa_temp")
     if e.get("invisibilidade") and not jogador["invisivel"]:
@@ -688,7 +737,7 @@ def pode_usar(jogador, item):
         return False, f"❌ {item['nome']} em recarga ({item['recarga_atual']} turno(s))."
     if e.get("livre") and jogador["livre_usado"]:
         return False, "❌ Você já usou um item de ação livre neste turno."
-    if exige_alvo(item):
+    if exige_alvo(item) or em_area(item):
         return True, ""
     if not _efeitos_uteis(jogador, e):
         return False, "❌ Esse item não teria efeito agora (já está ativo, vida cheia ou sem veneno)."
@@ -716,7 +765,7 @@ def usar_item(jogador, item):
     uteis = _efeitos_uteis(jogador, e)
     partes = []
     if "cura" in uteis:
-        valor = e["cura"] * (jogador.get("mult_cura_consumivel", 1.0) if item["tipo"] == "consumivel" else 1.0)
+        valor = e["cura"] * (mult_cura_consumivel(jogador) if item["tipo"] == "consumivel" else 1.0)
         cura = aplicar_cura(jogador, valor, "poções e itens")
         partes.append(f"💚 +{cura} de vida ({jogador['hp']}/{jogador['hp_max']})")
     if "antidoto" in uteis:
@@ -731,6 +780,9 @@ def usar_item(jogador, item):
     if "veneno_arma" in uteis:
         jogador["arma_envenenada"] = e["veneno_arma"]
         partes.append(f"🐍 arma envenenada ({e['veneno_arma']} por turno do alvo)")
+    if "ferida_arma" in uteis:
+        jogador["arma_ferida"] = e["ferida_arma"]
+        partes.append("☠️ arma com Óleo Necrótico: o próximo ataque que ferir abre uma Ferida")
     if "defesa_temp" in uteis:
         jogador["defesa_temp"] = e["defesa_temp"]
         jogador["defesa_temp_rodadas"] = DEFESA_TEMP_RODADAS
@@ -746,8 +798,10 @@ def usar_item(jogador, item):
 
 
 def aplicar_cura(jogador, valor, fonte=""):
-    """Cura o jogador (respeitando a vida máxima). Devolve quanto curou de fato.
+    """Cura o jogador (respeitando a vida máxima e a Ferida do Óleo Necrótico). Devolve quanto curou de fato.
     `fonte` só identifica a origem da cura (útil para estatísticas)."""
+    if jogador.get("ferida"):
+        valor *= FERIDA_CURA
     cura = max(0, min(round(valor), jogador["hp_max"] - jogador["hp"]))
     jogador["hp"] += cura
     return cura
@@ -758,7 +812,7 @@ def aplicar_cura(jogador, valor, fonte=""):
 # ----------------------------------------------------------------------
 def misturaveis(jogador):
     """Consumíveis que podem entrar numa Mistura (os que precisam de alvo, como bombas, ficam de fora)."""
-    return [i for i in jogador["itens"] if i["tipo"] == "consumivel" and not exige_alvo(i)]
+    return [i for i in jogador["itens"] if i["tipo"] == "consumivel" and not exige_alvo(i) and not em_area(i)]
 
 
 def misturar(jogador, item_a, item_b):
@@ -795,6 +849,12 @@ def misturar(jogador, item_a, item_b):
                              "recarga_atual": 0, "usos": 1, "alcance": None})
     jogador["mistura_usada"] = True
     return True, f"🔬 Mistura pronta: {nome}! " + ", ".join(descrever_efeitos(efeitos))
+
+
+def aplicar_ferida(alvo, turnos):
+    """Óleo Necrótico: abre uma Ferida no alvo (as curas dele rendem FERIDA_CURA); renova a duração, não acumula."""
+    atual = alvo["ferida"]["turnos"] if alvo.get("ferida") else 0
+    alvo["ferida"] = {"turnos": max(atual, turnos)}
 
 
 def aplicar_veneno(alvo, dano):

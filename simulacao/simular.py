@@ -236,7 +236,11 @@ class Robo:
             if not shop.pode_usar(j, item)[0]:
                 continue
             e = item["efeitos"]
-            if "bomba" in e or "raio" in e:
+            if "bomba_area" in e:  # Barril: vale a pena com 2 ou mais oponentes, ou para finalizar alguém
+                oponentes = [o for o in main.vivos(js) if o is not j]
+                if len(oponentes) >= 2 or any(o["hp"] <= e["bomba_area"] for o in oponentes):
+                    alvo_item.append((item, None))
+            elif "bomba" in e or "raio" in e:
                 if alvos:
                     dano = e.get("bomba", e.get("raio"))
                     finalizaveis = [a for a in alvos if a["hp"] <= dano]
@@ -263,7 +267,7 @@ class Robo:
                 falta = j["hp_max"] - j["hp"]
                 if (hp_pct < 0.55 and falta >= 0.6 * e.get("cura", 0)) or (j["veneno"] and j["veneno"]["dano"] >= 3):
                     cura.append((item, None))
-            elif any(k in e for k in ("buff_dano", "buff_rolagem", "veneno_arma")) and not e.get("invisibilidade"):
+            elif any(k in e for k in ("buff_dano", "buff_rolagem", "veneno_arma", "ferida_arma")) and not e.get("invisibilidade"):
                 if pode_atacar:
                     buff.append((item, None))
             elif any(k in e for k in ("defesa_temp", "escudo_pv", "invisibilidade")):
@@ -376,6 +380,10 @@ class Robo:
             v *= 1.2
         if raca == "Goblin" and "ouro_turno" in e:
             v *= 1.2
+        if raca == "Mosqueteiro" and "municao_extra" in e:
+            v *= 1.4
+        if raca == "Hemomante" and "pacto_desconto" in e:
+            v *= 1.4
         return v
 
     def escolher_compra(self, j, estoque):
@@ -419,6 +427,7 @@ def instalar_wrappers():
         resultado_ataque=dice.resultado_ataque,
         executar_ataque=main.executar_ataque,
         dano_direto=main.dano_direto,
+        dano_area=main.dano_area,
         turno=main.turno,
         escolher_raca=main.escolher_raca,
         escolher_alvo=main.escolher_alvo,
@@ -481,6 +490,15 @@ def instalar_wrappers():
         C.diretos.append((C.cenario, atk["raca"], item["nome"], hp0 - alvo["hp"]))
         if hp0 > 0 and not alvo["vivo"]:
             eliminar(alvo, atk["raca"] + " (item)")
+
+    def dano_area(atk, jogadores, dano, item):
+        vivos0 = [o for o in jogadores if o["vivo"] and o is not atk]
+        hp0 = {id(o): o["hp"] for o in vivos0}
+        _orig["dano_area"](atk, jogadores, dano, item)
+        C.diretos.append((C.cenario, atk["raca"], item["nome"], sum(hp0[id(o)] - o["hp"] for o in vivos0)))
+        for o in vivos0:
+            if not o["vivo"]:
+                eliminar(o, atk["raca"] + " (item)")
 
     def turno(rodada, jogador, jogadores):
         if rodada > LIMITE_RODADAS:
@@ -617,6 +635,7 @@ def instalar_wrappers():
     dice.resultado_ataque = resultado_ataque
     main.executar_ataque = executar_ataque
     main.dano_direto = dano_direto
+    main.dano_area = dano_area
     main.turno = turno
     main.escolher_raca = escolher_raca
     main.escolher_alvo = escolher_alvo
@@ -652,7 +671,7 @@ def checar_invariantes(jogadores, onde):
             C.bug("mana fora de 0..3", f"{r} mana={j['mana']} em {onde}")
         if not 0 <= j["furia"] <= main.FURIA_MAX:
             C.bug("fúria fora da barra", f"{r} fúria={j['furia']} em {onde}")
-        if not 0 <= j["municao"] <= main.MUNICAO_MAX:
+        if not 0 <= j["municao"] <= j["municao_max"]:
             C.bug("munição fora da barra", f"{r} munição={j['municao']} em {onde}")
         for tipo in shop.LIMITE_SLOTS:
             if len(shop.itens_do_slot(j, tipo)) > shop.limite_slot(j, tipo):
