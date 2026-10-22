@@ -45,7 +45,8 @@ Use um terminal com suporte a emoji e cores (Windows Terminal, terminal do VS Co
 | `app.py` | Abre a janela (pywebview). Com `--navegador`, serve a mesma interface em `http://localhost:8765/?navegador` para testes. |
 | `interface/` | A tela do jogo (`index.html`, `estilo.css`, `jogo.js`): três caixas como nas mesas de RPG online, dados animados um de cada vez (3 s cada, como no terminal) e até 6 jogadores na caixa de cima. Visual em `estilo.css`: paleta, fontes, espaços e componentes centralizados em variáveis. |
 | `PLANO_MULTIPLAYER.md` | Plano detalhado do modo em rede (mesma tela para todos, cada um joga só na sua vez). Ainda não implementado. |
-| `gerar_exe.bat` | Gera `dist\ArenaDeCombate.exe` com o PyInstaller. |
+| `gerar_exe.bat` | Gera `dist\ArenaDeCombate.exe` com o PyInstaller, já com o ícone do jogo. |
+| `icone/` | Ícone do jogo: `icone.ico` (16 a 256 px, usado no `.exe` e na janela) e `icone.png` (512 px). A aba do navegador usa `interface/icone.png`. |
 | `prototipo/telas.html` | Protótipo aprovado das telas (só visual, com dados de exemplo). |
 
 ## Regras atuais

@@ -4,6 +4,7 @@ rem Precisa do ambiente .venv com as bibliotecas:  .venv\Scripts\python.exe -m p
 cd /d "%~dp0"
 ".venv\Scripts\python.exe" -m PyInstaller --noconfirm --clean --onefile --windowed ^
     --name ArenaDeCombate ^
+    --icon "icone\icone.ico" ^
     --add-data "interface;interface" ^
     app.py
 echo.
