@@ -158,6 +158,14 @@ h1, h2, h3 { font-family: var(--fonte-titulo); font-weight: 600; margin: 0; line
 .barra > div { height: 100%; border-radius: 999px; transition: width .4s; }
 .barra.grossa { height: 8px; }
 
+/* ícone do personagem (interface/classes): do tamanho da letra em listas e etiquetas; maior em cartões e na ficha */
+.classe-img { display: inline-block; width: 1.25em; height: 1.25em; object-fit: contain; vertical-align: middle; }
+.cj-emoji .classe-img { width: 1.6rem; height: 1.6rem; }
+.jogadores.muitos .cj-emoji .classe-img { width: 1.35rem; height: 1.35rem; }
+.icone .classe-img { width: 88%; height: 88%; }
+.retrato .classe-img { width: 86%; height: 86%; }
+.linha-rank .emo .classe-img { width: 2.2rem; height: 2.2rem; }
+
 /* marca de cor do jogador ao lado do nome (o nome fica na cor do texto, legível em qualquer fundo) */
 .marca {
   display: inline-block; width: .6em; height: .6em; border-radius: 50%; background: var(--cor);

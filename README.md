@@ -47,6 +47,7 @@ Use um terminal com suporte a emoji e cores (Windows Terminal, terminal do VS Co
 | `PLANO_MULTIPLAYER.md` | Plano detalhado do modo em rede (mesma tela para todos, cada um joga só na sua vez). Ainda não implementado. |
 | `gerar_exe.bat` | Gera `dist\ArenaDeCombate.exe` com o PyInstaller, já com o ícone do jogo. |
 | `icone/` | Ícone do jogo: `icone.ico` (16 a 256 px, usado no `.exe` e na janela) e `icone.png` (512 px). A aba do navegador usa `interface/icone.png`. |
+| `interface/classes/` | Ícone de cada personagem (`barbaro.png`, `goblin.png`, `feiticeiro.png`, `ferreiro.png`, `hemomante.png`, `alquimista.png`, `mosqueteiro.png`; 256 px, fundo transparente). A janela usa no lugar do emoji do personagem; o terminal continua com o emoji. |
 | `prototipo/telas.html` | Protótipo aprovado das telas (só visual, com dados de exemplo). |
 
 ## Regras atuais

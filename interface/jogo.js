@@ -87,7 +87,7 @@ function gradeJogadores(cartoes) {
 
 function cartao(j, ativo) {
   return `<div class="cj ${ativo ? "ativo" : ""} ${j.vivo ? "" : "morto"}" style="--cor:${j.cor}" title="${esc(j.dica)}">
-    <div class="cj-cab"><span class="cj-emoji">${j.emoji}</span>
+    <div class="cj-cab"><span class="cj-emoji">${iconeClasse(j.personagem, j.emoji)}</span>
       <div class="cj-nome"><b>${esc(j.nome)}</b><small>${esc(j.personagem)}</small></div></div>
     ${barraVida(j.vida, j.max)}
     <div class="cj-linha"><span>💖 ${j.vida}/${j.max}</span><span>💰 ${j.ouro}</span></div>
@@ -98,6 +98,14 @@ function cartao(j, ativo) {
 function linhaOrdem(ordem) {
   return ordem.map((o, i) => `<span class="item ${o.estado}">${i + 1}º ${esc(o.nome)}</span>`)
     .join(`<span class="seta">➜</span>`);
+}
+
+// Ícone do personagem (interface/classes/<nome sem acento>.png). Sem imagem para o personagem, fica o emoji.
+const CLASSES = ["barbaro", "goblin", "feiticeiro", "ferreiro", "hemomante", "alquimista", "mosqueteiro"];
+function iconeClasse(personagem, emoji) {
+  const arquivo = String(personagem || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  return CLASSES.includes(arquivo)
+    ? `<img class="classe-img" src="classes/${arquivo}.png" alt="" draggable="false">` : emoji;
 }
 
 // Bolinha com a cor do jogador ao lado do nome (o nome fica na cor do texto, legível em qualquer fundo)
@@ -136,7 +144,7 @@ function tecla(ativa = true) {
   return contadorTecla <= 9 ? `<span class="tecla ${ativa ? "" : "inativa"}">${contadorTecla}</span>` : "";
 }
 
-// Identificação da ficha: espaço do retrato (futura ilustração; hoje o emoji), nome e personagem
+// Identificação da ficha: retrato (ícone do personagem), nome e personagem
 function fichaId(nome, emoji, personagem, cor) {
   return `<div class="ficha-id">
       <div class="retrato" title="Retrato do personagem">${emoji}</div>
@@ -150,7 +158,7 @@ function painelJogador(p, tag) {
   const defesaDica = p.defesa.endsWith("*") ? " (com ácido ou Defesa temporária)" : "";
   return `
     ${tag ? `<div class="vencedor-tag">${tag}</div>` : ""}
-    ${fichaId(p.nome, p.emoji, p.personagem, p.cor)}
+    ${fichaId(p.nome, iconeClasse(p.personagem, p.emoji), p.personagem, p.cor)}
     <div class="ficha-bloco">
       <div class="ficha-vida"><span class="rotulo">💖 Vida</span><span class="valor">${p.vida}/${p.max}</span></div>
       ${barraVida(p.vida, p.max, true)}
@@ -179,7 +187,7 @@ function lateralOrdem() {
     <div class="ficha-bloco"><h3 class="ficha-titulo">Ordem da rodada</h3>
     <ul class="lista">${(E.ordem || []).map((o, i) => {
       const j = E.jogadores.find(x => x.nome === o.nome);
-      return `<li>${i + 1}º ${marca(j.cor)}${esc(o.nome)} · ${j.emoji} ${esc(j.personagem)}${j.vivo ? "" : " 💀"}</li>`;
+      return `<li>${i + 1}º ${marca(j.cor)}${esc(o.nome)} · ${iconeClasse(j.personagem, j.emoji)} ${esc(j.personagem)}${j.vivo ? "" : " 💀"}</li>`;
     }).join("")}</ul></div>`;
 }
 
@@ -187,7 +195,7 @@ function lateralOrdem() {
 // Quem ataca e quem é atacado, acima dos dados (aparece já durante a rolagem)
 function confrontoHtml(c) {
   const lado = (j, papel) => `<div class="lado" style="--cor:${j.cor}">
-      <span class="icone">${j.emoji}</span>
+      <span class="icone">${iconeClasse(j.personagem, j.emoji)}</span>
       <div><span class="papel">${papel}</span><span class="nome-item">${esc(j.nome)}</span><small>${esc(j.personagem)}</small></div>
     </div>`;
   return `<div class="confronto">${lado(c.atacante, "Ataca")}<span class="versus">⚔️</span>${lado(c.alvo, "É atacado")}</div>`;
@@ -212,7 +220,11 @@ function painelHtml(p) {
 
 async function animarPainel(p) {
   const minha = animacao;
-  if (p.roleta) await animarRoleta(p.roleta, minha);
+  if (p.roleta) {
+    await animarRoleta(p.roleta, minha);
+    if (minha !== animacao) return;
+    desenharTopoTurno(E);  // a roleta parou: agora sim a ordem da rodada aparece em cima e na lateral
+  }
   for (let i = 0; i < p.dados.length; i++) {  // um dado de cada vez
     const el = $("dado" + i);
     if (!el || minha !== animacao) return;
@@ -280,7 +292,7 @@ function desenharEscolha() {
   for (let i = 0; i < q; i++) {
     const j = E.jogadores[i];
     if (j) {
-      vagas.push(`<div class="cj" style="--cor:${j.cor}"><div class="cj-cab"><span class="cj-emoji">${j.emoji}</span>
+      vagas.push(`<div class="cj" style="--cor:${j.cor}"><div class="cj-cab"><span class="cj-emoji">${iconeClasse(j.personagem, j.emoji)}</span>
         <div class="cj-nome"><b>${esc(j.nome)}</b><small>${esc(j.personagem)} · pronto ✔</small></div></div></div>`);
     } else if (i === n) {
       vagas.push(`<div class="cj" style="--cor:${E.cores[i]}"><div class="cj-cab"><span class="cj-emoji">❔</span>
@@ -302,7 +314,7 @@ function desenharEscolha() {
         <button class="btn" id="voltar" data-acao="refazer">Refazer as escolhas (0)</button>
       </div>`;
     $("lateral").innerHTML = `<h2>Jogadores</h2><div class="ficha-bloco"><ul class="lista">${
-      E.jogadores.map(j => `<li>${marca(j.cor)}${esc(j.nome)} · ${j.emoji} ${esc(j.personagem)}</li>`).join("")}</ul></div>`;
+      E.jogadores.map(j => `<li>${marca(j.cor)}${esc(j.nome)} · ${iconeClasse(j.personagem, j.emoji)} ${esc(j.personagem)}</li>`).join("")}</ul></div>`;
     return;
   }
 
@@ -320,7 +332,7 @@ function desenharEscolha() {
       trocam (ou clique) · Enter entra</span></p>
     <div class="grade">${E.personagens.map(p => `
       <button class="opcao ${personagemMarcado === p.nome ? "selecionada" : ""}" data-acao="local:marcar" data-p="${esc(p.nome)}">
-        <div class="topo-opcao"><span class="icone">${p.emoji}</span><span class="nome-item">${esc(p.nome)}</span></div>
+        <div class="topo-opcao"><span class="icone">${iconeClasse(p.nome, p.emoji)}</span><span class="nome-item">${esc(p.nome)}</span></div>
         <small>💖 ${p.vida} · ataque ${num(Math.round((p.fis + p.mag) * 10) / 10)} · ${esc(p.estilo)}</small>
         <small>${esc(p.descricao)}</small>
       </button>`).join("")}</div>
@@ -337,7 +349,7 @@ function desenharEscolha() {
   const atributo = (rotulo, valor, max, cor) => `<li><div class="ficha-vida"><span class="rotulo">${rotulo}</span>
     <span class="valor">${valor}</span></div>${barra(valor, max, cor)}</li>`;
   $("lateral").innerHTML = `
-    ${fichaId(p.nome, p.emoji, p.estilo)}
+    ${fichaId(p.nome, iconeClasse(p.nome, p.emoji), p.estilo)}
     <div class="ficha-bloco">
       <ul class="lista">
         ${atributo("💖 Vida", p.vida, 150, "var(--vida-alta)")}
@@ -355,16 +367,19 @@ function desenharEscolha() {
 /* =====================================================================
    TELA 2 — TURNO
    ===================================================================== */
-// Caixa de cima e caixa da direita do turno. Enquanto os dados rolam, mostram o estado de antes do golpe.
-function desenharTopoTurno(base) {
+// Caixa de cima e caixa da direita do turno. Enquanto os dados rolam, mostram o estado de antes do golpe;
+// enquanto a roleta da rodada 1 gira (sorteando), a ordem da rodada fica escondida.
+function desenharTopoTurno(base, sorteando = false) {
   const cartoes = gradeJogadores(base.jogadores.map(j => cartao(j, j.indice === base.atual)));
-  desenharTopo(`Rodada ${E.rodada}`, "", linhaOrdem(E.ordem), cartoes);
-  $("lateral").innerHTML = base.lateral ? painelJogador(base.lateral) : lateralOrdem();
+  desenharTopo(`Rodada ${E.rodada}`, sorteando ? "🎲 sorteando quem começa…" : "", sorteando ? "" : linhaOrdem(E.ordem), cartoes);
+  $("lateral").innerHTML = sorteando
+    ? `<h2>Rodada ${E.rodada}</h2><div class="ficha-bloco"><p class="nota">🎲 Sorteando quem começa…</p></div>`
+    : base.lateral ? painelJogador(base.lateral) : lateralOrdem();
 }
 
 function desenharTurno() {
   const rolando = E.modo === "painel" && E.painel.dados.length && anterior && anterior.jogadores && anterior.lateral;
-  desenharTopoTurno(rolando ? anterior : E);
+  desenharTopoTurno(rolando ? anterior : E, E.modo === "painel" && !!E.painel.roleta);
 
   if (E.modo === "painel") {
     $("principal").innerHTML = painelHtml(E.painel);
@@ -374,7 +389,7 @@ function desenharTurno() {
   }
   const j = E.jogadores[E.atual];
   const cab = `<div class="cab"><h2>Turno de ${marca(j.cor)}${esc(j.nome)}</h2>
-    <span class="etiqueta">${j.emoji} ${esc(j.personagem)}</span></div>`;
+    <span class="etiqueta">${iconeClasse(j.personagem, j.emoji)} ${esc(j.personagem)}</span></div>`;
 
   if (E.modo === "acoes") {
     $("principal").innerHTML = cab + registroHtml() + avisoHtml() + `
@@ -392,7 +407,7 @@ function desenharTurno() {
       <div class="grade">${E.alvos.lista.map(o => `
         <button class="opcao com-cor" data-acao="alvo" data-dados="${dados({ indice: o.indice })}" style="--cor:${o.cor}"
                 data-atalho ${o.bloqueio ? "disabled" : ""}>
-          <div class="topo-opcao">${tecla(!o.bloqueio)}<span class="icone">${o.emoji}</span><span class="nome-item">${esc(o.nome)}</span></div>
+          <div class="topo-opcao">${tecla(!o.bloqueio)}<span class="icone">${iconeClasse(o.personagem, o.emoji)}</span><span class="nome-item">${esc(o.nome)}</span></div>
           ${barraVida(o.vida, o.max)}
           <small>💖 ${o.vida}/${o.max} · 🔰 Defesa ${num(o.defesa)} · 💰 ${o.ouro}</small>
           <small>${o.bloqueio ? `<span class="motivo">${esc(o.bloqueio)}</span>` : o.status.join(" · ")}</small>
@@ -512,14 +527,14 @@ function desenharLoja() {
 function desenharFim() {
   const lista = E.classificacao, venc = lista[0];
   desenharTopo("🏆 Fim de jogo",
-    `${E.rodada} rodadas · vencedor: <b>${esc(venc.nome)}</b> (${venc.emoji} ${esc(venc.personagem)})`, "", cartoesDaPartida());
+    `${E.rodada} rodadas · vencedor: <b>${esc(venc.nome)}</b> (${iconeClasse(venc.personagem, venc.emoji)} ${esc(venc.personagem)})`, "", cartoesDaPartida());
   const medalhas = ["🥇", "🥈", "🥉"];
   $("principal").innerHTML = `
     <div class="cab"><h2>📜 Resultado final</h2></div>
     <div class="ranking">${lista.map((o, i) => `
       <div class="linha-rank ${i === 0 ? "primeiro" : ""}" style="--cor:${o.cor}">
         <span class="pos">${medalhas[i] || `${i + 1}º`}</span>
-        <span class="emo">${o.emoji}</span>
+        <span class="emo">${iconeClasse(o.personagem, o.emoji)}</span>
         <div><span class="nome-item">${esc(o.nome)}</span> · ${esc(o.personagem)}<small>${o.equipamentos}</small></div>
         <span class="sit">${o.vencedor ? `🏆 Vencedor<br>💖 ${o.vida}/${o.max}` : `💀 Eliminado na rodada ${o.rodada_morte ?? "?"}`}<br>💰 ${o.ouro}</span>
       </div>`).join("")}</div>
