@@ -215,7 +215,7 @@ class Robo:
                 return self.acao("passar")
             return self.acao("atacar")
         if raca == "Mosqueteiro" and j["municao"] == 0:
-            return self.acao("postura")  # recarrega
+            return self.acao("recarregar")
         if not pode_atacar:
             return self.acao("postura")
         if hp_pct < 0.3 and not j["postura"] and rng.random() < 0.35:
@@ -425,6 +425,7 @@ def instalar_wrappers():
         loja_jogador=main.loja_jogador,
         ouro_do_turno=main.ouro_do_turno,
         assumir_postura=main.assumir_postura,
+        recarregar=main.recarregar,
         aplicar_item_com_alvo=main.aplicar_item_com_alvo,
         usar_item=shop.usar_item,
         comprar=shop.comprar,
@@ -538,6 +539,10 @@ def instalar_wrappers():
         X.acao_turno = "postura"
         return msg
 
+    def recarregar(jogador):
+        X.acao_turno = "recarregar"
+        return _orig["recarregar"](jogador)
+
     def aplicar_item_com_alvo(jogador, item, alvo):
         o0, oa0 = jogador["ouro"], alvo["ouro"]
         C.itens_usados[item["nome"]] += 1
@@ -618,6 +623,7 @@ def instalar_wrappers():
     main.loja_jogador = loja_jogador
     main.ouro_do_turno = ouro_do_turno
     main.assumir_postura = assumir_postura
+    main.recarregar = recarregar
     main.aplicar_item_com_alvo = aplicar_item_com_alvo
     shop.usar_item = usar_item
     shop.comprar = comprar

@@ -23,7 +23,7 @@ MAX_JOGADORES = 6
 OURO_POR_TURNO = 6  # moedas ganhas no início de cada turno (antes: 5)
 AUMENTOS_OURO = ((10, 8), (20, 10), (30, 12))  # (depois do fim da rodada X, moedas por turno): 6 → 8 após a 10ª, → 10 após a 20ª, → 12 após a 30ª
 CURA_COMERCIANTE = 0.10  # fração da vida máxima que todos os vivos recuperam quando o Comerciante chega
-INTERVALO_LOJA = 5  # o Comerciante chega ao fim de cada N rodadas completas
+INTERVALO_LOJA = shop.INTERVALO_COMERCIANTE  # o Comerciante chega ao fim de cada N rodadas completas
 OURO_LOJA = 10  # moedas que cada jogador vivo recebe quando o Comerciante chega
 BONUS_GOBLIN = 0.5  # Goblin ganha 50% a mais de ouro (turno e Comerciante): 1,5x o das outras raças (antes: 2x)
 MAX_PIPS = 3  # barra de Mana (3/3)
@@ -37,17 +37,16 @@ MANA_REGEN_EXTRA = 1  # mana extra se o Feiticeiro não gastou mana na rodada
 PROTECAO_TURNOS = 1  # turnos seguintes a um ataque em que o alvo não pode ser atacado de novo (zera no fim da rodada)
 POSTURA_FERREIRO = 0.10  # bloqueio extra do Ferreiro em postura defensiva
 FOLEGO_CURA = 0.15  # Bárbaro, Fôlego de Batalha: fração da vida máxima curada ao consumir a Fúria cheia
-PACTO_CUSTO = 4  # Hemomante, Pacto de Sangue: vida paga pelo bônus (antes: 6)
+PACTO_CUSTO = 5  # Hemomante, Pacto de Sangue: vida paga pelo bônus (antes: 4)
 PACTO_MULT = 1.5  # Hemomante, Pacto de Sangue: multiplicador do próximo ataque
 VAMPIRISMO_HEMOMANTE = 0.30  # Hemomante: fração do dano causado que vira vida (antes: 0.20)
 CURA_CONSUMIVEL_HEMOMANTE = 0.75  # Hemomante: curas de consumíveis rendem menos (antes: 0.5)
 MUNICAO_MAX = 3  # Mosqueteiro: disparos por recarga (antes: 2)
 NA_MIRA_FIXO = 2  # Mosqueteiro, Na mira: dano fixo extra
 NA_MIRA_FRACAO = 0.5  # Mosqueteiro, Na mira: fração do dano físico das armas à distância somada ao disparo
-NA_MIRA_RECARGA = 3  # Mosqueteiro, Na mira: rodadas de recarga
+NA_MIRA_RECARGA = 3  # Mosqueteiro, Na mira: turnos de recarga
 ROUBO_CRITICO_GOBLIN = 2  # Goblin: moedas roubadas do alvo a cada crítico, no lugar do bônus do banco (antes: 4)
-RODADA_MORTE_SUBITA = 35  # a partir desta rodada todas as curas rendem CURA_MORTE_SUBITA (evita partidas sem fim)
-CURA_MORTE_SUBITA = 0.5
+POSTURAS_ATE_FALHAR = 3  # mecânica secreta: a postura escolhida neste número de turnos seguidos falha
 
 # Cores de cada jogador (por ordem de entrada)
 CORES_JOGADORES = ["red", "cyan", "green", "yellow", "magenta", "bright_blue"]
@@ -178,11 +177,12 @@ RACAS = {
         "defesa": 0,
         "afinidade": "fisico",
         "alcance": "ranged",
-        "passivo": f"Recarregar: munição {MUNICAO_MAX}/{MUNICAO_MAX}. Cada disparo gasta 1. Com a munição zerada, a postura "
-                   f"defensiva recarrega a barra inteira ({MUNICAO_MAX}/{MUNICAO_MAX}).",
+        "passivo": f"Recarregar: munição {MUNICAO_MAX}/{MUNICAO_MAX}. Cada disparo gasta 1. Com a munição zerada, a ação "
+                   f"Recarregar entra no lugar do ataque: gasta o turno, enche a barra ({MUNICAO_MAX}/{MUNICAO_MAX}) e não "
+                   "protege (ele fica exposto).",
         "habilidade": f"Na mira (ação livre, recarga de {NA_MIRA_RECARGA} turnos seus): o próximo disparo ignora a Defesa e a postura "
                       f"do alvo e causa +{NA_MIRA_FIXO} de dano + {round(NA_MIRA_FRACAO * 100)}% do dano físico das armas à distância.",
-        "postura": "Postura: se a munição estiver zerada, recarrega a barra inteira.",
+        "postura": "Postura: sem bônus especial (não recarrega a munição).",
         "itens": [{"nome": "⚾ Estilingue de madeira", "tipo": "arma", "efeitos": {"dano": 3}, "alcance": "ranged"}],
         "config": {"municao": MUNICAO_MAX},
     },
@@ -274,6 +274,8 @@ def criar_jogador(nome, raca, cor):
         "municao": 0,  # Mosqueteiro
         "na_mira": False,  # Mosqueteiro: o próximo disparo está na mira?
         "na_mira_recarga": 0,
+        "posturas_seguidas": 0,  # turnos seguidos com postura (mecânica secreta: POSTURAS_ATE_FALHAR)
+        "postura_no_turno": False,  # escolheu a postura no último turno?
         "mistura_usada": False,  # Alquimista: já fez a Mistura nesta visita?
         "penalidade_mira": 0,  # −N no D10 de ataque por arma de alcance diferente (preenchido por shop.recalcular_status)
         "provacao_pronta": True,  # Armadura da Provação: a Última Provação está carregada?
@@ -592,7 +594,7 @@ def linha_recurso(j):
             mira = "[green]pronta[/]"
         texto = f"🎯 Munição {pips(j['municao'], 'yellow', MUNICAO_MAX)}  •  Na mira: {mira}"
         if j["municao"] == 0:
-            texto += "  [bold red](sem munição: use a postura para recarregar)[/]"
+            texto += "  [bold red](sem munição: recarregue no lugar do ataque)[/]"
         return texto
     if raca == "Alquimista":
         estado = "[bright_black]já usada nesta visita[/]" if j["mistura_usada"] else "[green]disponível com o Comerciante[/]"
@@ -682,18 +684,20 @@ def tabela_arena(jogadores, ativo):
 
 def acoes_do_turno(jogador):
     """Ações do menu do turno, na ordem em que aparecem. O Feiticeiro não tem postura: no lugar dela, o Escudo de Mana.
-    Habilidades de ação livre (Bárbaro, Hemomante, Mosqueteiro) entram no fim da lista."""
+    O Mosqueteiro sem munição recarrega no lugar do ataque. Habilidades de ação livre (Bárbaro, Hemomante, Mosqueteiro)
+    entram no fim da lista."""
+    ataque = "recarregar" if jogador["raca"] == "Mosqueteiro" and jogador["municao"] == 0 else "atacar"
     if jogador["raca"] == "Feiticeiro":
-        acoes = ["atacar", "escudo_mana", "inventario", "passar"]
+        acoes = [ataque, "escudo_mana", "inventario", "passar"]
     else:
-        acoes = ["atacar", "postura", "inventario", "passar"]
+        acoes = [ataque, "postura", "inventario", "passar"]
     if jogador["raca"] in HABILIDADES_TURNO:
         acoes.append(HABILIDADES_TURNO[jogador["raca"]])
     return acoes
 
 
 def info_rodada(rodada):
-    """Linhas sobre a rodada para o cabeçalho do turno: próximo Comerciante, moedas por turno e morte súbita."""
+    """Linhas sobre a rodada para o cabeçalho do turno: próximo Comerciante e moedas por turno."""
     faltam = INTERVALO_LOJA - ((rodada - 1) % INTERVALO_LOJA)  # rodadas até o Comerciante, contando esta
     rodada_loja = rodada + faltam - 1
     fase_loja_nome = TIERS[shop.fase_da_rodada(rodada_loja)][0]
@@ -709,11 +713,6 @@ def info_rodada(rodada):
     else:
         info_ouro += "[bright_black](valor máximo)[/]"
     linhas.append(info_ouro)
-    if shop.fator_cura_global < 1:
-        linhas.append(f"💀 [bold red]Morte súbita: todas as curas rendem {round(shop.fator_cura_global * 100)}%[/]")
-    elif rodada >= RODADA_MORTE_SUBITA - 5:
-        linhas.append(f"💀 [red]Morte súbita a partir da rodada {RODADA_MORTE_SUBITA}: as curas vão render "
-                      f"{round(CURA_MORTE_SUBITA * 100)}%[/]")
     return linhas
 
 
@@ -764,8 +763,9 @@ def tela_turno(rodada, jogador, jogadores, aviso=None):
                    + (" [bright_black](custa 1/3 de mana)[/]" if jogador["raca"] == "Feiticeiro" else "")
                    + (" [bright_black](gasta 1 de munição)[/]" if jogador["raca"] == "Mosqueteiro" else "")),
         "postura": ("blue", "🔰 Adotar Postura Defensiva "
-                    "[bright_black](até a sua próxima vez: o D10 de defesa bloqueia de 0% a 95% do dano"
-                    + ("; com a munição zerada, recarrega" if jogador["raca"] == "Mosqueteiro" else "") + ")[/]"),
+                    "[bright_black](até a sua próxima vez: o D10 de defesa bloqueia de 0% a 95% do dano)[/]"),
+        "recarregar": ("yellow", f"🔄 Recarregar a arma [bright_black](gasta o turno • munição {MUNICAO_MAX}/{MUNICAO_MAX} • "
+                                 "sem defesa: você fica exposto)[/]"),
         "folego": ("red", f"😤 Fôlego de Batalha [bright_black](ação livre • com a Fúria cheia, cura "
                           f"{round(FOLEGO_CURA * 100)}% da vida máxima)[/]"),
         "pacto": ("bright_red", f"🦇 Pacto de Sangue [bright_black](ação livre • paga {PACTO_CUSTO} de vida: próximo ataque "
@@ -880,6 +880,7 @@ def passar_protecao(jogadores):
 def executar_ataque(atacante, alvo):
     """Resolve o ataque (resolver_ataque) e mostra no terminal: os D10 rolando, um de cada vez, e o painel do resultado."""
     resultado = resolver_ataque(atacante, alvo)
+    console.print(f"\n  {resultado['linhas'][0]}")  # quem ataca quem, antes de os dados rolarem
     for titulo, valor, cor in resultado["dados"]:
         animar_dado(titulo, valor, cor)
     console.print()
@@ -904,17 +905,12 @@ def resolver_ataque(atacante, alvo):
     for n, ataque in enumerate(ataques, start=1):
         titulo = f"D10 DE ATAQUE • {atacante['nome']}" + (f" ({n}/{n_dados})" if n_dados > 1 else "")
         dados.append((titulo, ataque["rolagem"], atacante["cor"]))
-    critico, normal = dice.FAIXAS_ATAQUE[2], dice.FAIXAS_ATAQUE[1]
+    critico = dice.FAIXAS_ATAQUE[2]
     if atacante["critico_garantido"]:  # Última Provação: o guerreiro volta da beira da morte com um crítico
         atacante["critico_garantido"] = False
         if ataques[0]["nome"] != critico["nome"]:
             ataques[0] = dice._montar(ataques[0]["rolagem"], critico, ataques[0]["base"])
         linhas.append("🏰 [bold yellow]Provação: crítico garantido![/]")
-    if alvo["bonus"].get("imune_critico"):  # Leitura de Combate: críticos contra o portador viram golpes normais
-        cancelados = sum(1 for a in ataques if a["nome"] == critico["nome"])
-        if cancelados:
-            ataques = [dice._montar(a["rolagem"], normal, a["base"]) if a["nome"] == critico["nome"] else a for a in ataques]
-            linhas.append(f"🧠 Leitura de Combate: {alvo['nome']} não foi pego desprevenido, o crítico virou golpe normal.")
     buff_dano = atacante["buff_dano"]
     atacante["buff_dano"] = 1.0
     fisico, magico = atacante["dano_fisico"], atacante["dano_magico"]
@@ -1209,7 +1205,7 @@ def bloqueio_habilidade(jogador, acao):
         if jogador["na_mira"]:
             return "O próximo disparo já está na mira."
         if jogador["na_mira_recarga"]:
-            return f"Na mira em recarga ({jogador['na_mira_recarga']} rodada(s))."
+            return f"Na mira em recarga ({jogador['na_mira_recarga']} turno(s))."
     return None
 
 
@@ -1260,23 +1256,31 @@ def bloqueio_ataque(jogador, jogadores):
     if jogador["raca"] == "Feiticeiro" and jogador["mana"] < 1:
         return "Sem mana para atacar! Escolha outra ação."
     if jogador["raca"] == "Mosqueteiro" and jogador["municao"] < 1:
-        return "Sem munição! Use a postura defensiva para recarregar."
+        return "Sem munição! Recarregue a arma."
     return None
 
 
 def assumir_postura(jogador):
-    """Ativa a postura defensiva e aplica o bônus do personagem. Devolve a mensagem para exibir."""
+    """Ativa a postura defensiva e aplica o bônus do personagem. Devolve a mensagem para exibir.
+    Mecânica secreta: a postura escolhida em POSTURAS_ATE_FALHAR turnos seguidos falha (o turno é gasto)."""
+    jogador["postura_no_turno"] = True
+    jogador["posturas_seguidas"] += 1
+    if jogador["posturas_seguidas"] >= POSTURAS_ATE_FALHAR:
+        jogador["posturas_seguidas"] = 0
+        return (f"🔰 [bold blue]{jogador['nome']}[/] tentou se defender de novo, mas baixou a guarda: "
+                "[bold red]a postura defensiva falhou![/]")
     jogador["postura"] = True
     msg = f"🔰 [bold blue]{jogador['nome']}[/] assumiu a postura defensiva!"
     if jogador["raca"] == "Ferreiro":
         msg += f" 🔨 Bloqueio reforçado (+{round(POSTURA_FERREIRO * 100)}%)"
-    if jogador["raca"] == "Mosqueteiro":
-        if jogador["municao"] == 0:
-            jogador["municao"] = MUNICAO_MAX
-            msg += f" 🎯 Munição recarregada ({MUNICAO_MAX}/{MUNICAO_MAX})!"
-        else:
-            msg += " 🎯 [bright_black](a munição ainda não zerou: não recarrega)[/]"
     return msg
+
+
+def recarregar(jogador):
+    """Mosqueteiro sem munição: gasta o turno recarregando, sem postura (fica exposto). Devolve a mensagem para exibir."""
+    jogador["municao"] = MUNICAO_MAX
+    return (f"🔄 [bold yellow]{jogador['nome']}[/] recarregou a arma ({MUNICAO_MAX}/{MUNICAO_MAX}), "
+            "mas baixou a guarda: [red]fica exposto até a próxima vez[/].")
 
 
 def ouro_base_do_turno(rodada):
@@ -1318,6 +1322,9 @@ def inicio_de_turno(jogador, rodada=1):
     jogador["invisivel"] = False
     jogador["escudo_pv"] = 0
     jogador["sentenca"] = 0  # a Sentença dura até o próximo turno do sentenciado
+    if not jogador["postura_no_turno"]:  # outra ação no último turno quebra a sequência de posturas
+        jogador["posturas_seguidas"] = 0
+    jogador["postura_no_turno"] = False
     # a postura defensiva protege só até a próxima ação do jogador: na vez dele ela termina
     # (se quiser continuar protegido, ele escolhe a postura de novo)
     postura_terminou = jogador["postura"]
@@ -1485,6 +1492,12 @@ def turno(rodada, jogador, jogadores):
             if not confirmar("🔰 Adotar a postura defensiva?"):
                 continue
             console.print(f"\n  {assumir_postura(jogador)}")
+            pausar()
+            return
+        if acao == "recarregar":
+            if not confirmar("🔄 Recarregar a arma (gasta o turno e você fica sem defesa)?"):
+                continue
+            console.print(f"\n  {recarregar(jogador)}")
             pausar()
             return
         if acao == "inventario":
@@ -1817,8 +1830,8 @@ def loja_jogador(jogador, estoque):
 
 def fase_loja(jogadores, ordem, rodada=INTERVALO_LOJA):
     """Rodada exclusiva do Comerciante: cada jogador vivo compra em sequência, num estoque só dele (sorteado à
-    parte, então os itens podem se repetir entre jogadores). O estoque só tem itens da fase da rodada
-    (limites em shop.FASES_POR_RODADA)."""
+    parte, então os itens podem se repetir entre jogadores). O estoque tem principalmente itens da fase da rodada
+    (limites em shop.FASES_POR_RODADA), mais alguns de outras fases (shop.composicao_estoque)."""
     fase = shop.fase_da_rodada(rodada)
     compradores = [j for j in ordem if j["vivo"]]
     curas = []
@@ -1843,9 +1856,9 @@ def fase_loja(jogadores, ordem, rodada=INTERVALO_LOJA):
         style="bright_black",
     )
     nome_fase, cor_fase = TIERS[fase]
-    abertura.append(f"Rodada {rodada} • só itens da fase ", style="bright_black")
+    abertura.append(f"Rodada {rodada} • fase ", style="bright_black")
     abertura.append(nome_fase, style=f"bold {cor_fase}")
-    abertura.append(f" ({shop.texto_fases()})", style="bright_black")
+    abertura.append(f": {shop.texto_composicao(rodada)} ({shop.texto_fases()})", style="bright_black")
     abertura.append(Text.from_markup("\n\n💚 " + "   ".join(curas)))
     console.print()
     console.print(Align.center(Panel(Align.center(abertura), box=box.DOUBLE, border_style="yellow", padding=(1, 6))))
@@ -1885,7 +1898,6 @@ def jogar(jogadores):
     while True:
         RODADA_ATUAL = rodada
         console.clear()
-        shop.fator_cura_global = CURA_MORTE_SUBITA if rodada >= RODADA_MORTE_SUBITA else 1.0
         ordem = sortear_ordem(jogadores)
         if rodada == 1:
             console.print()
@@ -1897,15 +1909,6 @@ def jogar(jogadores):
                     Text(f"💰 A ECONOMIA AQUECEU! 💰\nA partir de agora cada turno dá +{ouro_base_do_turno(rodada)} moedas "
                          f"(antes: +{ouro_base_do_turno(rodada - 1)}).", justify="center", style="bold yellow"),
                     box=box.DOUBLE, border_style="yellow", padding=(1, 6),
-                ))
-            )
-        if rodada == RODADA_MORTE_SUBITA:
-            console.print()
-            console.print(
-                Align.center(Panel(
-                    Text(f"💀 MORTE SÚBITA! 💀\nA partir de agora todas as curas rendem só {round(CURA_MORTE_SUBITA * 100)}%.",
-                         justify="center", style="bold red"),
-                    box=box.DOUBLE, border_style="red", padding=(1, 6),
                 ))
             )
         mostrar_ordem(ordem, rodada)

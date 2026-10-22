@@ -6,7 +6,7 @@ RPG PvP de terminal, em turnos, escrito em Python. De 2 a 6 jogadores se revezam
 
 ## Como rodar
 
-**Janela do jogo (recomendado):** dê dois cliques em `dist\ArenaDeCombate.exe`. O jogo abre numa janela própria, com mouse e teclado (números escolhem, 0 volta, Enter continua). **F11** liga e desliga a tela cheia (também há um botão no canto da caixa de cima).
+**Janela do jogo (recomendado):** dê dois cliques em `dist\ArenaDeCombate.exe`. O jogo abre numa janela própria, e dá para jogar 100% no teclado: números escolhem (inclusive A Forja, a Mistura e Sair do Comerciante), 0 volta, Enter continua, e na criação do personagem as setas ↑ ↓ trocam o personagem enquanto você digita o nome. Tab e Enter também funcionam em qualquer botão. **F11** liga e desliga a tela cheia (também há um botão no canto da caixa de cima).
 
 O executável não fica no repositório. Para gerá-lo (ou gerar de novo depois de mudar o código):
 
@@ -43,7 +43,8 @@ Use um terminal com suporte a emoji e cores (Windows Terminal, terminal do VS Co
 | `dice.py` | Faixas do D10 de ataque e de defesa. `resultado_ataque(bonus_crit, bonus_rolagem)` aplica os bônus de crítico (o crítico nunca começa abaixo de 6) e de rolagem (o resultado fica sempre entre 1 e 10). |
 | `partida.py` | Motor da janela: o fluxo da partida (escolha, rodadas, Comerciante, fim) sem `input()` nem `print()`. Recebe cada clique em `Partida.agir` e devolve o estado da tela em `Partida.estado`. |
 | `app.py` | Abre a janela (pywebview). Com `--navegador`, serve a mesma interface em `http://localhost:8765/?navegador` para testes. |
-| `interface/` | A tela do jogo (`index.html`, `estilo.css`, `jogo.js`): três caixas como nas mesas de RPG online, dados animados um de cada vez (3 s cada, como no terminal) e até 6 jogadores na caixa de cima. |
+| `interface/` | A tela do jogo (`index.html`, `estilo.css`, `jogo.js`): três caixas como nas mesas de RPG online, dados animados um de cada vez (3 s cada, como no terminal) e até 6 jogadores na caixa de cima. Visual em `estilo.css`: paleta, fontes, espaços e componentes centralizados em variáveis. |
+| `PLANO_MULTIPLAYER.md` | Plano detalhado do modo em rede (mesma tela para todos, cada um joga só na sua vez). Ainda não implementado. |
 | `gerar_exe.bat` | Gera `dist\ArenaDeCombate.exe` com o PyInstaller. |
 | `prototipo/telas.html` | Protótipo aprovado das telas (só visual, com dados de exemplo). |
 
@@ -58,6 +59,8 @@ A ordem da rodada é **sorteada livremente a cada rodada** (qualquer um pode abr
 3. Inventário e itens
 4. Passar a vez
 5. Habilidade de ação livre do personagem (só Bárbaro, Hemomante e Mosqueteiro)
+
+No Mosqueteiro sem munição, a opção 1 vira **Recarregar** (no lugar de Atacar).
 
 Itens de ação livre não gastam o turno.
 
@@ -76,8 +79,7 @@ Itens de ação livre não gastam o turno.
 - **Crítico ladrão do Goblin:** no Goblin, cada crítico rouba 2 moedas do alvo, no lugar das +3 moedas.
 - Quem é atacado fica **protegido no turno seguinte** (não pode ser atacado em dois turnos seguidos), mas pode levar dois ou mais ataques na mesma rodada. A proteção **zera no fim da rodada**: quem foi atacado no último turno pode ser atacado no primeiro turno da rodada seguinte. Bombas e o Cajado Relâmpago contam como ataque.
 - O dano passa por esta ordem: postura (D10 de defesa, tabela abaixo), Escudo de Mana, Defesa fixa (dano mínimo 1), escudos de item e vida.
-- **Morte súbita:** a partir da rodada 35, todas as curas (poções, vampirismo, regeneração, Comerciante, Fôlego) rendem 50%. Aparece um aviso na tela.
-- A postura dura até a próxima vez do jogador (ela termina quando chega a vez dele de agir) ou até ele ser atingido, o que vier primeiro. Para continuar protegido, ele escolhe a postura de novo. A postura **não reflete** dano. O Feiticeiro não tem postura.
+- A postura dura até a próxima vez do jogador (ela termina quando chega a vez dele de agir) ou até ele ser atingido, o que vier primeiro. Para continuar protegido, ele escolhe a postura de novo. **Mecânica secreta** (não aparece nos textos do jogo): a postura escolhida no 3º turno seguido falha (o turno é gasto e não protege nem recarrega a munição); qualquer outra ação no meio quebra a sequência. A postura **não reflete** dano. O Feiticeiro não tem postura.
 
   | D10 de defesa | 1–2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
   |---|---|---|---|---|---|---|---|---|---|
@@ -103,9 +105,9 @@ Todos os personagens têm os mesmos três status: vida, dano físico e dano mág
 | Goblin | 115 | físico 2 | corpo a corpo, físico | **Ganancioso:** ganha 50% a mais de ouro (1,5x): +3 por turno (+4 depois da rodada 10, +5 depois da rodada 20, +6 depois da rodada 30) e +5 no Comerciante. **Crítico ladrão:** cada crítico rouba 2 moedas do alvo. **Pechinchar** (35% de chance de 15% de desconto; depois do desconto fica desabilitado até a próxima visita). A postura não dá bônus. |
 | Feiticeiro | 110 | mágico 5 (ataque inicial 8 com o Livro velho) | à distância, mágico | **Mana 3/3:** cada ataque custa 1/3. Ao fim de cada rodada recupera 1/3 (+1/3 se não gastou mana). **Escudo de Mana** (custa 2/3, mitiga **50%** do próximo ataque recebido e dura **no máximo 3 rodadas**, contando a rodada em que foi erguido). **Não tem postura defensiva:** o Escudo de Mana ocupa o lugar dela no menu. |
 | Ferreiro | 110 | físico 3 | corpo a corpo, físico | **Mestre do Metal** (+10% em armas e armaduras), **A Forja** (por nível: +10% e ainda **+1 de dano** em arma ou **+1 de Defesa e +10 de vida** em armadura; 1 uso por visita, até 3 níveis por item). Postura bloqueia +10%. |
-| Hemomante | 110 | mágico 3 (ataque inicial 6 com o Frasco de sangue) | à distância, mágico | **Vampirismo:** cura 30% do dano causado (soma com itens, até 50%), mas curas de consumíveis rendem só 75%. **Pacto de Sangue** (ação livre, 1 vez por turno): paga 4 de vida para o próximo ataque causar ×1,5; não pode matar a si mesmo e não acumula com outros bônus de dano (vale o maior). |
+| Hemomante | 110 | mágico 3 (ataque inicial 6 com o Frasco de sangue) | à distância, mágico | **Vampirismo:** cura 30% do dano causado (soma com itens, até 50%), mas curas de consumíveis rendem só 75%. **Pacto de Sangue** (ação livre, 1 vez por turno): paga 5 de vida para o próximo ataque causar ×1,5; não pode matar a si mesmo e não acumula com outros bônus de dano (vale o maior). |
 | Alquimista | 110 | físico 2 e mágico 2 (ataque inicial 6 com o Par de luvas) | híbrido, híbrido | **Bolsa de poções:** compra até 2 consumíveis por visita e cada consumível comprado vem com +1 uso. **Mistura** (1 vez por visita do Comerciante): junta 2 consumíveis num só, com os efeitos dos dois (bombas não entram). Não sofre penalidade de afinidade nem de alcance. **Fraqueza:** só 1 espaço de arma. |
-| Mosqueteiro | 105 | físico 4 (ataque inicial 7 com o Estilingue) | à distância, físico | **Recarregar:** munição 3/3; cada disparo gasta 1; com a munição zerada, a postura recarrega a barra inteira. **Na mira** (ação livre, recarga de 3 turnos): o próximo disparo ignora a Defesa e a postura do alvo e causa +2 de dano + 50% do dano físico das armas à distância. |
+| Mosqueteiro | 105 | físico 4 (ataque inicial 7 com o Estilingue) | à distância, físico | **Recarregar:** munição 3/3; cada disparo gasta 1; com a munição zerada, a ação **Recarregar** entra no lugar do ataque: gasta o turno, enche a barra e **não protege** (ele fica exposto; a postura não recarrega mais). **Na mira** (ação livre, recarga de 3 turnos): o próximo disparo ignora a Defesa e a postura do alvo e causa +2 de dano + 50% do dano físico das armas à distância. |
 
 Cada personagem começa com uma arma inicial (+3 de dano; o Par de luvas do Alquimista dá +2).
 
@@ -114,7 +116,8 @@ Cada personagem começa com uma arma inicial (+3 de dano; o Par de luvas do Alqu
 Chega ao fim de cada 5 rodadas.
 
 - Cada jogador recebe +10 moedas, **recupera 10% da vida máxima** e vê um estoque próprio de 5 itens, sorteado só para ele, mais uma poção fixa que está sempre à venda: **💊 Poção Simples** (cura 15, 10 moedas, gasta o turno) até a rodada 15 e **🧴 Poção Reforçada** (cura 30, 20 moedas, gasta o turno) a partir da rodada 20.
-- O estoque depende da fase: **Early** até a rodada 9, **Mid** a partir da rodada 10, **Late** a partir da 20. Na prática: visita da rodada 5 é Early, das rodadas 10 e 15 é Mid, e da 20 em diante é Late.
+- O estoque depende da fase: **Early** até a rodada 14, **Mid** a partir da rodada 15, **Late** a partir da 25. Na prática: visitas das rodadas 5 e 10 são Early, das rodadas 15 e 20 são Mid, e da 25 em diante são Late.
+- **Itens de outras fases:** a última visita de cada fase traz uma prévia da seguinte, e o Late sempre mistura itens Mid, para o fim da partida não ficar repetitivo. Dos 5 itens sorteados: rodada 5 = 5 Early; rodada 10 = 4 Early + 1 Mid; rodada 15 = 5 Mid; rodada 20 = 4 Mid + 1 Late; rodada 25 em diante = 3 ou 4 Late + 1 ou 2 Mid. A garantia de 1 item de cada tipo vale para a parte da fase da visita.
 - Cada jogador compra até **1 equipamento** (arma, armadura, joia ou ativo) **e 1 consumível** por visita. A ordem de compra é **sorteada a cada visita** (como cada um tem o seu próprio estoque, a ordem não muda o que cada um pode comprar).
 - Itens ativos não podem se repetir (não dá para ter dois Olhos Protetores, por exemplo).
 - Espaços de equipamento: 2 armas (1 no Alquimista), 1 armadura, 2 joias, 2 ativos. Com o espaço cheio, o jogador escolhe qual item substituir.
@@ -127,13 +130,13 @@ Chega ao fim de cada 5 rodadas.
 - **Armaduras e joias.**
 - **Ativos** reutilizáveis com recarga (contada nos turnos do dono): Cálice Vital, Olho Protetor, Chifre de Guerra, Luvas do Ladrão, Capa da Invisibilidade, Cajado Relâmpago, Coroa da Provação. Ativos de ação livre que pedem alvo (Luvas, Coroa) não gastam o turno.
 - **Itens da Provação (Late):**
-  - **🏰 Armadura da Provação** (125): +4 de Defesa, +65 de vida, **Leitura de Combate** (golpes críticos contra o portador contam como golpes normais: sem ×2, sem moedas do crítico e sem crítico ladrão; na Fúria, cada dado crítico vira normal) e **Última Provação**: um golpe que mataria (ataque, bomba, raio) deixa o portador com 1 de vida, se ele estiver com pelo menos 5% da vida, e o próximo ataque dele é crítico garantido. Com 1 de vida, o próximo golpe mata. Recarrega a cada visita do Comerciante (não acumula). Substituiu as Escamas de Dragão. É a armadura de técnica; a Mithril continua sendo a de defesa bruta.
+  - **🏰 Armadura da Provação** (125): +4 de Defesa, +65 de vida, **Última Provação**: um golpe que mataria (ataque, bomba, raio) deixa o portador com 1 de vida, se ele estiver com pelo menos 5% da vida, e o próximo ataque dele é crítico garantido. Com 1 de vida, o próximo golpe mata. Recarrega a cada visita do Comerciante (não acumula). Substituiu as Escamas de Dragão. É a armadura de técnica; a Mithril continua sendo a de defesa bruta.
   - **🤺 Espada da Provação** (120): +9 de dano físico, corpo a corpo, +1 na faixa de crítico, **ignora a postura** do alvo.
   - **👑 Coroa da Provação** (80, ativo): **Sentença**, ação livre, recarga de 4 turnos seus: marca um oponente; até o próximo turno dele, todos os ataques que ele receber (de qualquer jogador, inclusive bombas e raios) causam +45% de dano.
 - **🧪 Frasco de Ácido** (Late, 38, consumível): arremessado num oponente, tira 3 de Defesa dele por 3 turnos dele (usar de novo renova a duração, não acumula). Gasta o turno.
 - **Efeitos de status:** veneno (nunca elimina), invisibilidade, escudo, Defesa temporária.
 - **Anel Venenoso:** envenena (4 por turno do alvo, durante 3 turnos) e depois recarrega por 3 turnos.
-- **Turnos x rodadas:** o que é do jogador conta nos **turnos dele**: recarga de itens ativos, do Anel Venenoso e do Na mira, e o veneno, que tira vida no começo do turno de quem está envenenado. O que vale para a rodada inteira conta em **rodadas**: Defesa temporária (Pele de Pedra), Escudo de Mana, Fúria desabilitada, mana do Feiticeiro, economia, Comerciante e morte súbita.
+- **Turnos x rodadas:** o que é do jogador conta nos **turnos dele**: recarga de itens ativos, do Anel Venenoso e do Na mira, e o veneno, que tira vida no começo do turno de quem está envenenado. O que vale para a rodada inteira conta em **rodadas**: Defesa temporária (Pele de Pedra), Escudo de Mana, Fúria desabilitada, mana do Feiticeiro, economia e Comerciante.
 - **Bônus de crítico:** +1 faz o crítico começar no 8 do D10 (30%), +2 no 7 (40%); o máximo é a partir do 6 (50%).
 
 ## Histórico de balanceamento
@@ -185,6 +188,7 @@ Quarta rodada de ajustes (depois do primeiro teste jogado):
 - Ajustes depois do relatório dos personagens: Hemomante com roubo de vida 30% (antes 20%) e Pacto de Sangue custando 4 de vida (antes 6); Goblin rouba 2 moedas no crítico (antes 4); Mosqueteiro com munição 3/3 (antes 2/2); Elixir Dourado cura 55 (antes 70) e custa 55. Depois: curas de consumíveis do Hemomante rendem 75% (antes 50%); Goblin com dano físico inicial 2 (antes 3).
 - Itens novos: Armadura da Provação (no lugar das Escamas de Dragão), Espada da Provação, Coroa da Provação e Frasco de Ácido; recargas descritas como "turnos seus"; corrigido: ativos de ação livre com alvo (Luvas do Ladrão, Coroa) não encerram mais o turno.
 - Interface: os equipamentos aparecem no cabeçalho do turno e do Comerciante; a tela final mostra todos os jogadores (colocação, rodada em que cada um foi eliminado e equipamentos); recargas e veneno contados em turnos do jogador.
+- Oitava rodada de ajustes: saiu a morte súbita (as curas rendiam 50% a partir da rodada 35); Mosqueteiro recarrega com uma ação própria, Recarregar, no lugar do ataque quando a munição zera (antes: a postura recarregava), e fica sem defesa nesse turno; Pacto de Sangue custa 5 de vida (antes 4); a Armadura da Provação perdeu a Leitura de Combate (críticos contra ela voltam a contar); postura em 3 turnos seguidos falha (mecânica secreta). Janela: jogável 100% no teclado (setas na escolha do personagem; números para Forja, Mistura e Sair do Comerciante; Enter/espaço no botão com foco). Loja: itens de outras fases (prévia da próxima fase nas rodadas 10 e 20; 1 a 2 itens Mid em toda visita do Late). Fases do Comerciante: Mid a partir da rodada 15 e Late a partir da 25 (antes: 10 e 20). Janela: nova identidade visual (minimalismo medieval: moldura escura, painéis marrons, área de leitura em pergaminho, dourado só na seleção e na ação principal); quem ataca e quem é atacado aparecem acima dos dados desde o começo da rolagem (no terminal, a linha sai antes do dado); cada opção numerada mantém o número da sua posição mesmo bloqueada (ações, alvos, inventário, estoque, Forja, Mistura e Sair).
 
 ## Propostas e pontos em aberto
 
@@ -195,6 +199,7 @@ Quarta rodada de ajustes (depois do primeiro teste jogado):
 | Resistência Mágica | Não será feita por enquanto. |
 | Poção simples com D4 para passar ou não a vez | Boa ideia. Poções fortes e ativos sempre gastariam o turno; precisa ser conciliado com o sistema atual de ação livre. |
 | Goblin com +5 de ouro e roubo de moedas no crítico | Precisa de refinamento: cai para 18–20% de vitórias. Roubo de D10 ou manter o +5 resolve. |
+| Modo em rede (mesma tela, cada um na sua vez) | Planejado em `PLANO_MULTIPLAYER.md`. |
 | Postura acaba no fim da rodada | Substituída: a postura agora acaba na próxima vez do jogador. |
 
 Outras questões:

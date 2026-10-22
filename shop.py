@@ -3,6 +3,9 @@
 import random
 
 ITENS_POR_JOGADOR = 5       # tamanho do estoque exclusivo que cada jogador vê no Comerciante
+INTERVALO_COMERCIANTE = 5   # o Comerciante chega ao fim de cada N rodadas completas
+ITENS_PROXIMA_FASE = 1      # última visita de uma fase (Early → Mid, Mid → Late): itens da fase seguinte no estoque
+ITENS_MID_NO_LATE = (1, 2)  # visitas do Late: o estoque sempre tem de 1 a 2 itens Mid (sorteado)
 EQUIPAVEIS = ("arma", "armadura")  # itens de combate físico (recebem Mestre do Metal e A Forja)
 LIMITE_SLOTS = {"arma": 2, "armadura": 1, "joia": 2, "ativo": 2}   # quantos itens equipados de cada tipo
 ROTULO_SLOT = {"arma": "armas", "armadura": "armadura", "joia": "joias", "ativo": "itens ativos"}
@@ -24,13 +27,13 @@ DEFESA_TEMP_RODADAS = 2     # duração da Defesa temporária das poções
 ACIDO_TURNOS = 3            # Frasco de Ácido: turnos do alvo com a Defesa reduzida
 PROVACAO_VIDA_MINIMA = 0.05 # Armadura da Provação: só salva quem está com pelo menos 5% da vida
 
-# Fases do jogo: o Comerciante só oferece itens da fase em que a partida está
+# Fases do jogo: o Comerciante oferece principalmente itens da fase em que a partida está (ver composicao_estoque)
 TIERS = {1: "Early", 2: "Mid", 3: "Late"}
-FASES_POR_RODADA = ((9, 1), (19, 2))  # até a rodada 9: Early; Mid a partir da 10; Late a partir da 20 (antes: 15 e 30)
+FASES_POR_RODADA = ((14, 1), (24, 2))  # até a rodada 14: Early; Mid a partir da 15; Late a partir da 25 (antes: 10 e 20)
 
 
 def texto_fases():
-    """Texto dos limites de fase para a interface (ex.: 'Early até a rodada 9, Mid a partir da 10, Late a partir da 20')."""
+    """Texto dos limites de fase para a interface (ex.: 'Early até a rodada 14, Mid a partir da 15, Late a partir da 25')."""
     (lim1, _), (lim2, _) = FASES_POR_RODADA
     return f"Early até a rodada {lim1}, Mid a partir da {lim1 + 1}, Late a partir da {lim2 + 1}"
 
@@ -158,9 +161,9 @@ CATALOGO = [
     _item("Armadura de Mithril", "💎", "armadura", 3, 100, {"hp_max": 70, "defesa": 5},
           "Leve como seda e dura como diamante."),
     _item("Armadura da Provação", "🏰", "armadura", 3, 125,
-          {"hp_max": 65, "defesa": 4, "imune_critico": True, "ultima_provacao": True},
-          "A armadura de um guerreiro que já viu de tudo: nunca é pego desprevenido (críticos contra ele viram golpes "
-          "normais) e não aceita cair: um golpe que mataria o deixa com 1 de vida, e ele responde com um crítico."),
+          {"hp_max": 65, "defesa": 4, "ultima_provacao": True},
+          "A armadura de um guerreiro que não aceita cair: um golpe que mataria o deixa com 1 de vida, e ele "
+          "responde com um crítico."),
 
     # --------------------------- JOIAS (anéis e amuletos) ---------------------------
     _item("Anel de Ferro", "💍", "joia", 1, 18, {"defesa": 1, "hp_max": 10},
@@ -237,16 +240,55 @@ def num(x):
 # ----------------------------------------------------------------------
 # Estoque
 # ----------------------------------------------------------------------
-def sortear_estoque(rodada=5, tamanho=ITENS_POR_JOGADOR):
-    """Sorteia o estoque de UM jogador numa visita: só itens da fase da rodada (ver FASES_POR_RODADA),
-    sem repetir item dentro do mesmo estoque. Cada jogador recebe o seu próprio sorteio, então os
-    estoques podem ser diferentes (e repetir itens entre jogadores).
-    Os tipos 'consumível, arma, armadura, joia e ativo' aparecem pelo menos uma vez quando a fase tem itens deles
-    e o estoque comporta. Cada item é uma cópia com a flag `disponivel`."""
+def composicao_estoque(rodada, tamanho=ITENS_POR_JOGADOR):
+    """Quantos itens de cada fase o estoque desta visita tem: {fase: quantidade}, a fase da rodada primeiro.
+    Na última visita de uma fase entra uma prévia da seguinte (ITENS_PROXIMA_FASE); no Late, sempre há itens Mid
+    (ITENS_MID_NO_LATE), para o fim da partida não ficar repetitivo."""
     fase = fase_da_rodada(rodada)
+    if fase == 3:
+        mid = random.randint(*ITENS_MID_NO_LATE)
+        return {3: tamanho - mid, 2: mid}
+    if fase_da_rodada(rodada + INTERVALO_COMERCIANTE) > fase:
+        return {fase: tamanho - ITENS_PROXIMA_FASE, fase + 1: ITENS_PROXIMA_FASE}
+    return {fase: tamanho}
+
+
+def texto_composicao(rodada):
+    """Descrição do estoque da visita para a interface (ex.: 'itens Late e de 1 a 2 itens Mid')."""
+    fase = fase_da_rodada(rodada)
+    if fase == 3:
+        minimo, maximo = ITENS_MID_NO_LATE
+        return f"itens {TIERS[3]} e de {minimo} a {maximo} itens {TIERS[2]}"
+    if fase_da_rodada(rodada + INTERVALO_COMERCIANTE) > fase:
+        n = ITENS_PROXIMA_FASE
+        return f"itens {TIERS[fase]} e {n} {'item' if n == 1 else 'itens'} {TIERS[fase + 1]} (prévia da próxima fase)"
+    return f"só itens {TIERS[fase]}"
+
+
+def sortear_estoque(rodada=5, tamanho=ITENS_POR_JOGADOR):
+    """Sorteia o estoque de UM jogador numa visita, com as fases de composicao_estoque, sem repetir item dentro do
+    mesmo estoque. Cada jogador recebe o seu próprio sorteio, então os estoques podem ser diferentes (e repetir
+    itens entre jogadores). Na parte da fase da rodada, os tipos 'consumível, arma, armadura, joia e ativo'
+    aparecem pelo menos uma vez quando a fase tem itens deles e o estoque comporta; os itens das outras fases são
+    sorteados livremente. Cada item é uma cópia com a flag `disponivel`."""
+    composicao = composicao_estoque(rodada, tamanho)
+    fase = fase_da_rodada(rodada)
+    escolhidos = _sortear_da_fase(fase, composicao[fase], garantir_tipos=True)
+    for outra, quantidade in composicao.items():
+        if outra != fase:
+            escolhidos += _sortear_da_fase(outra, quantidade)
+    random.shuffle(escolhidos)
+    escolhidos.append(pocao_fixa(rodada))  # sempre à venda, além dos itens sorteados
+    return [dict(i, efeitos=dict(i["efeitos"]), disponivel=True) for i in escolhidos]
+
+
+def _sortear_da_fase(fase, tamanho, garantir_tipos=False):
+    """Sorteia `tamanho` itens diferentes da fase (com garantir_tipos, tenta 1 de cada tipo de CATEGORIAS_GARANTIDAS)."""
     pool = [i for i in CATALOGO if i["tier"] == fase]
     tamanho = min(len(pool), tamanho)
     escolhidos = []
+    if not garantir_tipos:
+        return random.sample(pool, tamanho)
     categorias = list(CATEGORIAS_GARANTIDAS)
     random.shuffle(categorias)  # se o estoque for pequeno, nem sempre as mesmas categorias entram
     for tipo in categorias:
@@ -261,9 +303,7 @@ def sortear_estoque(rodada=5, tamanho=ITENS_POR_JOGADOR):
         item = random.choice(pool)
         escolhidos.append(item)
         pool.remove(item)
-    random.shuffle(escolhidos)
-    escolhidos.append(pocao_fixa(rodada))  # sempre à venda, além dos itens sorteados
-    return [dict(i, efeitos=dict(i["efeitos"]), disponivel=True) for i in escolhidos]
+    return escolhidos
 
 
 # ----------------------------------------------------------------------
@@ -306,8 +346,6 @@ def descrever_efeitos(efeitos, magico=False, usos=1):
         linhas.append(f"🌵 Reflete {e['espinhos']} de dano em quem te atacar")
     if "bloqueio_postura" in e:
         linhas.append(f"🔰 +{pct(e['bloqueio_postura'])}% de bloqueio na postura")
-    if e.get("imune_critico"):
-        linhas.append("🧠 Leitura de Combate: golpes críticos contra você contam como golpes normais")
     if e.get("ultima_provacao"):
         linhas.append(f"🏰 Última Provação: um golpe que mataria deixa você com 1 de vida (se estiver com pelo menos "
                       f"{pct(PROVACAO_VIDA_MINIMA)}% da vida) e o seu próximo ataque é crítico garantido; "
@@ -438,7 +476,7 @@ def recalcular_status(jogador):
         for chave in SOMADOS:
             if chave in item["efeitos"]:
                 bonus[chave] = bonus.get(chave, 0) + item["efeitos"][chave]
-        for chave in ("ultima_provacao", "ignora_postura", "imune_critico"):  # efeitos de liga/desliga
+        for chave in ("ultima_provacao", "ignora_postura"):  # efeitos de liga/desliga
             if item["efeitos"].get(chave):
                 bonus[chave] = True
     if jogador.get("vampirismo_base"):  # Hemomante: vampirismo do personagem (soma com os itens, dentro do teto)
@@ -707,14 +745,10 @@ def usar_item(jogador, item):
     return True, f"✅ {item['nome']} usado! " + " • ".join(partes)
 
 
-# Morte súbita: a partir de certa rodada todas as curas rendem menos (o main.py ajusta este fator a cada rodada)
-fator_cura_global = 1.0
-
-
 def aplicar_cura(jogador, valor, fonte=""):
-    """Cura o jogador (respeitando a vida máxima e a morte súbita). Devolve quanto curou de fato.
+    """Cura o jogador (respeitando a vida máxima). Devolve quanto curou de fato.
     `fonte` só identifica a origem da cura (útil para estatísticas)."""
-    cura = max(0, min(round(valor * fator_cura_global), jogador["hp_max"] - jogador["hp"]))
+    cura = max(0, min(round(valor), jogador["hp_max"] - jogador["hp"]))
     jogador["hp"] += cura
     return cura
 

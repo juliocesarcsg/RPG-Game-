@@ -20,13 +20,13 @@ Gerado automaticamente a partir do código (`main.py` e `shop.py`).
 | 👺 Goblin | Ganancioso: ganha 50% a mais de ouro no turno (+3; +4 depois da rodada 10; +5 depois da rodada 20; +6 depois da rodada 30) e no Comerciante (+5). Crítico ladrão: cada crítico rouba 2 moedas do alvo (no lugar do bônus de moedas do crítico). | Pechinchar: ao comprar do Comerciante, 35% de chance de 15% de desconto. Depois do desconto, fica desabilitada até a próxima visita. | Postura: sem bônus especial (não dá ouro). |
 | 🔮 Feiticeiro | Mana: barra 3/3. Cada ataque custa 1/3. Ao fim de toda rodada restaura 1/3 (+1/3 se não gastou mana). Seu dano é mágico: ignora 75% da Defesa do alvo. | Escudo de Mana: gasta 2/3 da mana e mitiga 50% do dano do próximo ataque recebido. Dura no máximo 3 rodadas (contando a rodada em que foi erguido). | Não usa a postura defensiva: no lugar dela há o Escudo de Mana. |
 | 🔨 Ferreiro | Mestre do Metal: armas e armaduras são 10% mais eficientes nele. | A Forja: quando o Comerciante chega, melhora 1 item de combate físico em +10% e ainda +1 de Dano (arma) ou +1 de Defesa e +10 de Vida máxima (armadura) por nível (1 uso por visita, até 3 níveis por item). | Postura: bloqueia +10% a mais do dano. |
-| 🦇 Hemomante | Vampirismo: cura 30% do dano causado (soma com itens, até 50%). Em compensação, curas de consumíveis rendem só 75%. | Pacto de Sangue (ação livre, 1 vez por turno): paga 4 de vida para o próximo ataque causar ×1,5. Não pode matar a si mesmo e não acumula com outros bônus de dano (vale o maior). | Postura: sem bônus especial. |
+| 🦇 Hemomante | Vampirismo: cura 30% do dano causado (soma com itens, até 50%). Em compensação, curas de consumíveis rendem só 75%. | Pacto de Sangue (ação livre, 1 vez por turno): paga 5 de vida para o próximo ataque causar ×1,5. Não pode matar a si mesmo e não acumula com outros bônus de dano (vale o maior). | Postura: sem bônus especial. |
 | 🔬 Alquimista | Bolsa de poções: compra até 2 consumíveis por visita do Comerciante e cada consumível comprado vem com +1 uso. Híbrido: armas de qualquer tipo de dano e alcance rendem 100%. Fraqueza: só 1 espaço de arma. | Mistura (1 vez por visita do Comerciante): junta 2 consumíveis num só, com os efeitos dos dois (bombas não entram). | Postura: sem bônus especial. |
-| 🎯 Mosqueteiro | Recarregar: munição 3/3. Cada disparo gasta 1. Com a munição zerada, a postura defensiva recarrega a barra inteira (3/3). | Na mira (ação livre, recarga de 3 turnos seus): o próximo disparo ignora a Defesa e a postura do alvo e causa +2 de dano + 50% do dano físico das armas à distância. | Postura: se a munição estiver zerada, recarrega a barra inteira. |
+| 🎯 Mosqueteiro | Recarregar: munição 3/3. Cada disparo gasta 1. Com a munição zerada, a ação Recarregar entra no lugar do ataque: gasta o turno, enche a barra (3/3) e não protege (ele fica exposto). | Na mira (ação livre, recarga de 3 turnos seus): o próximo disparo ignora a Defesa e a postura do alvo e causa +2 de dano + 50% do dano físico das armas à distância. | Postura: sem bônus especial (não recarrega a munição). |
 
 ## Resumo do catálogo
 
-Quantos itens existem em cada fase do Comerciante (sem contar as poções fixas). Cada jogador vê 5 itens sorteados da fase da visita, com pelo menos 1 de cada tipo quando a fase tem.
+Quantos itens existem em cada fase do Comerciante (sem contar as poções fixas). Cada jogador vê 5 itens sorteados: rodada 5 = 5 Early; rodada 10 = 4 Early + 1 Mid; rodada 15 = 5 Mid; rodada 20 = 4 Mid + 1 Late; rodada 25 em diante = 3 ou 4 Late + 1 ou 2 Mid. A parte da fase da visita tem pelo menos 1 de cada tipo quando a fase tem.
 
 | Fase | Armas | Armaduras | Joias | Itens ativos | Consumíveis | Total |
 |---|---|---|---|---|---|---|
@@ -56,7 +56,7 @@ Cada personagem rende 100% com armas do seu alcance e do seu tipo de dano (o Alq
 
 ## Itens
 
-Fases do Comerciante: Early até a rodada 9, Mid a partir da 10, Late a partir da 20. Por visita: 1 equipamento e 1 consumível (o Alquimista compra 2 consumíveis). Dano de item fora da afinidade do personagem rende 50%; arma de alcance diferente do personagem dá −1 no D10 de ataque.
+Fases do Comerciante: Early até a rodada 14, Mid a partir da 15, Late a partir da 25. Por visita: 1 equipamento e 1 consumível (o Alquimista compra 2 consumíveis). Dano de item fora da afinidade do personagem rende 50%; arma de alcance diferente do personagem dá −1 no D10 de ataque.
 
 ### Poções fixas (sempre à venda)
 
@@ -96,7 +96,7 @@ Fases do Comerciante: Early até a rodada 9, Mid a partir da 10, Late a partir d
 | 🧙 Manto Arcano | Mid | 52 | 🔰 +1 de Defesa; 💖 +40 de Vida máxima; 🌿 Regenera 1 de vida por turno; 🔮 +1 de mana por rodada (Feiticeiro) |
 | 🌵 Couraça de Espinhos | Mid | 55 | 🔰 +2 de Defesa; 💖 +45 de Vida máxima; 🌵 Reflete 2 de dano em quem te atacar |
 | 💎 Armadura de Mithril | Late | 100 | 🔰 +5 de Defesa; 💖 +70 de Vida máxima |
-| 🏰 Armadura da Provação | Late | 125 | 🔰 +4 de Defesa; 💖 +65 de Vida máxima; 🧠 Leitura de Combate: golpes críticos contra você contam como golpes normais; 🏰 Última Provação: um golpe que mataria deixa você com 1 de vida (se estiver com pelo menos 5% da vida) e o seu próximo ataque é crítico garantido; recarrega a cada visita do Comerciante |
+| 🏰 Armadura da Provação | Late | 125 | 🔰 +4 de Defesa; 💖 +65 de Vida máxima; 🏰 Última Provação: um golpe que mataria deixa você com 1 de vida (se estiver com pelo menos 5% da vida) e o seu próximo ataque é crítico garantido; recarrega a cada visita do Comerciante |
 
 ### Joias (16)
 

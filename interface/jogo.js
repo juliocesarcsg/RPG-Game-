@@ -96,15 +96,21 @@ function cartao(j, ativo) {
 }
 
 function linhaOrdem(ordem) {
-  return ordem.map((o, i) => `<span class="item ${o.estado}">${i + 1}º ${esc(o.nome.toUpperCase())}</span>`)
+  return ordem.map((o, i) => `<span class="item ${o.estado}">${i + 1}º ${esc(o.nome)}</span>`)
     .join(`<span class="seta">➜</span>`);
 }
 
-function desenharTopo(titulo, subtitulo, ordem, jogadores) {
+// Bolinha com a cor do jogador ao lado do nome (o nome fica na cor do texto, legível em qualquer fundo)
+const marca = cor => `<span class="marca" style="--cor:${cor}"></span>`;
+
+// Caixa de cima: título e metadados na mesma linha, depois a ordem da rodada e os jogadores
+function desenharTopo(titulo, meta, ordem, jogadores) {
   $("topo").innerHTML = `
-    <button class="btn-tela" id="btn-tela" data-acao="local:tela-cheia"></button>
-    <h1>${titulo}</h1>
-    ${subtitulo ? `<div class="subtitulo">${subtitulo}</div>` : ""}
+    <div class="topo-linha">
+      <h1>${titulo}</h1>
+      ${meta ? `<span class="meta">${meta}</span>` : ""}
+      <button class="btn-tela" id="btn-tela" data-acao="local:tela-cheia"></button>
+    </div>
     <div class="ordem">${ordem || ""}</div>
     ${jogadores || ""}`;
   atualizarBotaoTela();
@@ -123,46 +129,75 @@ function registroHtml() {
 }
 
 let contadorTecla = 0;  // números dos atalhos (1-9) na ordem em que os botões aparecem
-function tecla() {
+// Toda opção numerada conta, mesmo bloqueada (ativa = false: número apagado e a tecla não faz nada),
+// para os números das outras opções não mudarem de lugar. O botão leva data-atalho mesmo quando desabilitado.
+function tecla(ativa = true) {
   contadorTecla++;
-  return contadorTecla <= 9 ? `<span class="tecla">${contadorTecla}</span>` : "";
+  return contadorTecla <= 9 ? `<span class="tecla ${ativa ? "" : "inativa"}">${contadorTecla}</span>` : "";
 }
 
+// Identificação da ficha: espaço do retrato (futura ilustração; hoje o emoji), nome e personagem
+function fichaId(nome, emoji, personagem, cor) {
+  return `<div class="ficha-id">
+      <div class="retrato" title="Retrato do personagem">${emoji}</div>
+      <div><h2>${cor ? marca(cor) : ""}${esc(nome)}</h2>${personagem ? `<div class="quem">${esc(personagem)}</div>` : ""}</div>
+    </div>`;
+}
+
+// Ficha lateral do jogador: identificação, atributos, equipamentos e informações da rodada
 function painelJogador(p, tag) {
+  const vazio = `<span class="vazio">—</span>`;
+  const defesaDica = p.defesa.endsWith("*") ? " (com ácido ou Defesa temporária)" : "";
   return `
     ${tag ? `<div class="vencedor-tag">${tag}</div>` : ""}
-    <h2>${esc(p.nome)}</h2>
-    <div class="quem">${p.emoji} ${esc(p.personagem)}</div>
-    <div class="retrato" title="Retrato do personagem">${p.emoji}</div>
-    ${barraVida(p.vida, p.max, true)}
-    <div class="atributos">
-      <span>💖 ${p.vida}/${p.max}</span><span title="Dano físico">🔪 ${num(p.fis)}</span>
-      <span title="Dano mágico">🌠 ${num(p.mag)}</span>
-      <span title="Defesa${p.defesa.endsWith("*") ? " (com ácido ou Defesa temporária)" : ""}">🔰 ${num(p.defesa)}</span>
+    ${fichaId(p.nome, p.emoji, p.personagem, p.cor)}
+    <div class="ficha-bloco">
+      <div class="ficha-vida"><span class="rotulo">💖 Vida</span><span class="valor">${p.vida}/${p.max}</span></div>
+      ${barraVida(p.vida, p.max, true)}
+      <dl class="stats">
+        <div><dt>🔪 Físico</dt><dd>${num(p.fis)}</dd></div>
+        <div><dt>🌠 Mágico</dt><dd>${num(p.mag)}</dd></div>
+        <div title="Defesa${defesaDica}"><dt>🔰 Defesa</dt><dd>${num(p.defesa)}</dd></div>
+        <div><dt>💰 Ouro</dt><dd>${p.ouro}</dd></div>
+      </dl>
+      ${p.recurso ? `<p class="ficha-linha">${p.recurso}</p>` : ""}
+      ${p.buffs ? `<p class="ficha-linha">${p.buffs}</p>` : ""}
     </div>
-    <ul class="lista">
-      <li>💰 <b>${p.ouro} moedas</b></li>
-      ${p.recurso ? `<li>${p.recurso}</li>` : ""}
-      ${p.buffs ? `<li>${p.buffs}</li>` : ""}
-      ${p.espacos.map(s => `<li><span class="rotulo">${esc(s.rotulo)} (${s.usados}/${s.limite}):</span> ${s.itens.join(", ") || "—"}</li>`).join("")}
-      <li><span class="rotulo">Consumíveis:</span> ${p.consumiveis.join(", ") || "—"}</li>
-      ${p.info.map(l => `<li>${l}</li>`).join("")}
-    </ul>`;
+    <div class="ficha-bloco">
+      <h3 class="ficha-titulo">Equipamentos</h3>
+      <dl class="equip">
+        ${p.espacos.map(s => `<div><dt>${esc(s.rotulo)} <span>${s.usados}/${s.limite}</span></dt>
+          <dd>${s.itens.join("<br>") || vazio}</dd></div>`).join("")}
+        <div><dt>Consumíveis</dt><dd>${p.consumiveis.join("<br>") || vazio}</dd></div>
+      </dl>
+    </div>
+    ${p.info.length ? `<div class="ficha-bloco"><ul class="lista">${p.info.map(l => `<li>${l}</li>`).join("")}</ul></div>` : ""}`;
 }
 
 function lateralOrdem() {
   return `<h2>Rodada ${E.rodada}</h2>
-    <ul class="lista" style="margin-top:14px">${(E.ordem || []).map((o, i) => {
+    <div class="ficha-bloco"><h3 class="ficha-titulo">Ordem da rodada</h3>
+    <ul class="lista">${(E.ordem || []).map((o, i) => {
       const j = E.jogadores.find(x => x.nome === o.nome);
-      return `<li><b style="color:${j.cor}">${i + 1}º ${esc(o.nome)}</b> · ${j.emoji} ${esc(j.personagem)}${j.vivo ? "" : " 💀"}</li>`;
-    }).join("")}</ul>`;
+      return `<li>${i + 1}º ${marca(j.cor)}${esc(o.nome)} · ${j.emoji} ${esc(j.personagem)}${j.vivo ? "" : " 💀"}</li>`;
+    }).join("")}</ul></div>`;
 }
 
 /* ---------- painel: resultado de ação, anúncio de rodada, Comerciante ---------- */
+// Quem ataca e quem é atacado, acima dos dados (aparece já durante a rolagem)
+function confrontoHtml(c) {
+  const lado = (j, papel) => `<div class="lado" style="--cor:${j.cor}">
+      <span class="icone">${j.emoji}</span>
+      <div><span class="papel">${papel}</span><span class="nome-item">${esc(j.nome)}</span><small>${esc(j.personagem)}</small></div>
+    </div>`;
+  return `<div class="confronto">${lado(c.atacante, "Ataca")}<span class="versus">⚔️</span>${lado(c.alvo, "É atacado")}</div>`;
+}
+
 function painelHtml(p) {
   const animado = p.dados.length > 0 || !!p.roleta;
   return `
     <div class="cab"><h2>${p.titulo}</h2></div>
+    ${p.confronto ? confrontoHtml(p.confronto) : ""}
     ${p.roleta ? `<div class="roleta" id="roleta">🎲</div>` : ""}
     ${p.dados.length ? `<div class="dados">${p.dados.map((d, i) => `
       <div><div class="dado esperando" id="dado${i}" style="--cor:${d.cor}">?</div>
@@ -207,11 +242,11 @@ async function animarRoleta(r, minha) {
   for (let i = 0; i < passos; i++) {
     if (minha !== animacao || !el) return;
     const k = (inicio + i) % n;
-    el.innerHTML = `👉 <span style="color:${r.cores[k]}">${esc(r.nomes[k])}</span> 👈`;
+    el.innerHTML = `👉 ${marca(r.cores[k])}${esc(r.nomes[k])} 👈`;
     await espera(atraso);
     atraso *= 1.09;
   }
-  el.innerHTML = `🏁 <span style="color:${r.cores[r.vencedor]}">${esc(r.nomes[r.vencedor])}</span> começa! 🏁`;
+  el.innerHTML = `🏁 ${marca(r.cores[r.vencedor])}${esc(r.nomes[r.vencedor])} começa! 🏁`;
   await espera(500);
 }
 
@@ -220,8 +255,7 @@ async function animarRoleta(r, minha) {
    ===================================================================== */
 function desenharEscolha() {
   if (!E.quantidade) {
-    desenharTopo("⚔️ ARENA DE COMBATE", "RPG PvP em turnos · de 2 a 6 jogadores no mesmo teclado",
-      `<span class="item atual">Quantos jogadores?</span>`, "");
+    desenharTopo("⚔️ Arena de Combate", "RPG PvP em turnos · de 2 a 6 jogadores no mesmo teclado", "", "");
     let botoes = "";
     for (let n = E.min; n <= E.max; n++) {
       botoes += `<button class="btn forte grande" data-acao="quantidade" data-dados="${dados({ n })}" data-tecla="${n}">${n}</button>`;
@@ -232,7 +266,7 @@ function desenharEscolha() {
       <div class="botoes">${botoes}</div>`;
     $("lateral").innerHTML = `
       <div class="boas-vindas">
-        <h2>Como jogar</h2>
+        <h2>📜 Como jogar</h2>
         <p>⚔️ Cada um escolhe um personagem. Vence quem sobrar vivo.</p>
         <p>🎲 Na sua vez: atacar, defender, usar itens ou passar. O D10 decide a força do golpe.</p>
         <p>🧳 A cada 5 rodadas chega o Comerciante: cada jogador compra 1 equipamento e 1 consumível.</p>
@@ -255,37 +289,38 @@ function desenharEscolha() {
       vagas.push(`<div class="cj vaga">Jogador ${i + 1}</div>`);
     }
   }
-  desenharTopo("⚔️ ARENA DE COMBATE", `RPG PvP em turnos · ${q} jogadores no mesmo teclado`,
-    `<span class="item atual">${n < q ? `Jogador ${n + 1} de ${q}: escolha o seu personagem` : "Todos prontos!"}</span>`,
-    gradeJogadores(vagas));
+  desenharTopo("⚔️ Arena de Combate",
+    `${q} jogadores · ${n < q ? `jogador <b>${n + 1} de ${q}</b> escolhendo` : "<b>todos prontos</b>"}`,
+    "", gradeJogadores(vagas));
 
   if (n >= q) {
     $("principal").innerHTML = `
       <div class="cab"><h2>Tudo pronto!</h2></div>
-      <p>Os ${q} jogadores escolheram. A roleta vai sortear quem começa.</p>
+      <p class="nota">Os ${q} jogadores escolheram. A roleta vai sortear quem começa.</p>
       <div class="botoes">
         <button class="btn forte grande" data-acao="comecar" data-enter>🎲 Começar a partida (Enter)</button>
-        <button class="btn" data-acao="refazer">Refazer as escolhas</button>
+        <button class="btn" id="voltar" data-acao="refazer">Refazer as escolhas (0)</button>
       </div>`;
-    $("lateral").innerHTML = `<h2>Jogadores</h2><ul class="lista" style="margin-top:14px">${
-      E.jogadores.map(j => `<li><b style="color:${j.cor}">${esc(j.nome)}</b> · ${j.emoji} ${esc(j.personagem)}</li>`).join("")}</ul>`;
+    $("lateral").innerHTML = `<h2>Jogadores</h2><div class="ficha-bloco"><ul class="lista">${
+      E.jogadores.map(j => `<li>${marca(j.cor)}${esc(j.nome)} · ${j.emoji} ${esc(j.personagem)}</li>`).join("")}</ul></div>`;
     return;
   }
 
   if (!E.personagens.some(p => p.nome === personagemMarcado)) personagemMarcado = E.personagens[0].nome;
   $("principal").innerHTML = `
-    <div class="cab"><h2 style="color:${E.cores[n]}">Jogador ${n + 1}</h2>
+    <div class="cab"><h2>${marca(E.cores[n])}Jogador ${n + 1}</h2>
       <div class="botoes">
         ${n > 0 ? `<button class="btn" data-acao="refazer">Refazer</button>` : ""}
         <button class="btn" data-acao="trocar_quantidade">Trocar a quantidade (${q})</button>
       </div></div>
     ${avisoHtml()}
-    <label class="campo"><b>📝 Nome:</b>
+    <label class="campo">📝 Nome
       <input id="nome" maxlength="20" placeholder="Digite o seu nome" value="${esc(nomeDigitado)}" autocomplete="off"></label>
-    <p class="secao">Personagens · clique para ver os detalhes</p>
+    <p class="secao">Personagens <span class="nota">· <span class="tecla tecla-texto">↑</span> <span class="tecla tecla-texto">↓</span>
+      trocam (ou clique) · Enter entra</span></p>
     <div class="grade">${E.personagens.map(p => `
-      <button class="opcao ${personagemMarcado === p.nome ? "selecionada" : ""}" data-acao="local:marcar" data-p="${esc(p.nome)}" data-atalho>
-        <div class="topo-opcao">${tecla()}<span class="icone">${p.emoji}</span><b>${esc(p.nome)}</b></div>
+      <button class="opcao ${personagemMarcado === p.nome ? "selecionada" : ""}" data-acao="local:marcar" data-p="${esc(p.nome)}">
+        <div class="topo-opcao"><span class="icone">${p.emoji}</span><span class="nome-item">${esc(p.nome)}</span></div>
         <small>💖 ${p.vida} · ataque ${num(Math.round((p.fis + p.mag) * 10) / 10)} · ${esc(p.estilo)}</small>
         <small>${esc(p.descricao)}</small>
       </button>`).join("")}</div>
@@ -299,16 +334,18 @@ function desenharEscolha() {
 
   const p = E.personagens.find(x => x.nome === personagemMarcado);
   const barra = (v, max, cor) => `<div class="barra"><div style="width:${Math.min(100, v / max * 100)}%;background:${cor}"></div></div>`;
+  const atributo = (rotulo, valor, max, cor) => `<li><div class="ficha-vida"><span class="rotulo">${rotulo}</span>
+    <span class="valor">${valor}</span></div>${barra(valor, max, cor)}</li>`;
   $("lateral").innerHTML = `
-    <h2>${esc(p.nome)}</h2>
-    <div class="retrato">${p.emoji}</div>
-    <ul class="lista">
-      <li><b>💖 Vida ${p.vida}</b>${barra(p.vida, 150, "var(--vida-alta)")}</li>
-      <li><b>🔪 Físico ${num(p.fis)}</b>${barra(p.fis, 10, "#c0392b")}</li>
-      <li><b>🌠 Mágico ${num(p.mag)}</b>${barra(p.mag, 10, "#8e44ad")}</li>
-      <li>🎯 ${esc(p.estilo)}</li>
-    </ul>
-    <p class="nota" style="margin-top:6px">Dano já com o item inicial.</p>
+    ${fichaId(p.nome, p.emoji, p.estilo)}
+    <div class="ficha-bloco">
+      <ul class="lista">
+        ${atributo("💖 Vida", p.vida, 150, "var(--vida-alta)")}
+        ${atributo("🔪 Físico", num(p.fis), 10, "#c96a55")}
+        ${atributo("🌠 Mágico", num(p.mag), 10, "#a77bc4")}
+      </ul>
+      <p class="nota" style="margin-top:var(--e2)">Dano já com o item inicial.</p>
+    </div>
     <div class="bloco"><span class="rotulo">✨ Passiva</span><p>${p.passiva}</p></div>
     ${p.habilidade ? `<div class="bloco"><span class="rotulo">🌟 Habilidade</span><p>${p.habilidade}</p></div>` : ""}
     <div class="bloco"><span class="rotulo">🔰 Postura defensiva</span><p>${p.postura}</p></div>
@@ -321,7 +358,7 @@ function desenharEscolha() {
 // Caixa de cima e caixa da direita do turno. Enquanto os dados rolam, mostram o estado de antes do golpe.
 function desenharTopoTurno(base) {
   const cartoes = gradeJogadores(base.jogadores.map(j => cartao(j, j.indice === base.atual)));
-  desenharTopo(`RODADA ${E.rodada}`, "", linhaOrdem(E.ordem), cartoes);
+  desenharTopo(`Rodada ${E.rodada}`, "", linhaOrdem(E.ordem), cartoes);
   $("lateral").innerHTML = base.lateral ? painelJogador(base.lateral) : lateralOrdem();
 }
 
@@ -336,7 +373,7 @@ function desenharTurno() {
     return;
   }
   const j = E.jogadores[E.atual];
-  const cab = `<div class="cab"><h2>Turno de <span style="color:${j.cor}">${esc(j.nome.toUpperCase())}</span></h2>
+  const cab = `<div class="cab"><h2>Turno de ${marca(j.cor)}${esc(j.nome)}</h2>
     <span class="etiqueta">${j.emoji} ${esc(j.personagem)}</span></div>`;
 
   if (E.modo === "acoes") {
@@ -344,8 +381,8 @@ function desenharTurno() {
       <p class="secao">Escolha sua ação</p>
       <div class="acoes">${E.acoes.map(a => `
         <button class="acao ${a.livre ? "livre" : ""}" data-acao="acao" data-dados="${dados({ id: a.id })}"
-                ${a.bloqueio ? "disabled" : "data-atalho"}>
-          ${a.bloqueio ? `<span class="tecla" style="opacity:.4">✖</span>` : tecla()}
+                data-atalho ${a.bloqueio ? "disabled" : ""}>
+          ${tecla(!a.bloqueio)}
           <span class="acao-texto"><strong>${esc(a.nome)}${a.livre ? `<span class="pill-livre">ação livre</span>` : ""}</strong>
           <small>${a.bloqueio ? `<span class="motivo">${esc(a.bloqueio)}</span>` : esc(a.desc)}</small></span>
         </button>`).join("")}</div>`;
@@ -353,9 +390,9 @@ function desenharTurno() {
     $("principal").innerHTML = cab + avisoHtml() + `
       <p class="secao">${esc(E.alvos.titulo)}</p>
       <div class="grade">${E.alvos.lista.map(o => `
-        <button class="opcao" data-acao="alvo" data-dados="${dados({ indice: o.indice })}" style="border-left:8px solid ${o.cor}"
-                ${o.bloqueio ? "disabled" : "data-atalho"}>
-          <div class="topo-opcao">${o.bloqueio ? "" : tecla()}<span class="icone">${o.emoji}</span><b>${esc(o.nome)}</b></div>
+        <button class="opcao com-cor" data-acao="alvo" data-dados="${dados({ indice: o.indice })}" style="--cor:${o.cor}"
+                data-atalho ${o.bloqueio ? "disabled" : ""}>
+          <div class="topo-opcao">${tecla(!o.bloqueio)}<span class="icone">${o.emoji}</span><span class="nome-item">${esc(o.nome)}</span></div>
           ${barraVida(o.vida, o.max)}
           <small>💖 ${o.vida}/${o.max} · 🔰 Defesa ${num(o.defesa)} · 💰 ${o.ouro}</small>
           <small>${o.bloqueio ? `<span class="motivo">${esc(o.bloqueio)}</span>` : o.status.join(" · ")}</small>
@@ -368,11 +405,12 @@ function desenharTurno() {
         const clicavel = it.usavel && !it.bloqueio;
         const uso = it.usavel ? (it.livre ? " · 🆓 ação livre" : it.alvo ? " · escolhe um alvo" : " · gasta o turno") : "";
         return `<button class="opcao ${it.usavel ? "" : "fixa"}" data-acao="usar" data-dados="${dados({ indice: it.indice })}"
-                  ${clicavel ? "data-atalho" : "disabled"}>
-          <div class="topo-opcao">${clicavel ? tecla() : ""}<b>${it.nome}</b></div>
+                  ${it.usavel ? "data-atalho" : ""} ${clicavel ? "" : "disabled"}>
+          <div class="topo-opcao">${it.usavel ? tecla(clicavel) : ""}${it.emoji ? `<span class="icone">${it.emoji}</span>` : ""}
+            <span class="nome-item">${it.nome}</span></div>
           <span class="tipo" style="--tcor:${it.cor}">${esc(it.tipo)}${uso}</span>
           <ul class="efeitos">${it.efeitos.map(l => `<li>${l}</li>`).join("")}</ul>
-          <small>${it.bloqueio ? `<span class="motivo">${esc(it.bloqueio)}</span>` : esc(it.estado)}</small>
+          <span class="estado">${it.bloqueio ? `<span class="motivo">${esc(it.bloqueio)}</span>` : esc(it.estado)}</span>
         </button>`;
       }).join("") || `<p class="nota">Inventário vazio.</p>`}</div>
       <div class="botoes"><button class="btn" id="voltar" data-acao="voltar">🔙 Voltar (0)</button></div>`;
@@ -384,9 +422,9 @@ function desenharTurno() {
    ===================================================================== */
 function desenharLoja() {
   const L = E.loja;
-  desenharTopo("🧳 O COMERCIANTE", `Rodada ${L.rodada} · itens <b>${esc(L.fase)}</b>`, linhaOrdem(L.ordem), cartoesDaPartida());
+  desenharTopo("🧳 O Comerciante", `Rodada ${L.rodada} · fase <b>${esc(L.fase)}</b>`, linhaOrdem(L.ordem), cartoesDaPartida());
   $("lateral").innerHTML = E.lateral ? painelJogador(E.lateral)
-    : `<h2>🧳</h2><p class="nota" style="text-align:center">Todos já passaram pelo Comerciante.</p>`;
+    : `<h2>🧳 O Comerciante</h2><p class="nota" style="margin-top:var(--e2)">Todos já passaram pelo Comerciante.</p>`;
 
   if (E.modo === "painel") {
     $("principal").innerHTML = painelHtml(E.painel);
@@ -394,7 +432,7 @@ function desenharLoja() {
     return;
   }
   const j = E.jogadores[E.atual];
-  const cab = `<div class="cab"><h2>Estoque de <span style="color:${j.cor}">${esc(j.nome.toUpperCase())}</span></h2>
+  const cab = `<div class="cab"><h2>Estoque de ${marca(j.cor)}${esc(j.nome)}</h2>
     <div class="chips">${L.compras.map(c => `<span class="chip ${c.feitas >= c.limite ? "esgotado" : ""}">${esc(c.rotulo)} ${c.feitas}/${c.limite}</span>`).join("")}</div></div>`;
   const voltar = `<div class="botoes"><button class="btn" id="voltar" data-acao="voltar">🔙 Voltar (0)</button></div>`;
 
@@ -402,7 +440,7 @@ function desenharLoja() {
     $("principal").innerHTML = cab + avisoHtml() + `<p class="secao">${esc(L.substituir.titulo)}</p>
       <div class="grade">${L.substituir.lista.map(c => `
         <button class="opcao" data-acao="substituir" data-dados="${dados({ indice: c.indice })}" data-atalho>
-          <div class="topo-opcao">${tecla()}<b>${c.nome}</b></div>
+          <div class="topo-opcao">${tecla()}<span class="nome-item">${c.nome}</span></div>
           <ul class="efeitos">${c.efeitos.map(l => `<li>${l}</li>`).join("")}</ul>
         </button>`).join("")}</div>` + voltar;
     return;
@@ -411,7 +449,7 @@ function desenharLoja() {
     $("principal").innerHTML = cab + avisoHtml() + `<p class="secao">${esc(L.forja.titulo)}</p>
       <div class="grade">${L.forja.lista.map(c => `
         <button class="opcao" data-acao="forjar" data-dados="${dados({ indice: c.indice })}" data-atalho>
-          <div class="topo-opcao">${tecla()}<b>${c.nome}</b><span class="preco">🔨 ${c.nivel}/${c.max}</span></div>
+          <div class="topo-opcao">${tecla()}<span class="nome-item">${c.nome}</span><span class="preco">🔨 ${c.nivel}/${c.max}</span></div>
           <ul class="efeitos">${c.efeitos.map(l => `<li>${l}</li>`).join("")}</ul>
         </button>`).join("")}</div>` + voltar;
     return;
@@ -423,8 +461,8 @@ function desenharLoja() {
       <div class="grade">${L.mistura.lista.map(c => {
         const vezes = esc2.filter(x => x === c.indice).length;
         return `<button class="opcao ${vezes ? "selecionada" : ""}" data-acao="ingrediente" data-dados="${dados({ indice: c.indice })}" data-atalho>
-          <div class="topo-opcao">${tecla()}<b>${c.nome}</b><span class="preco">${vezes ? `✔ ${vezes > 1 ? "×2" : ""}` : ""}</span></div>
-          <small>${c.usos} uso(s)</small>
+          <div class="topo-opcao">${tecla()}<span class="nome-item">${c.nome}</span><span class="preco">${vezes ? `✔ ${vezes > 1 ? "×2" : ""}` : ""}</span></div>
+          <span class="tipo">${c.usos} uso(s)</span>
           <ul class="efeitos">${c.efeitos.map(l => `<li>${l}</li>`).join("")}</ul>
         </button>`;
       }).join("")}</div>
@@ -442,29 +480,29 @@ function desenharLoja() {
     ${avisoHtml()}
     <div class="grade">${L.estoque.map(it => `
       <button class="opcao ${s && s.indice === it.indice ? "selecionada" : ""}" data-acao="item" data-dados="${dados({ indice: it.indice })}"
-              ${it.disponivel ? "data-atalho" : "disabled"}>
-        <div class="topo-opcao">${it.disponivel ? tecla() : ""}<span class="icone">${it.emoji}</span>
-          <span class="preco">${it.disponivel ? `💰 ${it.preco}` : "VENDIDO"}</span></div>
-        <b class="${it.disponivel ? "" : "vendido"}">${esc(it.nome)}</b>
+              data-atalho ${it.disponivel ? "" : "disabled"}>
+        <div class="topo-opcao">${tecla(it.disponivel)}<span class="icone">${it.emoji}</span>
+          <span class="preco">${it.disponivel ? `💰 ${it.preco}` : "Vendido"}</span></div>
+        <span class="nome-item ${it.disponivel ? "" : "vendido"}">${esc(it.nome)}</span>
         <span class="tipo" style="--tcor:${it.cor}">${esc(it.tipo)} · ${it.fixa ? "sempre à venda" : esc(it.fase)}</span>
         <ul class="efeitos">${it.efeitos.map(l => `<li>${l}</li>`).join("")}</ul>
       </button>`).join("")}</div>
     ${s ? `<div class="detalhe">
-      <h3>${s.emoji} ${esc(s.nome)} <span class="tipo" style="--tcor:var(--suave)">${esc(s.tipo)} · ${esc(s.fase)}</span></h3>
-      <p><i>${esc(s.descricao)}</i></p>
+      <h3>${s.emoji} ${esc(s.nome)} <span class="tipo">${esc(s.tipo)} · ${esc(s.fase)}</span></h3>
+      <p class="descricao">${esc(s.descricao)}</p>
       <ul class="efeitos">${s.efeitos.map(l => `<li>✨ ${l}</li>`).join("")}</ul>
       ${s.detalhes.map(l => `<p>${l}</p>`).join("")}
-      <p>💰 Preço: <b style="color:${s.pode_pagar ? "var(--ok)" : "var(--perigo)"}">${s.preco} moedas</b> (você tem ${j.ouro})</p>
+      <p>💰 Preço: <b class="${s.pode_pagar ? "pode" : "nao-pode"}">${s.preco} moedas</b> (você tem ${j.ouro})</p>
       <div class="botoes">
         <button class="btn forte" id="comprar" data-acao="comprar" data-enter ${s.bloqueio ? "disabled" : ""}>✅ Comprar (Enter)</button>
         <button class="btn" id="voltar" data-acao="voltar">🔙 Voltar (0)</button>
         ${s.bloqueio ? `<span class="motivo">${esc(s.bloqueio)}</span>` : ""}
       </div></div>` : ""}
     <div class="botoes">
-      ${L.extras.map(x => `<button class="btn" data-acao="${x.id}" ${x.bloqueio ? `disabled title="${esc(x.bloqueio)}"` : ""}>
-        ${esc(x.nome)}${x.bloqueio ? ` (${esc(x.bloqueio)})` : ""}</button>`).join("")}
-      <button class="btn ${L.esgotadas ? "forte" : ""}" data-acao="sair_loja" ${L.esgotadas && !s ? "data-enter" : ""}>
-        🚪 Sair do Comerciante ${L.proximo ? `(próximo: ${esc(L.proximo)})` : "(último a comprar)"}</button>
+      ${L.extras.map(x => `<button class="btn" data-acao="${x.id}" data-atalho ${x.bloqueio ? `disabled title="${esc(x.bloqueio)}"` : ""}>
+        ${tecla(!x.bloqueio)}${esc(x.nome)}${x.bloqueio ? ` (${esc(x.bloqueio)})` : ""}</button>`).join("")}
+      <button class="btn ${L.esgotadas ? "forte" : "saida"}" data-acao="sair_loja" data-atalho ${L.esgotadas && !s ? "data-enter" : ""}>
+        ${tecla()}🚪 Sair do Comerciante ${L.proximo ? `(próximo: ${esc(L.proximo)})` : "(último a comprar)"}</button>
     </div>`;
 }
 
@@ -473,7 +511,7 @@ function desenharLoja() {
    ===================================================================== */
 function desenharFim() {
   const lista = E.classificacao, venc = lista[0];
-  desenharTopo("🏆 FIM DE JOGO",
+  desenharTopo("🏆 Fim de jogo",
     `${E.rodada} rodadas · vencedor: <b>${esc(venc.nome)}</b> (${venc.emoji} ${esc(venc.personagem)})`, "", cartoesDaPartida());
   const medalhas = ["🥇", "🥈", "🥉"];
   $("principal").innerHTML = `
@@ -482,7 +520,7 @@ function desenharFim() {
       <div class="linha-rank ${i === 0 ? "primeiro" : ""}" style="--cor:${o.cor}">
         <span class="pos">${medalhas[i] || `${i + 1}º`}</span>
         <span class="emo">${o.emoji}</span>
-        <div><b>${esc(o.nome)}</b> · ${esc(o.personagem)}<small>${o.equipamentos}</small></div>
+        <div><span class="nome-item">${esc(o.nome)}</span> · ${esc(o.personagem)}<small>${o.equipamentos}</small></div>
         <span class="sit">${o.vencedor ? `🏆 Vencedor<br>💖 ${o.vida}/${o.max}` : `💀 Eliminado na rodada ${o.rodada_morte ?? "?"}`}<br>💰 ${o.ouro}</span>
       </div>`).join("")}</div>
     <div class="botoes"><button class="btn forte grande" data-acao="novo_jogo" data-enter>🔁 Jogar de novo (Enter)</button></div>`;
@@ -505,6 +543,13 @@ function desenhar() {
 const ACOES_LOCAIS = {
   "tela-cheia": () => alternarTelaCheia(),
   marcar: el => { personagemMarcado = el.dataset.p; desenhar(); },
+  // ↑ / ↓ na tela de escolha: troca o personagem marcado sem sair do campo do nome
+  trocarPersonagem: passo => {
+    const nomes = E.personagens.map(p => p.nome);
+    const i = nomes.indexOf(personagemMarcado);
+    personagemMarcado = nomes[(i + passo + nomes.length) % nomes.length];
+    desenhar();
+  },
   entrar: async () => {
     const antes = E.jogadores.length;
     await agir("entrar", { nome: nomeDigitado, personagem: personagemMarcado });
@@ -530,12 +575,19 @@ function clicar(el, ev) {
 document.addEventListener("keydown", ev => {
   if (ev.key === "F11") { ev.preventDefault(); alternarTelaCheia(); return; }
   if (ev.key === "Escape" && telaCheia && !NAVEGADOR) { alternarTelaCheia(false); return; }
-  if (ev.repeat) return;
   const primeiroEnter = () => [...document.querySelectorAll("[data-enter]")].find(visivel);
   if (ev.target.tagName === "INPUT") {
-    if (ev.key === "Enter") clicar(primeiroEnter(), ev);
+    if ((ev.key === "ArrowUp" || ev.key === "ArrowDown") && E && E.tela === "escolha") {
+      ev.preventDefault();
+      ACOES_LOCAIS.trocarPersonagem(ev.key === "ArrowDown" ? 1 : -1);
+      return;
+    }
+    if (ev.key === "Enter" && !ev.repeat) clicar(primeiroEnter(), ev);
     return;
   }
+  if (ev.repeat) return;
+  // botão com foco (navegação pelo Tab): Enter e espaço clicam nele mesmo
+  if ((ev.key === "Enter" || ev.key === " ") && ev.target.tagName === "BUTTON") return;
   if (ev.key === "Enter") { clicar(primeiroEnter(), ev); return; }
   if (ev.key === "0") { clicar($("voltar"), ev); return; }
   if (/^[1-9]$/.test(ev.key)) {

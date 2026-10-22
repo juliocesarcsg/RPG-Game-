@@ -16,7 +16,8 @@ import dice
 import main
 import shop
 
-# Cores do rich usadas nos textos do jogo -> cores legíveis no fundo creme/laranja da janela
+# Cores do rich usadas nos textos do jogo. Nos textos, para_html usa a classe t-<cor> (o estilo.css define a cor
+# legível no pergaminho e nos painéis escuros); estes valores ficam para as etiquetas de tipo dos cartões de item.
 CORES_TEXTO = {
     "red": "#b3261e", "bright_red": "#c62828", "green": "#1e7a34", "bright_green": "#2e8b3a",
     "yellow": "#8a5a00", "bright_yellow": "#9a6b00", "blue": "#1d5fa8", "bright_blue": "#2c5fcc",
@@ -48,19 +49,19 @@ def para_html(marcacao):
         trecho = html.escape(seg.text)
         estilo = seg.style
         if estilo:
-            css = []
+            classes = []
             if estilo.color and estilo.color.name in CORES_TEXTO:
-                css.append(f"color:{CORES_TEXTO[estilo.color.name]}")
+                classes.append("t-" + estilo.color.name.replace("_", "-"))
             if estilo.bold:
-                css.append("font-weight:700")
+                classes.append("t-forte")
             if estilo.italic:
-                css.append("font-style:italic")
+                classes.append("t-italico")
             if estilo.strike:
-                css.append("text-decoration:line-through")
+                classes.append("t-riscado")
             elif estilo.underline:
-                css.append("text-decoration:underline")
-            if css:
-                trecho = f'<span style="{";".join(css)}">{trecho}</span>'
+                classes.append("t-sublinhado")
+            if classes:
+                trecho = f'<span class="{" ".join(classes)}">{trecho}</span>'
         partes.append(trecho)
     return "".join(partes).replace("\n", "<br>")
 
@@ -110,8 +111,9 @@ def texto_acao(acao, jogador):
                    {"Feiticeiro": "custa 1/3 de mana", "Mosqueteiro": "gasta 1 de munição"}.get(
                        raca, "o D10 define o dano: fraco ×0,5, normal ×1, crítico ×2")),
         "postura": ("🔰 Postura defensiva",
-                    "até a sua próxima vez, o D10 de defesa bloqueia de 0% a 95% do dano"
-                    + (" • com a munição zerada, recarrega" if raca == "Mosqueteiro" else "")),
+                    "até a sua próxima vez, o D10 de defesa bloqueia de 0% a 95% do dano"),
+        "recarregar": ("🔄 Recarregar a arma",
+                       f"gasta o turno • munição {main.MUNICAO_MAX}/{main.MUNICAO_MAX} • sem defesa: você fica exposto"),
         "escudo_mana": ("🔮 Escudo de Mana",
                         f"custa 2/3 de mana • mitiga {round(main.ESCUDO_MANA * 100)}% do próximo ataque • "
                         f"dura até {main.ESCUDO_MANA_RODADAS} rodadas"),
@@ -173,7 +175,6 @@ class Partida:
         self.loja = None
         self.vencedor = None
         main.ELIMINADOS.clear()
-        shop.fator_cura_global = 1.0
 
     # ------------------------------------------------------------------
     # Entrada única da interface
@@ -202,12 +203,13 @@ class Partida:
         self.registro.insert(0, para_html(marcacao))
         del self.registro[60:]
 
-    def mostrar_painel(self, titulo, linhas, depois, botao="Continuar", dados=None, roleta=None):
+    def mostrar_painel(self, titulo, linhas, depois, botao="Continuar", dados=None, roleta=None, confronto=None):
         """Troca a caixa principal por um painel (resultado de ação, anúncio de rodada, Comerciante...).
-        `depois` é o método chamado quando o jogador clica no botão."""
+        `depois` é o método chamado quando o jogador clica no botão. `confronto` (atacante e alvo) aparece acima
+        dos dados desde o começo da rolagem."""
         self.modo = "painel"
         self.painel = {"titulo": titulo, "linhas": linhas, "depois": depois, "botao": botao,
-                       "dados": dados or [], "roleta": roleta}
+                       "dados": dados or [], "roleta": roleta, "confronto": confronto}
 
     def _acao_continuar(self):
         if self.modo != "painel" or not self.painel:
@@ -269,7 +271,6 @@ class Partida:
 
     def iniciar_rodada(self):
         main.RODADA_ATUAL = self.rodada
-        shop.fator_cura_global = main.CURA_MORTE_SUBITA if self.rodada >= main.RODADA_MORTE_SUBITA else 1.0
         self.tela = "turno"
         self.ordem = main.sortear_ordem(self.jogadores)
         self.vez = 0
@@ -277,9 +278,6 @@ class Partida:
         if self.rodada > 1 and main.ouro_base_do_turno(self.rodada) > main.ouro_base_do_turno(self.rodada - 1):
             linhas.append(f"💰 [bold yellow]A ECONOMIA AQUECEU![/] A partir de agora cada turno dá "
                           f"+{main.ouro_base_do_turno(self.rodada)} moedas (antes: +{main.ouro_base_do_turno(self.rodada - 1)}).")
-        if self.rodada == main.RODADA_MORTE_SUBITA:
-            linhas.append(f"💀 [bold red]MORTE SÚBITA![/] A partir de agora todas as curas rendem só "
-                          f"{round(main.CURA_MORTE_SUBITA * 100)}%.")
         linhas.append("📋 Ordem da rodada: " + "  ➜  ".join(
             f"{i}º [bold {j['cor']}]{j['nome']}[/]" for i, j in enumerate(self.ordem, start=1)))
         roleta = None
@@ -327,11 +325,11 @@ class Partida:
         self.loja = None
         self.iniciar_rodada()
 
-    def acao_encerra_turno(self, titulo, linhas, registro=None, dados=None):
+    def acao_encerra_turno(self, titulo, linhas, registro=None, dados=None, confronto=None):
         """Mostra o resultado de uma ação que gasta o turno; o botão Continuar passa a vez."""
         if registro:
             self.registrar(registro)
-        self.mostrar_painel(titulo, linhas, "fim_do_turno", "Continuar", dados=dados)
+        self.mostrar_painel(titulo, linhas, "fim_do_turno", "Continuar", dados=dados, confronto=confronto)
 
     # ------------------------------------------------------------------
     # Ações do turno
@@ -349,6 +347,9 @@ class Partida:
         elif id == "postura":
             msg = main.assumir_postura(j)
             self.acao_encerra_turno("🔰 Postura defensiva", [msg], registro=msg)
+        elif id == "recarregar":
+            msg = main.recarregar(j)
+            self.acao_encerra_turno("🔄 Recarregar", [msg], registro=msg)
         elif id == "escudo_mana":
             bloqueio = main.bloqueio_escudo_mana(j)
             if bloqueio:
@@ -407,7 +408,9 @@ class Partida:
                       f"🎲 {' + '.join(str(d['valor']) for d in dados)} • −{perda} 💖"
                       + (" • 💀 eliminado!" if not alvo["vivo"] else ""))
             self.alvo_de = None
-            return self.acao_encerra_turno("💥 Resultado do ataque", resultado["linhas"], registro=resumo, dados=dados)
+            confronto = {"atacante": self.identidade(j), "alvo": self.identidade(alvo)}
+            return self.acao_encerra_turno("💥 Resultado do ataque", resultado["linhas"], registro=resumo, dados=dados,
+                                           confronto=confronto)
         # item com alvo (bomba, raio, roubo, ácido, sentença)
         item = self.alvo_de["item"]
         self.alvo_de = None
@@ -488,7 +491,7 @@ class Partida:
             f"{round(main.CURA_COMERCIANTE * 100)}% da vida máxima.",
             f"Cada jogador tem um estoque próprio de {shop.ITENS_POR_JOGADOR} itens, sorteado só para ele, mais a "
             f"{pocao['emoji']} {pocao['nome']} sempre à venda • até {shop.texto_limite_compras()} por jogador.",
-            f"Rodada {r} • só itens da fase [bold]{nome_fase}[/] ({shop.texto_fases()}).",
+            f"Rodada {r} • fase [bold]{nome_fase}[/]: {shop.texto_composicao(r)} ({shop.texto_fases()}).",
             "💚 " + "   ".join(curas),
         ]
         self.mostrar_painel("🧳 O Comerciante chegou!", linhas, "proximo_comprador", "Abrir o Comerciante")
@@ -648,6 +651,11 @@ class Partida:
             "dica": " • ".join(Text.from_markup(s).plain for s in status),
         }
 
+    def identidade(self, j):
+        """Só quem é o jogador (nome, personagem, emoji e cor), sem os números que mudam com o golpe."""
+        return {"nome": j["nome"], "personagem": j["raca"], "emoji": main.RACAS[j["raca"]]["emoji"],
+                "cor": cor_jogador(j["cor"])}
+
     def painel_jogador(self, j, info=True):
         """Caixa da direita: tudo sobre o jogador da vez."""
         dados = self.cartao(j)
@@ -676,7 +684,7 @@ class Partida:
     def dados_painel(self):
         p = self.painel
         return {"titulo": para_html(p["titulo"]), "linhas": [para_html(l) for l in p["linhas"]], "botao": p["botao"],
-                "dados": p["dados"], "roleta": p["roleta"]}
+                "dados": p["dados"], "roleta": p["roleta"], "confronto": p.get("confronto")}
 
     def dados_acoes(self, j):
         acoes = []
@@ -731,7 +739,7 @@ class Partida:
                 bloqueio = None if pode else tirar_prefixo(msg)
             forja = item.get("forja", 0)
             itens.append({
-                "indice": i,
+                "indice": i, "emoji": item.get("emoji", ""),  # itens iniciais trazem o emoji no próprio nome
                 "nome": para_html(item["nome"] + (f" [yellow]🔨+{round(forja * shop.BONUS_FORJA * 100)}%[/]" if forja else "")
                                   + (f" ×{item['usos']}" if item["tipo"] == "consumivel" and item.get("usos", 1) > 1 else "")),
                 "tipo": rotulo, "cor": CORES_TEXTO.get(cor, "#6b4a00"),
